@@ -280,6 +280,10 @@
     <Compile Include="Migrations\201806041014566_datetime nullable.Designer.cs">
       <DependentUpon>201806041014566_datetime nullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806041041344_rent list in appuser.cs" />
+    <Compile Include="Migrations\201806041041344_rent list in appuser.Designer.cs">
+      <DependentUpon>201806041041344_rent list in appuser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -380,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806041014566_datetime nullable.resx">
       <DependentUpon>201806041014566_datetime nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806041041344_rent list in appuser.resx">
+      <DependentUpon>201806041041344_rent list in appuser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
