@@ -12,7 +12,7 @@ namespace RentApp.Models.Entities
         public string  Manufactor { get; set; }
         public int Year { get; set; }
         public string Description { get; set; }
-        public decimal PricePerHoure { get; set; }
+        public decimal PricePerHour { get; set; }
         public bool Unvailable { get; set; }
         public List<string> Images { get; set; }
         public virtual TypeOfVehicle Type { get; set; }

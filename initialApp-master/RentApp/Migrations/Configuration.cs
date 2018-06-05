@@ -43,7 +43,7 @@ namespace RentApp.Migrations
             v1.Images = lista;
             v1.Manufactor = "Golf";
             v1.Model = "Passat";
-            v1.PricePerHoure = 200;
+            v1.PricePerHour = 200;
             v1.Type = tov;
             v1.Year = 1991;
 
