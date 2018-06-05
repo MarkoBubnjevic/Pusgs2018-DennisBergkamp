@@ -20,45 +20,22 @@ namespace RentApp.Migrations
 
         protected override void Seed(RentApp.Persistance.RADBContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
-
-          /*  if (System.Diagnostics.Debugger.IsAttached == false)
-            {
-                System.Diagnostics.Debugger.Launch();
-            }*/
-
+       
             Branch b1 = new Branch();               // FILIJALA
             b1.Address = "Zivojina Culuma";
             b1.Latitude = 1115;
             b1.Longitude = 2225;
             b1.Logo = "asdasd";
 
-            //context.Branches.Add(b1);               //----
 
             TypeOfVehicle tov = new TypeOfVehicle();           // TYPE OF VECHILE
           
             tov.Name = "Karavan";
             tov.Vehicles = new List<Vehicle>();
             
-         
-
-
             Vehicle v1 = new Vehicle();                   // VOZILO
             v1.Description = "bla bla";
            
-            
             List<string> lista = new List<string>();
             lista.Add("asdasd");
             lista.Add("asdasdfgg");
@@ -74,7 +51,6 @@ namespace RentApp.Migrations
             r1.Branch = b1;
             r1.Vehicle = v1;
 
-                
             AppUser a1 = new AppUser();                   // APPUSER
             a1.Activated = true;
             a1.Email = "maxtax@gmail.com";
@@ -91,10 +67,7 @@ namespace RentApp.Migrations
             s1.Branches.Add(b1);
             s1.Vehicles.Add(v1);
 
-
             context.Services.Add(s1);
-
-
 
             if (!context.Roles.Any(r => r.Name == "Admin"))
             {
@@ -139,32 +112,7 @@ namespace RentApp.Migrations
 
             );
 
-            // context.SaveChanges();
-
-            try
-            {
-                context.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                var sb = new StringBuilder();
-                foreach (var failure in ex.EntityValidationErrors)
-                {
-                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
-                    foreach (var error in failure.ValidationErrors)
-                    {
-                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
-                        sb.AppendLine();
-                    }
-                }
-                throw new DbEntityValidationException(
-                    "Entity Validation Failed - errors follow:\n" +
-                    sb.ToString(), ex
-                );
-            }
-
-
-
+            SaveChanges(context);
 
             var userStore = new UserStore<RAIdentityUser>(context);
             var userManager = new UserManager<RAIdentityUser>(userStore);
@@ -186,6 +134,31 @@ namespace RentApp.Migrations
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
 
+            }
+        }
+
+        private static void SaveChanges(DbContext context)
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var sb = new StringBuilder();
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                );
             }
         }
     }

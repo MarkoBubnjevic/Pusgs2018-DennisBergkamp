@@ -14,7 +14,7 @@ namespace RentApp.Models.Entities
         public string Description { get; set; }
         public decimal PricePerHoure { get; set; }
         public bool Unvailable { get; set; }
-        public TypeOfVehicle Type { get; set; }
         public List<string> Images { get; set; }
+        public virtual TypeOfVehicle Type { get; set; }
     }
 }
