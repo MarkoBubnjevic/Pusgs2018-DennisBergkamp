@@ -1,5 +1,4 @@
 ﻿using RentApp.Models.Entities;
-using RentApp.Persistance.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace RentApp.Persistance.Repository.Interface
 {
-    public interface IServiceRepository : IRepository<Service, int>
+    public interface IBranchRepository : IRepository<Branch, int>
     {
-        IEnumerable<Service> GetAll(int pageIndex, int pageSize);
+        IEnumerable<Branch> GetAll(int pageIndex, int pageSize);
     }
 }

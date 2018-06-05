@@ -8,16 +8,16 @@ using System.Web;
 
 namespace RentApp.Persistance.Repository.Implementation
 {
-    public class ServiceRepository : Repository<Service, int>, IServiceRepository
+    public class VehicleRepository : Repository<Vehicle, int>, IVehicleRepository
     {
-        public ServiceRepository(DbContext context) : base(context)
+        public VehicleRepository(DbContext context) : base(context)
         {
         }
 
-        public IEnumerable<Service> GetAll(int pageIndex, int pageSize)
+        public IEnumerable<Vehicle> GetAll(int pageIndex, int pageSize)
         {
-            return RADBContext.Services.Skip((pageIndex - 1) * pageSize).Take(pageSize);
-        
+            return RADBContext.Vechiles.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+
         }
 
         protected RADBContext RADBContext { get { return context as RADBContext; } }
