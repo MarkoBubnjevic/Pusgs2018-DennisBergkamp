@@ -10,51 +10,58 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
+using RentApp.Persistance.UnitOfWork.Interface;
 
 namespace RentApp.Controllers
 {
     public class TypeOfVehiclesController : ApiController
     {
-        private RADBContext db = new RADBContext();
-
-        // GET: api/TypeOfVehicles
-        public IQueryable<TypeOfVehicle> GetTypes()
+        public TypeOfVehiclesController()
         {
-            return db.Types;
         }
 
-        // GET: api/TypeOfVehicles/5
-        [ResponseType(typeof(TypeOfVehicle))]
-        public IHttpActionResult GetTypeOfVehicle(int id)
+
+        private readonly IUnitOfWork unitOfWork;
+
+        public TypeOfVehiclesController(IUnitOfWork unitOfWork)
         {
-            TypeOfVehicle typeOfVehicle = db.Types.Find(id);
-            if (typeOfVehicle == null)
+            this.unitOfWork = unitOfWork;
+        }
+
+        public IEnumerable<TypeOfVehicle> GetTypes()
+        {
+            return unitOfWork.Types.GetAll();
+        }
+
+        [ResponseType(typeof(TypeOfVehicle))]
+        public IHttpActionResult GetTypes(int id)
+        {
+            TypeOfVehicle rent = unitOfWork.Types.Get(id);
+            if (rent == null)
             {
                 return NotFound();
             }
 
-            return Ok(typeOfVehicle);
+            return Ok(rent);
         }
 
-        // PUT: api/TypeOfVehicles/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTypeOfVehicle(int id, TypeOfVehicle typeOfVehicle)
+        public IHttpActionResult PutType(int id, TypeOfVehicle rent)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != typeOfVehicle.Id)
+            if (id != rent.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(typeOfVehicle).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
+                unitOfWork.Types.Update(rent);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,49 +78,38 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/TypeOfVehicles
         [ResponseType(typeof(TypeOfVehicle))]
-        public IHttpActionResult PostTypeOfVehicle(TypeOfVehicle typeOfVehicle)
+        public IHttpActionResult PostTypes(TypeOfVehicle rent)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Types.Add(typeOfVehicle);
-            db.SaveChanges();
+            unitOfWork.Types.Add(rent);
+            unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = typeOfVehicle.Id }, typeOfVehicle);
+            return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
         }
 
-        // DELETE: api/TypeOfVehicles/5
         [ResponseType(typeof(TypeOfVehicle))]
         public IHttpActionResult DeleteTypeOfVehicle(int id)
         {
-            TypeOfVehicle typeOfVehicle = db.Types.Find(id);
-            if (typeOfVehicle == null)
+            TypeOfVehicle rent = unitOfWork.Types.Get(id);
+            if (rent == null)
             {
                 return NotFound();
             }
 
-            db.Types.Remove(typeOfVehicle);
-            db.SaveChanges();
+            unitOfWork.Types.Remove(rent);
+            unitOfWork.Complete();
 
-            return Ok(typeOfVehicle);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return Ok(rent);
         }
 
         private bool TypeOfVehicleExists(int id)
         {
-            return db.Types.Count(e => e.Id == id) > 0;
+            return unitOfWork.Types.Get(id) != null;
         }
     }
 }

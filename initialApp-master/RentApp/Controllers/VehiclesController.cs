@@ -10,51 +10,58 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
+using RentApp.Persistance.UnitOfWork.Interface;
 
 namespace RentApp.Controllers
 {
     public class VehiclesController : ApiController
     {
-        private RADBContext db = new RADBContext();
-
-        // GET: api/Vehicles
-        public IQueryable<Vehicle> GetVechiles()
+        public VehiclesController()
         {
-            return db.Vechiles;
         }
 
-        // GET: api/Vehicles/5
-        [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult GetVehicle(int id)
+
+        private readonly IUnitOfWork unitOfWork;
+
+        public VehiclesController(IUnitOfWork unitOfWork)
         {
-            Vehicle vehicle = db.Vechiles.Find(id);
-            if (vehicle == null)
+            this.unitOfWork = unitOfWork;
+        }
+
+        public IEnumerable<Vehicle> GetVehicles()
+        {
+            return unitOfWork.Vehicles.GetAll();
+        }
+
+        [ResponseType(typeof(Vehicle))]
+        public IHttpActionResult GetVehicles(int id)
+        {
+            Vehicle rent = unitOfWork.Vehicles.Get(id);
+            if (rent == null)
             {
                 return NotFound();
             }
 
-            return Ok(vehicle);
+            return Ok(rent);
         }
 
-        // PUT: api/Vehicles/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutVehicle(int id, Vehicle vehicle)
+        public IHttpActionResult PutVehicle(int id, Vehicle rent)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != vehicle.Id)
+            if (id != rent.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(vehicle).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
+                unitOfWork.Vehicles.Update(rent);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,49 +78,38 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Vehicles
         [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult PostVehicle(Vehicle vehicle)
+        public IHttpActionResult PostVehicles(Vehicle rent)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Vechiles.Add(vehicle);
-            db.SaveChanges();
+            unitOfWork.Vehicles.Add(rent);
+            unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = vehicle.Id }, vehicle);
+            return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
         }
 
-        // DELETE: api/Vehicles/5
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult DeleteVehicle(int id)
         {
-            Vehicle vehicle = db.Vechiles.Find(id);
-            if (vehicle == null)
+            Vehicle rent = unitOfWork.Vehicles.Get(id);
+            if (rent == null)
             {
                 return NotFound();
             }
 
-            db.Vechiles.Remove(vehicle);
-            db.SaveChanges();
+            unitOfWork.Vehicles.Remove(rent);
+            unitOfWork.Complete();
 
-            return Ok(vehicle);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return Ok(rent);
         }
 
         private bool VehicleExists(int id)
         {
-            return db.Vechiles.Count(e => e.Id == id) > 0;
+            return unitOfWork.Vehicles.Get(id) != null;
         }
     }
 }
