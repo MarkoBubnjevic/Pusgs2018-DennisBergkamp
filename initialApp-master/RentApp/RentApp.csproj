@@ -298,6 +298,10 @@
     <Compile Include="Migrations\201806060651076_Dodati komentari.Designer.cs">
       <DependentUpon>201806060651076_Dodati komentari.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806060752099_novi podaci u bazi.cs" />
+    <Compile Include="Migrations\201806060752099_novi podaci u bazi.Designer.cs">
+      <DependentUpon>201806060752099_novi podaci u bazi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -426,6 +430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806060651076_Dodati komentari.resx">
       <DependentUpon>201806060651076_Dodati komentari.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806060752099_novi podaci u bazi.resx">
+      <DependentUpon>201806060752099_novi podaci u bazi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
