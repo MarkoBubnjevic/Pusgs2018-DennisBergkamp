@@ -14,25 +14,25 @@ using RentApp.Persistance.UnitOfWork.Interface;
 
 namespace RentApp.Controllers
 {
-    public class BranchesController : ApiController
+    public class CommentsController : ApiController
     {
 
         private readonly IUnitOfWork unitOfWork;
 
-        public BranchesController(IUnitOfWork unitOfWork)
+        public CommentsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Branch> GetBranches()
+        public IEnumerable<Comment> GetComments()
         {
-            return unitOfWork.Branches.GetAll();
+            return unitOfWork.Comments.GetAll();
         }
 
-        [ResponseType(typeof(Branch))]
-        public IHttpActionResult GetBranches(int id)
+        [ResponseType(typeof(Comment))]
+        public IHttpActionResult GetComments(int id)
         {
-            Branch branch = unitOfWork.Branches.Get(id);
+            Comment branch = unitOfWork.Comments.Get(id);
             if (branch == null)
             {
                 return NotFound();
@@ -42,7 +42,7 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBranch(int id, Branch branch)
+        public IHttpActionResult PutComment(int id, Comment branch)
         {
             if (!ModelState.IsValid)
             {
@@ -56,12 +56,12 @@ namespace RentApp.Controllers
 
             try
             {
-                unitOfWork.Branches.Update(branch);
+                unitOfWork.Comments.Update(branch);
                 unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BranchExists(id))
+                if (!CommentExists(id))
                 {
                     return NotFound();
                 }
@@ -75,35 +75,35 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Branch))]
-        public IHttpActionResult PostBranches(Branch branch)
+        public IHttpActionResult PostComments(Comment branch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Branches.Add(branch);
+            unitOfWork.Comments.Add(branch);
             unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = branch.Id }, branch);
         }
 
-        [ResponseType(typeof(Branch))]
-        public IHttpActionResult DeleteBranch(int id)
+        [ResponseType(typeof(Comment))]
+        public IHttpActionResult DeleteComment(int id)
         {
-            Branch branch = unitOfWork.Branches.Get(id);
+            Comment branch = unitOfWork.Comments.Get(id);
             if (branch == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Branches.Remove(branch);
+            unitOfWork.Comments.Remove(branch);
             unitOfWork.Complete();
 
             return Ok(branch);
         }
 
-        private bool BranchExists(int id)
+        private bool CommentExists(int id)
         {
             return unitOfWork.Branches.Get(id) != null;
         }

@@ -264,6 +264,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppUsersController.cs" />
     <Compile Include="Controllers\BranchesController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RentsController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
@@ -293,10 +294,15 @@
     <Compile Include="Migrations\201806050741049_price per hour umesto houre.Designer.cs">
       <DependentUpon>201806050741049_price per hour umesto houre.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806060651076_Dodati komentari.cs" />
+    <Compile Include="Migrations\201806060651076_Dodati komentari.Designer.cs">
+      <DependentUpon>201806060651076_Dodati komentari.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Branch.cs" />
+    <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Entities\RAIdentityUser.cs" />
     <Compile Include="Models\Entities\AppUser.cs" />
     <Compile Include="Models\Entities\Rent.cs" />
@@ -306,6 +312,7 @@
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\Implementation\AppUserRepository.cs" />
     <Compile Include="Persistance\Repository\Implementation\BranchRepository.cs" />
+    <Compile Include="Persistance\Repository\Implementation\CommentRepository.cs" />
     <Compile Include="Persistance\Repository\Implementation\RentRepository.cs" />
     <Compile Include="Persistance\Repository\Implementation\Repository.cs" />
     <Compile Include="Persistance\Repository\Implementation\ServiceRepository.cs" />
@@ -313,6 +320,7 @@
     <Compile Include="Persistance\Repository\Implementation\VehicleRepository.cs" />
     <Compile Include="Persistance\Repository\Interface\IAppUserRepository.cs" />
     <Compile Include="Persistance\Repository\Interface\IBranchRepository.cs" />
+    <Compile Include="Persistance\Repository\Interface\ICommentRepository.cs" />
     <Compile Include="Persistance\Repository\Interface\IRentRepository.cs" />
     <Compile Include="Persistance\Repository\Interface\IRepository.cs" />
     <Compile Include="Persistance\Repository\Interface\IServiceRepository.cs" />
@@ -415,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806050741049_price per hour umesto houre.resx">
       <DependentUpon>201806050741049_price per hour umesto houre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806060651076_Dodati komentari.resx">
+      <DependentUpon>201806060651076_Dodati komentari.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

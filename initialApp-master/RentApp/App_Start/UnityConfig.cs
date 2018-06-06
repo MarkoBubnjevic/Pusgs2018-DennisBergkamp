@@ -5,6 +5,8 @@ using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.Repository.Implementation;
 using RentApp.Persistance.Repository.Interface;
+using RentApp.Persistance.UnitOfWork.Implementation;
+using RentApp.Persistance.UnitOfWork.Interface;
 using RentApp.Providers;
 using System;
 using System.Data.Entity;
@@ -58,6 +60,8 @@ namespace RentApp
             container.RegisterType<IRentRepository, RentRepository>();
             container.RegisterType<ITypeOfVehicleRepository, TypeOfVehicleRepository>();
             container.RegisterType<IVehicleRepository, VehicleRepository>();
+            container.RegisterType<IUnitOfWork, DemoUnitOfWork>();
+            container.RegisterType<ICommentRepository, CommentRepository>();
 
             container.RegisterType<DbContext, RADBContext>(new PerRequestLifetimeManager());
             container.RegisterType<ApplicationUserManager>();

@@ -17,10 +17,6 @@ namespace RentApp.Controllers
     public class AppUsersController : ApiController
     {
 
-        public AppUsersController()
-        {
-        }
-
         private readonly IUnitOfWork unitOfWork;
 
         public AppUsersController(IUnitOfWork unitOfWork)

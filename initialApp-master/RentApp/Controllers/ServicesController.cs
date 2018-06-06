@@ -18,11 +18,9 @@ namespace RentApp.Controllers
     public class ServicesController : ApiController
     {
 
-        public ServicesController()
-        {
-        }
 
-        private readonly IUnitOfWork unitOfWork;
+
+    private readonly IUnitOfWork unitOfWork;
 
     public ServicesController(IUnitOfWork unitOfWork)
     {

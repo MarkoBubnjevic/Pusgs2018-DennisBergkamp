@@ -17,9 +17,6 @@ namespace RentApp.Controllers
     public class RentsController : ApiController
     {
 
-        public RentsController()
-        {
-        }
 
 
         private readonly IUnitOfWork unitOfWork;

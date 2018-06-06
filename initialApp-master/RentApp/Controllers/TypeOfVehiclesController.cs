@@ -16,10 +16,7 @@ namespace RentApp.Controllers
 {
     public class TypeOfVehiclesController : ApiController
     {
-        public TypeOfVehiclesController()
-        {
-        }
-
+   
 
         private readonly IUnitOfWork unitOfWork;
 
