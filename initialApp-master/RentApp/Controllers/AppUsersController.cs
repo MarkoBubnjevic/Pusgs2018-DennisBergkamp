@@ -24,11 +24,13 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        //GET: api/AppUsers
         public IEnumerable<AppUser> GetAppUsers()
         {
             return unitOfWork.AppUsers.GetAll();
         }
 
+        //GET: api/AppUsers/5
         [ResponseType(typeof(AppUser))]
         public IHttpActionResult GetAppUser(int id)
         {
@@ -41,6 +43,7 @@ namespace RentApp.Controllers
             return Ok(service);
         }
 
+        //PUT: api/AppUsers/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAppUser(int id, AppUser appUser)
         {
@@ -74,6 +77,8 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
+        //POST: api/AppUsers
         [ResponseType(typeof(AppUser))]
         public IHttpActionResult PostAppUser(AppUser appUser)
         {
@@ -88,6 +93,8 @@ namespace RentApp.Controllers
             return CreatedAtRoute("DefaultApi", new { id = appUser.Id }, appUser);
         }
 
+
+        //DELETE: api/AppUsers/5
         [ResponseType(typeof(AppUser))]
         public IHttpActionResult DeleteAppUser(int id)
         {

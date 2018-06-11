@@ -11,6 +11,8 @@ import { RegComponent } from './reg/reg.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ClockComponent } from './clock/clock.component';
+import { SignalRService } from 'src/app/services/signalR.service';
 
 const Routes = [
   {
@@ -30,6 +32,10 @@ const Routes = [
     component: ProfileComponent
   },
   {
+    path: "clock",
+    component: ClockComponent
+  },
+  {
     path: "other",
     redirectTo: "home"
   }
@@ -41,7 +47,8 @@ const Routes = [
     RegComponent,
     LoginComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    ClockComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +57,7 @@ const Routes = [
     HttpClientModule,
     HttpClientXsrfModule
   ],
-  providers: [],
+  providers: [SignalRService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
