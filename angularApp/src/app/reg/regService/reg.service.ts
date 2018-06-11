@@ -5,12 +5,12 @@ import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { AppUser } from '../../models/appuser.model';
+import { RegisterBinding } from '../../models/registerBinding.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class RegService {
 
   constructor(private httpClient: HttpClient) { }
 
@@ -24,8 +24,8 @@ export class LoginService {
     return Observable.throw(errorMessage);
   }
 
-  postMethodDemo(newMember): Observable<any> {
+
+  registerMethod(newMember): Observable<any> {
     return this.httpClient.post("https://localhost:4200/api/Account/Register", newMember)
   }
-
 }

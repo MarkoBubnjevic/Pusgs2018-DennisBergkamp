@@ -4,7 +4,7 @@ export class AppUser {
     Id: number;
     FullName : String;
     Email : String;
-    Birthday:DateTimeFormat;
+    //Birthday: DateTimeFormat;
     Activated:boolean;
     PersonalDocument:String;
     Renting:Rent[];
@@ -12,7 +12,7 @@ export class AppUser {
     constructor(Id: number,
         FullName : String,
         Email : String,
-        Birthday:DateTimeFormat,
+        //Birthday: DateTimeFormat,
         Activated:boolean,
         PersonalDocument:String,
         Renting:Rent[]) {
@@ -20,7 +20,7 @@ export class AppUser {
         this.Id=Id;
         this.FullName=FullName;
         this.Email=Email;
-        this.Birthday=Birthday;
+        //this.Birthday=Birthday;
         this.Activated=Activated;
         this.PersonalDocument=PersonalDocument;
         this.Renting=Renting;
