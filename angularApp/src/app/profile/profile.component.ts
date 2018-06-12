@@ -12,4 +12,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
   }
 
+  logOut(){
+    localStorage.clear();
+  }
 }

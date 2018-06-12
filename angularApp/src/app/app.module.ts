@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { RegComponent } from './reg/reg.component';
 import { LoginComponent } from './login/login.component';
@@ -14,11 +16,15 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ClockComponent } from './clock/clock.component';
 import { SignalRService } from 'src/app/services/signal-r.service';
+import { SerComponent } from './ser/ser.component';
+
+import { CanActivateViaAuthGuard } from './guard/auth.guard';
 
 const Routes = [
   {
     path: "login",
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: "reg",
@@ -37,6 +43,14 @@ const Routes = [
     component: ClockComponent
   },
   {
+    path: "ser",
+    component: SerComponent
+  },
+  {
+    path: '',
+    component: SerComponent
+  },
+  {
     path: "other",
     redirectTo: "home"
   }
@@ -49,7 +63,8 @@ const Routes = [
     LoginComponent,
     HomeComponent,
     ProfileComponent,
-    ClockComponent
+    ClockComponent,
+    SerComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +75,7 @@ const Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [SignalRService],
+  providers: [SignalRService, CanActivateViaAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

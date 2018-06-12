@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './loginService/login.service';
+import { LogInModel } from 'src/app/models/login.model';
 
 @Component({
   selector: 'app-login',
@@ -14,4 +15,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  callTokens(logInModel: LogInModel){
+        this.loginService.getTheToken(logInModel);
+      }
 }
