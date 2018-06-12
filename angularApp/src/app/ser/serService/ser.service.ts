@@ -6,8 +6,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { Service } from '../../models/service.model';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
 
 
 @Injectable({

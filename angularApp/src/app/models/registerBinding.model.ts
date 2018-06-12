@@ -1,4 +1,5 @@
 export class RegisterBinding{
+    FullName: string;
     Email: string;
     Username: string;
     Date: string;
@@ -6,11 +7,13 @@ export class RegisterBinding{
     ConfirmPassword: string;
     
 
-    constructor(email: string,
+    constructor(fullname: string,
+        email: string,
         username:string,
         date:string,
         password : string,
         confirmPassword:string) {
+        this.FullName = fullname;
         this.Email=email;
         this.Password=password;
         this.ConfirmPassword=confirmPassword;

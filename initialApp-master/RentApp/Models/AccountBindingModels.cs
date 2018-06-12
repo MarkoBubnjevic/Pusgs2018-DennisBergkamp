@@ -35,6 +35,10 @@ namespace RentApp.Models
     public class RegisterBindingModel
     {
         [Required]
+        [Display(Name = "FullName")]
+        public string FullName { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

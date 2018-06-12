@@ -17,8 +17,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { ClockComponent } from './clock/clock.component';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { SerComponent } from './ser/ser.component';
+import { MapComponent } from './map/map.component';
 
 import { CanActivateViaAuthGuard } from './guard/auth.guard';
+
+import { AgmCoreModule } from '@agm/core';
 
 const Routes = [
   {
@@ -31,20 +34,12 @@ const Routes = [
     component: RegComponent
   },
   {
-    path: "home",
-    component: HomeComponent
+    path: "map",
+    component: MapComponent
   },
   {
     path: "profile",
     component: ProfileComponent
-  },
-  {
-    path: "clock",
-    component: ClockComponent
-  },
-  {
-    path: "ser",
-    component: SerComponent
   },
   {
     path: '',
@@ -52,7 +47,7 @@ const Routes = [
   },
   {
     path: "other",
-    redirectTo: "home"
+    redirectTo: ''
   }
 ]
 
@@ -64,7 +59,8 @@ const Routes = [
     HomeComponent,
     ProfileComponent,
     ClockComponent,
-    SerComponent
+    SerComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +69,8 @@ const Routes = [
     HttpClientModule,
     HttpClientXsrfModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
   providers: [SignalRService, CanActivateViaAuthGuard],
   bootstrap: [AppComponent]

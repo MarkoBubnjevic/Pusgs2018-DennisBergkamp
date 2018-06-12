@@ -21,7 +21,6 @@ export class RegComponent implements OnInit {
   }
 
   onSubmit(appUser: RegisterBinding){
-    console.log(appUser);
     this.regService.registerMethod(appUser)
     .subscribe(
       data => {

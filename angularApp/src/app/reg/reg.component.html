@@ -1,6 +1,9 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
   
    <div class="container">
+      <label for="FullName"><b>FullName</b></label>
+      <input id="FullName" type="text" placeholder="Enter FullName" name="FullName" ngModel required #FullName = "ngModel">
+
      <label for="Username"><b>Username</b></label>
      <input id="Username" type="text" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel">
  
