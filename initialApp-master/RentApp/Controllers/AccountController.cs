@@ -313,14 +313,14 @@ namespace RentApp.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!(ModelState.IsValid))
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             var appUser = new AppUser();
             appUser.Activated = false;
-            appUser.Birthday = DateTime.Parse(model.Date);
+            appUser.Birthday = DateTime.Now;
             appUser.Email = model.Email;
             appUser.FullName = "test";
             appUser.PersonalDocument = "putanja";
@@ -331,7 +331,7 @@ namespace RentApp.Controllers
 
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                return GetErrorResult(result);    // password 6 slova minimum mora da ima slovo i broj neko i moras specijalan znak
             }
 
             return Ok();

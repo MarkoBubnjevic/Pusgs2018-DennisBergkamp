@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { RegService } from './regService/reg.service';
 import { RegisterBinding } from '../models/registerBinding.model';
+import { error } from 'selenium-webdriver';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-reg',
@@ -11,24 +13,22 @@ import { RegisterBinding } from '../models/registerBinding.model';
 })
 export class RegComponent implements OnInit {
 
-  private methodResult: RegisterBinding;
-  private dataFromInput: RegisterBinding;
+  isValid: boolean
 
   constructor(private regService: RegService) { }
 
   ngOnInit() {
   }
 
-  callPost(){
-
-    this.regService.registerMethod(this.dataFromInput)
+  onSubmit(appUser: RegisterBinding){
+    console.log(appUser);
+    this.regService.registerMethod(appUser)
     .subscribe(
       data => {
-        this.methodResult = data;
+        alert("You have been successfully registrated!");
       },
       error => {
-        console.log(error);
+        alert("User already exists!");
       })
   }
-
 }

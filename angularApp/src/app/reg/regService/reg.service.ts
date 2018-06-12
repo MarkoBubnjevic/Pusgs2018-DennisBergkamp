@@ -26,6 +26,7 @@ export class RegService {
 
 
   registerMethod(newMember): Observable<any> {
-    return this.httpClient.post("https://localhost:4200/api/Account/Register", newMember)
+    console.log(newMember);
+    return this.httpClient.post("http://localhost:51680/api/Account/Register", newMember);
   }
 }

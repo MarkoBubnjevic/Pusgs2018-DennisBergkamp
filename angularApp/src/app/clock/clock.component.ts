@@ -4,15 +4,14 @@ import {
 } from '@angular/core';  
 import {  
   SignalRService  
-} from '../services/signalR.service';  
+} from '../services/signal-r.service';  
 import {  
   GetClockTime  
 } from '../models/get-clock-time.model';  
 // decorator section comprised of selector and view template  
 @Component({  
   selector: 'clock-component',  
-  templateUrl: './clock.component.html', 
-  styleUrls: ['./clock.component.css'] 
+  templateUrl: './clock.component.html'
 })  
 export class ClockComponent {  
   // public variables declaration  
