@@ -1,24 +1,24 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
   
-   <div class="container">
-      <label for="FullName"><b>FullName</b></label>
+   <div>
+      <label for="FullName"><b>FullName: </b></label>
       <input id="FullName" type="text" placeholder="Enter FullName" name="FullName" ngModel required #FullName = "ngModel">
-
-     <label for="Username"><b>Username</b></label>
+      <br>
+     <label for="Username"><b>Username: </b></label>
      <input id="Username" type="text" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel">
- 
-     <label for="Password"><b>Password</b></label>
+     <br>
+     <label for="Password"><b>Password: </b></label>
      <input id="Password" type="password" placeholder="Enter Password" name="Password" ngModel  required #Password = "ngModel">
-
-     <label for="ConfirmPassword"><b>Password</b></label>
+     <br>
+     <label for="ConfirmPassword"><b>Confirm Password: </b></label>
      <input id="ConfirmPassword" type="password"  placeholder="Enter ConfirmPassword" name="ConfirmPassword" ngModel  required #ConfirmPassword = "ngModel">
-
-     <label for="Email"><b>Email</b></label>
+     <br>
+     <label for="Email"><b>Email: </b></label>
      <input id="Email" type="text"   placeholder="Enter Email" name="Email" ngModel  required #Email = "ngModel">
-
-     <label for="Date"><b>Date</b></label>
+     <br>
+     <label for="Date"><b>Date: </b></label>
      <input id="Date" type="text" placeholder="dd-mm-yyy" name="Date" ngModel  required #Date = "ngModel">
- 
+     <br>
      <button type="submit">Register</button>
    </div>
  </form>

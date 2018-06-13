@@ -1,20 +1,25 @@
 
 <p>All Vehicles:</p>
 <li *ngFor="let vehicle of vehicles; let i = index">
-  <label>Model</label>
+  <label>Model: </label>
   <input type="text" [(ngModel)]="vehicle.Model"/>
-  <label>Manufactor</label>
+  <br>
+  <label>Manufactor: </label>
   <input type="text" [(ngModel)]="vehicle.Manufactor"/>
-  <label>Year</label>
+  <br>
+  <label>Year: </label>
   <input type="text" [(ngModel)]="vehicle.Year"/>
+  <br>
   <button *ngIf="checkAvailable(i)" (click)="addVehicle(i)">Add Vehicle</button>
 </li>
 
 <p>All Branches:</p>
 <li *ngFor="let branch of branches; let i = index">
-  <label>Logo</label>
+  <label>Logo: </label>
   <input type="text" [(ngModel)]="branch.Logo"/>
-  <label>Address</label>
+  <br>
+  <label>Address: </label>
   <input type="text" [(ngModel)]="branch.Address"/>
+  <br>
   <button (click)="addBranch(i)">Add Branch</button>
 </li>

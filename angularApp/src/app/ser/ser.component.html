@@ -1,33 +1,41 @@
+<p>Add Service</p>
+<br>
 <form *ngIf="checkRole()" #f="ngForm" (ngSubmit)="addService(f.value)">
-  
-   <div class="container">
-      <label for="Name"><b>Name</b></label>
+   <div>
+      <label for="Name"><b>Name: </b></label>
       <input id="Name" type="text" placeholder="Enter Name" name="Name" ngModel required #Name = "ngModel">
-
-     <label for="Logo"><b>Logo</b></label>
+      <br>
+     <label for="Logo"><b>Logo: </b></label>
      <input id="Logo" type="text" placeholder="Enter Logo" name="Logo" ngModel required #Logo = "ngModel">
- 
-     <label for="Email"><b>Email</b></label>
+     <br>
+     <label for="Email"><b>Email: </b></label>
      <input id="Email" type="text" placeholder="Enter Email" name="Email" ngModel  required #Email = "ngModel">
-
-     <label for="Description"><b>Description</b></label>
+     <br>
+     <label for="Description"><b>Description: </b></label>
      <input id="Description" type="text"  placeholder="Enter Description" name="Description" ngModel  required #Description = "ngModel">
-
+     <br>
      <button type="submit">Add Service</button>
    </div>
  </form>
-
-
+<br>
+<br>
+<div>
 <p>All Services:</p>
-<ul>
-  <li *ngFor="let service of services; let i = index">
-    <label>Name</label>
-    <input type="text" [(ngModel)]="service.Name"/>
-    <label>Email</label>
-    <input type="text" [(ngModel)]="service.Email"/>
-    <label>Description</label>
-    <input type="text" [(ngModel)]="service.Description"/>
-    <button *ngIf="checkRole()" (click)="deleteService(service.Id)">Delete </button>
-    <button *ngIf="checkRole()" (click)="saveService(i)">Save </button>
-  </li>
- </ul>
+  <ul>
+    <li *ngFor="let service of services; let i = index">
+      <label>Name: </label>
+      <input type="text" [(ngModel)]="service.Name"/>
+      <br>
+      <label>Email: </label>
+      <input type="text" [(ngModel)]="service.Email"/>
+      <br>
+      <label>Description: </label>
+      <input type="text" [(ngModel)]="service.Description"/>
+      <br>
+      <button *ngIf="checkRole()" (click)="deleteService(service.Id)">Delete </button>
+      <button *ngIf="checkRole()" (click)="saveService(i)">Save </button>
+      <br>
+      <br>
+    </li>
+  </ul>
+</div>
