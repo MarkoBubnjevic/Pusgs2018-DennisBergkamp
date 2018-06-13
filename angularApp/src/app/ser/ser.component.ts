@@ -29,4 +29,36 @@ export class SerComponent implements OnInit {
         })
   }
 
+  addService(service: Service){
+    this.serService.postService(service)
+    .subscribe(
+      data => {
+        alert("Service successfully added!");
+        this.callGet();
+      },
+      error => {
+        alert("Service error!");
+      })
+  }
+
+  checkRole(){
+    return localStorage.role == "Admin";
+  }
+
+
+  deleteService(id: number){
+    this.serService.deleteService(id)
+    .subscribe(
+      data => {
+        alert("Service successfully deleted!");
+        this.callGet();
+      },
+      error => {
+        alert("Service error!");
+      })
+  }
+
+  saveService(i) {
+    console.log(this.services[i])
+  }
 }

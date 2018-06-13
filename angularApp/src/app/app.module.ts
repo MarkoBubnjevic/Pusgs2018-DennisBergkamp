@@ -8,6 +8,7 @@ import { HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/interceptor';
 
 import { AppComponent } from './app.component';
 import { RegComponent } from './reg/reg.component';
@@ -73,6 +74,18 @@ const Routes = [
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
   providers: [SignalRService, CanActivateViaAuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: 'CanAlwaysActivateGuard',
+      useValue: () => {
+        return true;
+      } 
+    }]
 })
 export class AppModule { }

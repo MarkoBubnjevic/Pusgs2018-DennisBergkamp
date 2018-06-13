@@ -85,6 +85,12 @@ namespace RentApp.Controllers
             return BadRequest(ModelState);
         }
 
+        service.AverageGrade = 0;
+        service.Branches = new List<Branch>();
+        service.Comments = new List<Comment>();
+        service.NumberOfGrades = 0;
+        service.Vehicles = new List<Vehicle>();
+
         unitOfWork.Services.Add(service);
         unitOfWork.Complete();
 

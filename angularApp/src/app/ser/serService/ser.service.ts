@@ -25,12 +25,17 @@ export class SerService {
       return Observable.throw(errorMessage);
     }
   
-     getAllServices(): Observable<Service[]> {
+    getAllServices(): Observable<Service[]> {
       return this.httpClient.get<Service[]>('http://localhost:51680/api/Services')
     
     }
   
     postService(newMember): Observable<any> {
-      return this.httpClient.post("http://jsonplaceholder.typicode.com/posts", newMember)
+      return this.httpClient.post("http://localhost:51680/api/Services", newMember)
     }
+
+    deleteService(id: number){
+      return this.httpClient.delete("http://localhost:51680/api/Services/"+id)
+    }
+
 }
