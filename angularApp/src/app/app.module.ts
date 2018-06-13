@@ -23,6 +23,7 @@ import { MapComponent } from './map/map.component';
 import { CanActivateViaAuthGuard } from './guard/auth.guard';
 
 import { AgmCoreModule } from '@agm/core';
+import { RentComponent } from './rent/rent.component';
 
 const Routes = [
   {
@@ -43,6 +44,10 @@ const Routes = [
     component: ProfileComponent
   },
   {
+    path: "rent",
+    component: RentComponent
+  },
+  {
     path: '',
     component: SerComponent
   },
@@ -61,7 +66,8 @@ const Routes = [
     ProfileComponent,
     ClockComponent,
     SerComponent,
-    MapComponent
+    MapComponent,
+    RentComponent
   ],
   imports: [
     BrowserModule,
@@ -73,9 +79,9 @@ const Routes = [
     ReactiveFormsModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
-  providers: [SignalRService, CanActivateViaAuthGuard],
-  bootstrap: [
-    AppComponent,
+  providers: [
+    SignalRService, 
+    CanActivateViaAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
@@ -86,6 +92,7 @@ const Routes = [
       useValue: () => {
         return true;
       } 
-    }]
+    }],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

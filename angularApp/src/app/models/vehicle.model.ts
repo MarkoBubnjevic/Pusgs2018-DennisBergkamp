@@ -7,9 +7,9 @@ export class Vehicle {
     Year:number;
     Description:string;  
     PricePerHour:number;   //nzm kako idu decimalni dal je samo obicno number il ne
-    Unavailable:boolean;
+    Unvailable:boolean;
     Images:string[];
-    Type:TypeOfVehicle[];
+    Type:TypeOfVehicle;
 
     constructor(Id: number,
         Model : String,
@@ -17,9 +17,9 @@ export class Vehicle {
         Year:number,
         Description:string,  
         PricePerHour:number,
-        Unavailable:boolean,
+        Unvailable:boolean,
         Images:string[],
-        Type:TypeOfVehicle[]) {
+        Type:TypeOfVehicle) {
         
             this.Id=Id;
             this.Model=Model;
@@ -27,7 +27,7 @@ export class Vehicle {
             this.Year=Year;
             this.Description=Description;
             this.PricePerHour=PricePerHour;
-            this.Unavailable=Unavailable;
+            this.Unvailable=Unvailable;
             this.Images=Images;
             this.Type=Type;
 

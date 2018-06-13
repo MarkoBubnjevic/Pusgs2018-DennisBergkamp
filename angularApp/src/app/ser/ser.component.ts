@@ -54,11 +54,19 @@ export class SerComponent implements OnInit {
         this.callGet();
       },
       error => {
-        alert("Service error!");
+        alert("Service delete error!");
       })
   }
 
   saveService(i) {
-    console.log(this.services[i])
+    this.serService.updateService(i,this.services[i])
+    .subscribe(
+      data => {
+        alert("Service successfully updated!");
+        this.callGet();
+      },
+      error => {
+        alert("Service update error!");
+      })
   }
 }

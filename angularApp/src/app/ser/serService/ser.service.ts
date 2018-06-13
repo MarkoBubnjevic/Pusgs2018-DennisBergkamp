@@ -38,4 +38,8 @@ export class SerService {
       return this.httpClient.delete("http://localhost:51680/api/Services/"+id)
     }
 
+    updateService(id:number,service:Service): Observable<Service> {
+      return this.httpClient.put<Service>('http://localhost:51680/api/Services/'+ id,service)
+    }
+
 }
