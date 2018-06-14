@@ -1,12 +1,13 @@
-<form #f="ngForm" (ngSubmit)="callTokens(f.value)">
-   
-    <div>
-      <label for="Username"><b>Username: </b></label>
-      <input id="Username" type="text" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel">
-      <br>
-      <label for="Passwrod"><b>Password: </b></label>
-      <input id="Passwrod" type="password" placeholder="Enter Password" name="Password" ngModel required #Password = "ngModel">
-      <br>
-      <button type="submit">Login</button>
-    </div>
-  </form>
+<div class="container">
+  <form class="form-signin"  #f="ngForm" (ngSubmit)="callTokens(f.value)">   
+      <div>
+        <label for="Username"><b>Username: </b></label>
+        <input id="Username" type="text" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel">
+        <br>
+        <label for="Passwrod"><b>Password: </b></label>
+        <input id="Passwrod" type="password" placeholder="Enter Password" name="Password" ngModel required #Password = "ngModel">
+        <br>
+        <button class="btn btn-lg btn-primary " type="submit">Login</button>
+      </div>
+    </form>
+</div>

@@ -62,6 +62,31 @@ namespace RentApp.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class BranchBindingModel
+    {
+        [Required]
+        [Display(Name = "Logo")]
+        public string Logo { get; set; }
+
+        [Required]
+        [Display(Name = "Latitude")]
+        public double Latitude { get; set; }
+
+        [Required]
+        [Display(Name = "Longitude")]
+        public double Longitude { get; set; }
+
+        [Required]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        [Required]
+        [Display(Name = "ServiceName")]
+        public string ServiceName { get; set; }
+
+
+    }
+
     public class RegisterExternalBindingModel
     {
         [Required]

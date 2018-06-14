@@ -24,6 +24,7 @@ import { CanActivateViaAuthGuard } from './guard/auth.guard';
 
 import { AgmCoreModule } from '@agm/core';
 import { RentComponent } from './rent/rent.component';
+import { BranchComponent } from './branch/branch.component';
 
 const Routes = [
   {
@@ -67,7 +68,8 @@ const Routes = [
     ClockComponent,
     SerComponent,
     MapComponent,
-    RentComponent
+    RentComponent,
+    BranchComponent
   ],
   imports: [
     BrowserModule,

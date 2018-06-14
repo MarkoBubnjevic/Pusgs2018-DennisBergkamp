@@ -3,18 +3,21 @@ export class Branch {
     Logo : String;
     Latitude:number;
     Longitude:number;
-    Address:string;  
+    Address:string;
+    ServiceName: string;  
 
     constructor(Id: number,
         Logo : String,
         Latitude:number,
         Longitude:number,
-        Address:string) {
+        Address:string,
+        ServiceName:string) {
         this.Address=Address;
         this.Id=Id;
         this.Latitude=Latitude;
         this.Logo=Logo;
         this.Longitude=Longitude;
+        this.ServiceName=ServiceName;
 
     }
 }

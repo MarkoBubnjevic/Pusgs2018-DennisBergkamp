@@ -1,14 +1,36 @@
 
-  <div>
+  <!--<div>
     <ul>
       <li><a [routerLink]="['/']">Services</a></li>
       <li><a [routerLink]="['/login']">Log In</a></li>
       <li><a [routerLink]="['/reg']">Register</a></li>
       <li><a [routerLink]="['/rent']">Rent</a></li>
-      <li><a [routerLink]="['/map']">Branches Map</a></li>
+      <li><a [routerLink]="['/map']">Map</a></li>
       <li style="float:right"><a [routerLink]="['/profile']">Profile</a></li>
     </ul>
   </div>
 
+
+<router-outlet></router-outlet> -->
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+   
+
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+          <li><a [routerLink]="['/']">Services</a></li>
+          <li><a [routerLink]="['/login']">Log In</a></li>
+          <li><a [routerLink]="['/reg']">Register</a></li>
+          <li><a [routerLink]="['/rent']">Rent</a></li>
+          <li><a [routerLink]="['/map']">Map</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li><a [routerLink]="['/profile']">Profile</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <router-outlet></router-outlet>
