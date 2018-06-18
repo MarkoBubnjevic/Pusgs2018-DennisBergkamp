@@ -1,12 +1,16 @@
 <div class="container">
   <form class="form-signin"  #f="ngForm" (ngSubmit)="callTokens(f.value)">   
       <div>
-        <label for="Username"><b>Username: </b></label>
-        <input id="Username" type="text" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel">
-        <br>
-        <label for="Passwrod"><b>Password: </b></label>
-        <input id="Passwrod" type="password" placeholder="Enter Password" name="Password" ngModel required #Password = "ngModel">
-        <br>
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
+          <input id="Username" type="text" style="width:fit-content" class="form-control" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel" aria-describedby="basic-addon1">
+        </div>
+       
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+          <input id="Passwrod" type="text" style="width:fit-content" class="form-control" placeholder="Enter Passwrod" name="Passwrod" ngModel required #Passwrod = "ngModel" aria-describedby="basic-addon1">
+        </div>
+        
         <button class="btn btn-lg btn-primary " type="submit">Login</button>
       </div>
     </form>

@@ -1,39 +1,56 @@
-<p>Add Service</p>
+
+<div class="container">
+  <label>Add Service</label>
+  <br>
+  <form  #f="ngForm" (ngSubmit)="addService(f.value)">
+    <div>
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input id="Name" type="text" style="width:fit-content" class="form-control" placeholder="Enter Name" name="Name" ngModel required #Name = "ngModel" aria-describedby="basic-addon1">
+      </div>
+     
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input id="Logo" type="text" style="width:fit-content" class="form-control" placeholder="Enter Logo" name="Logo" ngModel required #Logo = "ngModel" aria-describedby="basic-addon1">
+      </div>
+
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input id="Email" type="text" style="width:fit-content" class="form-control" placeholder="Enter Email" name="Email" ngModel required #Email = "ngModel" aria-describedby="basic-addon1">
+      </div>
+
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input id="Description" type="text" style="width:fit-content" class="form-control" placeholder="Enter Description" name="Description" ngModel required #Description = "ngModel" aria-describedby="basic-addon1">
+      </div>
+    
+      <button class="btn btn-lg btn-primary" type="submit">Add Service</button>
+    </div>
+  </form>
+</div>
 <br>
-<form *ngIf="checkRole()" #f="ngForm" (ngSubmit)="addService(f.value)">
-   <div>
-      <label for="Name"><b>Name: </b></label>
-      <input id="Name" type="text" placeholder="Enter Name" name="Name" ngModel required #Name = "ngModel">
-      <br>
-     <label for="Logo"><b>Logo: </b></label>
-     <input id="Logo" type="text" placeholder="Enter Logo" name="Logo" ngModel required #Logo = "ngModel">
-     <br>
-     <label for="Email"><b>Email: </b></label>
-     <input id="Email" type="text" placeholder="Enter Email" name="Email" ngModel  required #Email = "ngModel">
-     <br>
-     <label for="Description"><b>Description: </b></label>
-     <input id="Description" type="text"  placeholder="Enter Description" name="Description" ngModel  required #Description = "ngModel">
-     <br>
-     <button type="submit">Add Service</button>
-   </div>
- </form>
 <br>
-<br>
-<div>
-<p>All Services:</p>
+<div class="container">
+<label>All Services:</label>
   <ul>
     <li *ngFor="let service of services; let i = index">
-      <label>Name: </label>
-      <input type="text" [(ngModel)]="service.Name"/>
-      <br>
-      <label>Email: </label>
-      <input type="text" [(ngModel)]="service.Email"/>
-      <br>
-      <label>Description: </label>
-      <input type="text" [(ngModel)]="service.Description"/>
-      <br>
-      <button *ngIf="checkRole()" (click)="deleteService(service.Id)">Delete </button>
-      <button *ngIf="checkRole()" (click)="saveService(i)">Save </button>
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input type="text" [(ngModel)]="service.Name">
+      </div>
+
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input type="text" [(ngModel)]="service.Email">
+      </div>
+      
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input type="text" [(ngModel)]="service.Description">
+      </div>
+
+      <button class="btn btn-lg btn-primary"  (click)="deleteService(service.Id)">Delete </button>
+      <button class="btn btn-lg btn-primary"  (click)="saveService(i)">Save </button>
       <br>
       <br>
     </li>

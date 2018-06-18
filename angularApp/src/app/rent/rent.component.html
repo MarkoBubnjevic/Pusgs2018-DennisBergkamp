@@ -1,25 +1,42 @@
+<div class="container">
+  <label>All Vehicles:</label>
+  <ul>
+    <li *ngFor="let vehicle of vehicles; let i = index">
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="vehicle.Model">
+      </div>
 
-<p>All Vehicles:</p>
-<li *ngFor="let vehicle of vehicles; let i = index">
-  <label>Model: </label>
-  <input type="text" [(ngModel)]="vehicle.Model"/>
-  <br>
-  <label>Manufactor: </label>
-  <input type="text" [(ngModel)]="vehicle.Manufactor"/>
-  <br>
-  <label>Year: </label>
-  <input type="text" [(ngModel)]="vehicle.Year"/>
-  <br>
-  <button *ngIf="checkAvailable(i)" (click)="addVehicle(i)">Add Vehicle</button>
-</li>
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="vehicle.Manufactor">
+      </div>
 
-<p>All Branches:</p>
-<li *ngFor="let branch of branches; let i = index">
-  <label>Logo: </label>
-  <input type="text" [(ngModel)]="branch.Logo"/>
-  <br>
-  <label>Address: </label>
-  <input type="text" [(ngModel)]="branch.Address"/>
-  <br>
-  <button (click)="addBranch(i)">Add Branch</button>
-</li>
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="vehicle.Year">
+      </div>
+
+      <button class="btn btn-lg btn-primary" *ngIf="checkAvailable(i)" (click)="addVehicle(i)">Add Vehicle</button>
+    </li>
+  </ul>
+</div>
+
+<div class="container">
+  <label>All Branches:</label>
+  <ul>
+    <li *ngFor="let branch of branches; let i = index">
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="branch.Logo">
+      </div>
+
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="branch.Address">
+      </div>
+
+      <button  class="btn btn-lg btn-primary" (click)="addBranch(i)">Add Branch</button>
+    </li>
+  </ul>
+</div>

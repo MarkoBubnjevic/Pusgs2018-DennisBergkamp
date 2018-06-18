@@ -1,27 +1,35 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
   <div class="container">
-     <!--<label for="FullName"><b>FullName: </b></label>
-    <input id="FullName" type="text" placeholder="Enter FullName" name="FullName" ngModel required #FullName = "ngModel">-->
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-pencil"></i></span>
+      <input id="FullName" type="text" style="width:fit-content" class="form-control" placeholder="Enter FullName" name="FullName" ngModel required #FullName = "ngModel" aria-describedby="basic-addon1">
+    </div>
+
     <div class="input-group ">
       <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-      <input id="FullName" type="text" style="width:fit-content" class="form-control" placeholder="FullName" name="FullName" ngModel required #FullName = "ngModel" aria-describedby="basic-addon1">
+      <input id="Username" type="text" style="width:fit-content" class="form-control" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel" aria-describedby="basic-addon1">
     </div>
-    <br>
-    <label for="Username"><b>Username: </b></label>
-    <input id="Username" type="text" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel">
-    <br>
-    <label for="Password"><b>Password: </b></label>
-    <input id="Password" type="password" placeholder="Enter Password" name="Password" ngModel  required #Password = "ngModel">
-    <br>
-    <label for="ConfirmPassword"><b>Confirm Password: </b></label>
-    <input id="ConfirmPassword" type="password"  placeholder="Enter ConfirmPassword" name="ConfirmPassword" ngModel  required #ConfirmPassword = "ngModel">
-    <br>
-    <label for="Email"><b>Email: </b></label>
-    <input id="Email" type="text"   placeholder="Enter Email" name="Email" ngModel  required #Email = "ngModel">
-    <br>
-    <label for="Date"><b>Date: </b></label>
-    <input id="Date" type="text" placeholder="dd-mm-yyy" name="Date" ngModel  required #Date = "ngModel">
-    <br>
-    <button type="submit">Register</button>
+
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+      <input id="Password" type="password" style="width:fit-content" class="form-control" placeholder="Enter Password" name="Password" ngModel required #Password = "ngModel" aria-describedby="basic-addon1">
+    </div>
+    
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+      <input id="ConfirmPassword" type="password" style="width:fit-content" class="form-control" placeholder="Enter ConfirmPassword" name="ConfirmPassword" ngModel required #ConfirmPassword = "ngModel" aria-describedby="basic-addon1">
+    </div>
+  
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+      <input id="Email" type="text" style="width:fit-content" class="form-control" placeholder="Enter Email" name="Email" ngModel required #Email = "ngModel" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+      <input id="Date" type="text" style="width:fit-content" class="form-control" placeholder="Enter Date" name="Date" ngModel required #Date = "ngModel" aria-describedby="basic-addon1">
+    </div>
+
+    <button class="btn btn-lg btn-primary " type="submit">Register</button>
   </div>
 </form>
