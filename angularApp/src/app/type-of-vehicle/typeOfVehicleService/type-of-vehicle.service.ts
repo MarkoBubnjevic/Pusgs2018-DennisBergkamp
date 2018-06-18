@@ -5,14 +5,12 @@ import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { Rent } from '../../models/rent.model';
-import { Vehicle } from '../../models/vehicle.model';
-import { Branch } from 'src/app/models/branch.model';
+import { TypeOfVehicle } from '../../models/typeofvehicle.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RentService {
+export class TypeOfVehicleService {
 
   constructor(private httpClient: HttpClient) { }
 
@@ -26,15 +24,11 @@ export class RentService {
     return Observable.throw(errorMessage);
   }
 
-  getAllVehicles(): Observable<Vehicle[]> {
-    return this.httpClient.get<Vehicle[]>('http://localhost:51680/api/Vehicles')
+  getAllTypes(): Observable<TypeOfVehicle[]> {
+    return this.httpClient.get<TypeOfVehicle[]>('http://localhost:51680/api/TypeOfVehicles')
   }
 
-  getAllBranches(): Observable<Branch[]> {
-    return this.httpClient.get<Branch[]>('http://localhost:51680/api/Branches')
-  }
-
-  postRent(newMember): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/Rents", newMember)
+  postType(newMember): Observable<any> {
+    return this.httpClient.post("http://localhost:51680/api/TypeOfVehicles", newMember)
   }
 }

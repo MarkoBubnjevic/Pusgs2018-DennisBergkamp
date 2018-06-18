@@ -1,0 +1,33 @@
+<div class="container">
+    <label>Add Type</label>
+    <br>
+    <form  #f="ngForm" (ngSubmit)="addType(f.value)">
+      <div>
+
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input id="Name" type="text" style="width:fit-content" class="form-control" placeholder="Enter Name" name="Name" ngModel required #Name = "ngModel" aria-describedby="basic-addon1">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add Type</button>
+      </div>
+    </form>
+  </div>
+<br>
+  <div class="container">
+      <label>All Types:</label>
+        <ul>
+          <li *ngFor="let item of types; let i = index">
+
+            <div class="input-group ">
+              <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+              <input type="text" [(ngModel)]="item.Name">
+            </div>
+
+            <button class="btn  btn-primary"  (click)="deleteType(service.Id)">Delete </button>
+            <button class="btn  btn-primary"  (click)="saveType(i)">Save </button>
+            <br>
+            <br>
+          </li>
+        </ul>
+      </div>

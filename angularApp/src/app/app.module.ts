@@ -25,6 +25,8 @@ import { CanActivateViaAuthGuard } from './guard/auth.guard';
 import { AgmCoreModule } from '@agm/core';
 import { RentComponent } from './rent/rent.component';
 import { BranchComponent } from './branch/branch.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
+import { TypeOfVehicleComponent } from './type-of-vehicle/type-of-vehicle.component';
 
 const Routes = [
   {
@@ -39,6 +41,14 @@ const Routes = [
   {
     path: "map",
     component: MapComponent
+  },
+  {
+    path: "vehicle",
+    component: VehicleComponent
+  },
+  {
+    path: "tov",
+    component: TypeOfVehicleComponent
   },
   {
     path: "profile",
@@ -69,7 +79,9 @@ const Routes = [
     SerComponent,
     MapComponent,
     RentComponent,
-    BranchComponent
+    BranchComponent,
+    VehicleComponent,
+    TypeOfVehicleComponent
   ],
   imports: [
     BrowserModule,

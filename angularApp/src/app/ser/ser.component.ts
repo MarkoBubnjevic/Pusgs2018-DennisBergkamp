@@ -59,7 +59,8 @@ export class SerComponent implements OnInit {
   }
 
   saveService(i) {
-    this.serService.updateService(i,this.services[i])
+    debugger
+    this.serService.updateService(this.services[i].Id,this.services[i])
     .subscribe(
       data => {
         alert("Service successfully updated!");

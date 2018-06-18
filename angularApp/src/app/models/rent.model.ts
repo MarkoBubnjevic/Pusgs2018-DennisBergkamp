@@ -3,14 +3,14 @@ import { Vehicle } from "src/app/models/vehicle.model";
 
 export class Rent {
     Id: number;
-    Start : Date;
-    End: Date;
+    Start : string;
+    End: string;
     Branch:Branch;
     Vehicle:Vehicle;  
 
     constructor( Id: number,
-        Start : Date,
-        End: Date,
+        Start : string,
+        End: string,
         Branch:Branch,
         Vehicle:Vehicle  ) {
         this.Id=Id;

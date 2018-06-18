@@ -63,12 +63,12 @@ export class BranchComponent implements OnInit {
     this.branchService.deleteBranch(id)
     .subscribe(
       data => {
-        alert("Service successfully deleted!");
+        alert("Branch successfully deleted!");
         this.getServices();
         this.getBranches();
       },
       error => {
-        alert("Service delete error!");
+        alert("Branch delete error!");
       })
   }
 

@@ -1,29 +1,39 @@
 
-   <div >
-     <label for="Email"><b>Email: </b></label> 
-     <input id="Email" type="text" [(ngModel)]="appUser.Email"/>
-    <br>
-     <label for="FullName"><b>FullName: </b></label>
-     <input id="FullName" type="text" [(ngModel)]="appUser.FullName"/>
-     <br>
-     <label for="Birthday"><b>Birthday: </b></label>
-     <input id="Birthday" type="text" [(ngModel)]="appUser.Birthday"/>
-     <br>
-     <label for="Activated"><b>Activated: </b></label>
-     <input id="Activated" type="text" [(ngModel)]="appUser.Activated"/>
-     <br>
-     <label for="PersonalDocument"><b>PersonalDocument: </b></label> 
-     <input id="PersonalDocument" type="text" [(ngModel)]="appUser.PersonalDocument"/>
-     <br>
-     <label for="Rents"><b>Rents</b></label>
-    <ul>
-    <li *ngFor="let rent of appUser.Renting">
-        <p>rent: {{rent.Id}}</p>
-    </li> 
-    </ul>   
-    <br>
-     <button (click)="logOut()">Log Out</button>
-     <button (click)="saveChanges()">Save Changes</button>
+   <div class="container">
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="appUser.Email">
+      </div>
+
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="appUser.FullName">
+      </div>
+    
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="appUser.Birthday">
+      </div>
+
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="appUser.Activated">
+      </div>
+      
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" [(ngModel)]="appUser.PersonalDocument">
+      </div>
+     
+     <label><b>Rents</b></label>
+      <ul>
+        <li *ngFor="let rent of appUser.Renting">
+          <label>rent: {{rent.Id}}</label>
+        </li> 
+      </ul>   
+      <br>
+     <button class="btn btn-primary" (click)="logOut()">Log Out</button>
+     <button class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
    </div>
 
   

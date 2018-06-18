@@ -1,0 +1,74 @@
+<div class="container">
+    <label>Add Vehicle</label>
+    <br>
+    <form  #f="ngForm" (ngSubmit)="addVehicle(f.value)">
+      <div>
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input id="Model" type="text" style="width:fit-content" class="form-control" placeholder="Enter Model" name="Model" ngModel required #Model = "ngModel" aria-describedby="basic-addon1">
+        </div>
+       
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input id="Manufactor" type="text" style="width:fit-content" class="form-control" placeholder="Enter Manufactor" name="Manufactor" ngModel required #Manufactor = "ngModel" aria-describedby="basic-addon1">
+        </div>
+  
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input id="Year" type="text" style="width:fit-content" class="form-control" placeholder="Enter Year" name="Year" ngModel required #Year = "ngModel" aria-describedby="basic-addon1">
+        </div>
+  
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input id="Description" type="text" style="width:fit-content" class="form-control" placeholder="Enter Description" name="Description" ngModel required #Description = "ngModel" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input id="PricePerHour" type="text" style="width:fit-content" class="form-control" placeholder="Enter PricePerHour" name="PricePerHour" ngModel required #PricePerHour = "ngModel" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input id="Unvailable" type="text" style="width:fit-content" class="form-control" placeholder="Enter Unvailable" name="Unvailable" ngModel required #Unvailable = "ngModel" aria-describedby="basic-addon1">
+        </div>
+      
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input id="Images" type="text" style="width:fit-content" class="form-control" placeholder="Enter Images" name="Images" ngModel required #Images = "ngModel" aria-describedby="basic-addon1">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add Vehicle</button>
+      </div>
+    </form>
+  </div>
+  <br>
+  <br>
+
+
+<div class="container">
+  <label>All Vehicles:</label>
+  <ul>
+    <li *ngFor="let vehicle of vehicles; let i = index">
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input type="text" [(ngModel)]="vehicle.Model">
+      </div>
+
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input type="text" [(ngModel)]="vehicle.Manufactor">
+      </div>
+      
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input type="text" [(ngModel)]="vehicle.Year">
+      </div>
+
+      <button class="btn  btn-danger"  (click)="deleteVehicle(vehicle.Id)">Delete </button>
+      <button class="btn  btn-primary"  (click)="savevehicle(i)">Save </button>
+      <br>
+      <br>
+    </li>
+  </ul>
+</div>

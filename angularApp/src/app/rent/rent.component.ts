@@ -4,6 +4,7 @@ import { Rent } from '../models/rent.model';
 import { Vehicle } from '../models/vehicle.model';
 import { AppUser } from '../models/appUser.model';
 import { Branch } from '../models/branch.model';
+import { DateModel } from '../models/date.model';
 
 import {RentService} from './rentService/rent.service';
 
@@ -64,7 +65,18 @@ export class RentComponent implements OnInit {
    alert("Branch added "+this.rentbranch.Address)
   }
 
-  finishRent(){
-    
+  finishRent(date: DateModel){
+
+    this.rent = new Rent(undefined,date.StartDate,date.EndDate, this.rentbranch, this.rentVehicle);
+
+    this.rentService.postRent(this.rent)
+    .subscribe(
+      data => {
+        alert("Rent successfully added!");
+      },
+      error => {
+        alert("Rent error!");
+      })
+
   }
 }

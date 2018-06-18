@@ -5,14 +5,12 @@ import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { Rent } from '../../models/rent.model';
 import { Vehicle } from '../../models/vehicle.model';
-import { Branch } from 'src/app/models/branch.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RentService {
+export class VehicleService {
 
   constructor(private httpClient: HttpClient) { }
 
@@ -28,13 +26,10 @@ export class RentService {
 
   getAllVehicles(): Observable<Vehicle[]> {
     return this.httpClient.get<Vehicle[]>('http://localhost:51680/api/Vehicles')
+  
   }
 
-  getAllBranches(): Observable<Branch[]> {
-    return this.httpClient.get<Branch[]>('http://localhost:51680/api/Branches')
-  }
-
-  postRent(newMember): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/Rents", newMember)
+  postVehicle(newMember): Observable<any> {
+    return this.httpClient.post("http://localhost:51680/api/Vehicles", newMember)
   }
 }

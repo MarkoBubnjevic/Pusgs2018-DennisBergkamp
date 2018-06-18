@@ -24,7 +24,7 @@
         <input id="Description" type="text" style="width:fit-content" class="form-control" placeholder="Enter Description" name="Description" ngModel required #Description = "ngModel" aria-describedby="basic-addon1">
       </div>
     
-      <button class="btn btn-lg btn-primary" type="submit">Add Service</button>
+      <button class="btn btn-primary" type="submit">Add Service</button>
     </div>
   </form>
 </div>
@@ -49,8 +49,8 @@
         <input type="text" [(ngModel)]="service.Description">
       </div>
 
-      <button class="btn btn-lg btn-primary"  (click)="deleteService(service.Id)">Delete </button>
-      <button class="btn btn-lg btn-primary"  (click)="saveService(i)">Save </button>
+      <button class="btn  btn-primary"  (click)="deleteService(service.Id)">Delete </button>
+      <button class="btn  btn-primary"  (click)="saveService(i)">Save </button>
       <br>
       <br>
     </li>

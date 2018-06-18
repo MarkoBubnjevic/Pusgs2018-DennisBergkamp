@@ -29,7 +29,7 @@
       <input id="Address" type="text" style="width:fit-content" class="form-control" placeholder="Enter Address" name="Address" ngModel required #Address = "ngModel" aria-describedby="basic-addon1">
      </div>
 
-     <button class="btn btn-lg btn-primary " type="submit">Add Branch</button>
+     <button class="btn btn-primary " type="submit">Add Branch</button>
    </div>
  </form>
 <br>
@@ -58,8 +58,8 @@
             <input type="text" [(ngModel)]="branchs.Address">
            </div>
       
-          <button class="btn btn-lg btn-primary " *ngIf="checkRole()" (click)="deleteBranch(branchs.Id)">Delete </button>
-          <button class="btn btn-lg btn-primary " *ngIf="checkRole()" (click)="saveBranch(i)">Save </button>
+          <button class="btn btn-primary "  (click)="deleteBranch(branchs.Id)">Delete </button>
+          <button class="btn btn-primary "  (click)="saveBranch(i)">Save </button>
           <br>
           <br>
         </li>

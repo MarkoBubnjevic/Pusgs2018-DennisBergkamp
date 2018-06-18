@@ -17,7 +17,9 @@
         <input type="text" [(ngModel)]="vehicle.Year">
       </div>
 
-      <button class="btn btn-lg btn-primary" *ngIf="checkAvailable(i)" (click)="addVehicle(i)">Add Vehicle</button>
+      <button class="btn btn-primary" *ngIf="checkAvailable(i)" (click)="addVehicle(i)">Add Vehicle</button>
+      <br>
+      <br>
     </li>
   </ul>
 </div>
@@ -36,7 +38,26 @@
         <input type="text" [(ngModel)]="branch.Address">
       </div>
 
-      <button  class="btn btn-lg btn-primary" (click)="addBranch(i)">Add Branch</button>
+      <button  class="btn btn-primary" (click)="addBranch(i)">Add Branch</button>
+      <br>
+      <br>
     </li>
   </ul>
+</div>
+
+<div class="container">
+  <label>Enter start and end date:</label>
+    <form  #f1="ngForm" (ngSubmit)="finishRent(f1.value)">
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input id="StartDate" type="text" style="width:fit-content" class="form-control" placeholder="Enter StartDate dd-mm-yyyy" name="StartDate" ngModel required #StartDate = "ngModel" aria-describedby="basic-addon1">
+      </div>
+
+      <div class="input-group ">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input id="EndDate" type="text" style="width:fit-content" class="form-control" placeholder="Enter EndDate dd-mm-yyyy" name="EndDate" ngModel required #EndDate = "ngModel" aria-describedby="basic-addon1">
+      </div>
+    <button  class="btn btn-primary" type="submit">Finish rent</button>
+    <br>
+  </form>
 </div>
