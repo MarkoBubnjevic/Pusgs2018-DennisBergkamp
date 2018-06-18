@@ -325,7 +325,6 @@ namespace RentApp.Controllers
                 appUser.Birthday = DateTime.Parse(model.Date);
             }
             catch (Exception e){ }
-            appUser.Email = model.Email;
             appUser.FullName = model.FullName;
             appUser.PersonalDocument = "";
             appUser.Renting = new List<Rent>();

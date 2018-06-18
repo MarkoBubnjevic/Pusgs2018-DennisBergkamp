@@ -316,6 +316,10 @@
     <Compile Include="Migrations\201806060752099_novi podaci u bazi.Designer.cs">
       <DependentUpon>201806060752099_novi podaci u bazi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806181349184_Logicko brisanje.cs" />
+    <Compile Include="Migrations\201806181349184_Logicko brisanje.Designer.cs">
+      <DependentUpon>201806181349184_Logicko brisanje.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -449,6 +453,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806060752099_novi podaci u bazi.resx">
       <DependentUpon>201806060752099_novi podaci u bazi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806181349184_Logicko brisanje.resx">
+      <DependentUpon>201806181349184_Logicko brisanje.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

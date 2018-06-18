@@ -20,9 +20,9 @@ namespace RentApp.Migrations
 
         protected override void Seed(RentApp.Persistance.RADBContext context)
         {
-            Branch branch1 = new Branch() { Address = "Bulevar Oslobodjenja 123", Latitude = 22.22, Longitude = 44.44, Logo = "prva putanja do slike" };
-            Branch branch2 = new Branch() { Address = "Bulevar Kralja Petra 45", Latitude = 11.32, Longitude = 53.44, Logo = "druga putanja do slike" };
-            Branch branch3 = new Branch() { Address = "Bulevar Cara Lazara 42", Latitude = 31.33, Longitude = 25.77, Logo = "treca putanja do slike" };
+            Branch branch1 = new Branch() { Deleted = false, Address = "Bulevar Oslobodjenja 123", Latitude = 22.22, Longitude = 44.44, Logo = "prva putanja do slike" };
+            Branch branch2 = new Branch() { Deleted = false, Address = "Bulevar Kralja Petra 45", Latitude = 11.32, Longitude = 53.44, Logo = "druga putanja do slike" };
+            Branch branch3 = new Branch() { Deleted = false, Address = "Bulevar Cara Lazara 42", Latitude = 31.33, Longitude = 25.77, Logo = "treca putanja do slike" };
 
             context.Branches.AddOrUpdate(a => a.Id, branch1);
             context.Branches.AddOrUpdate(a => a.Id, branch2);
@@ -30,9 +30,9 @@ namespace RentApp.Migrations
 
             SaveChanges(context);
 
-            TypeOfVehicle tov1 = new TypeOfVehicle() { Name = "BMW", Vehicles = new List<Vehicle>() };
-            TypeOfVehicle tov2 = new TypeOfVehicle() { Name = "Audi", Vehicles = new List<Vehicle>() };
-            TypeOfVehicle tov3 = new TypeOfVehicle() { Name = "Fiat", Vehicles = new List<Vehicle>() };
+            TypeOfVehicle tov1 = new TypeOfVehicle() { Deleted = false, Name = "Karavan", Vehicles = new List<Vehicle>() };
+            TypeOfVehicle tov2 = new TypeOfVehicle() { Deleted = false, Name = "Terenac", Vehicles = new List<Vehicle>() };
+            TypeOfVehicle tov3 = new TypeOfVehicle() { Deleted = false, Name = "Gradski auto", Vehicles = new List<Vehicle>() };
 
             context.Types.AddOrUpdate(a => a.Id, tov1);
             context.Types.AddOrUpdate(a => a.Id, tov2);
@@ -40,9 +40,9 @@ namespace RentApp.Migrations
 
             SaveChanges(context);
 
-            Vehicle vehicle1 = new Vehicle() { Model = "X5", Manufactor = "Fabrika BMW", Year = 2015, Description = "Opis BMW", PricePerHour = 50, Unvailable = true, Images = new List<string>() { "prva slika BMW", "druga slika BMW" }, Type = context.Types.Find(1) };
-            Vehicle vehicle2 = new Vehicle() { Model = "R8", Manufactor = "Fabrika Audi", Year = 2014, Description = "Opis Audi", PricePerHour = 70, Unvailable = false, Images = new List<string>() { "prva slika Audi", "druga slika Audi" }, Type = context.Types.Find(2) };
-            Vehicle vehicle3 = new Vehicle() { Model = "Panda", Manufactor = "Fabrika Fiat", Year = 2010, Description = "Opis Fiat", PricePerHour = 30, Unvailable = true, Images = new List<string>() { "prva slika Fiat", "druga slika Fiat" }, Type = context.Types.Find(3) };
+            Vehicle vehicle1 = new Vehicle() { Deleted = false, Model = "X5", Manufactor = "Fabrika BMW", Year = 2015, Description = "Opis BMW", PricePerHour = 50, Unvailable = true, Images = new List<string>() { "prva slika BMW", "druga slika BMW" }, Type = context.Types.Find(1) };
+            Vehicle vehicle2 = new Vehicle() { Deleted = false, Model = "R8", Manufactor = "Fabrika Audi", Year = 2014, Description = "Opis Audi", PricePerHour = 70, Unvailable = false, Images = new List<string>() { "prva slika Audi", "druga slika Audi" }, Type = context.Types.Find(2) };
+            Vehicle vehicle3 = new Vehicle() { Deleted = false, Model = "Panda", Manufactor = "Fabrika Fiat", Year = 2010, Description = "Opis Fiat", PricePerHour = 30, Unvailable = true, Images = new List<string>() { "prva slika Fiat", "druga slika Fiat" }, Type = context.Types.Find(3) };
 
             context.Vechiles.AddOrUpdate(a => a.Id, vehicle1);
             context.Vechiles.AddOrUpdate(a => a.Id, vehicle2);
@@ -50,9 +50,9 @@ namespace RentApp.Migrations
 
             SaveChanges(context);
 
-            Rent rent1 = new Rent() { Start = DateTime.Now, End = DateTime.Now, Branch = context.Branches.Find(1), Vehicle = context.Vechiles.Find(1) };
-            Rent rent2 = new Rent() { Start = DateTime.Now, End = DateTime.Now, Branch = context.Branches.Find(2), Vehicle = context.Vechiles.Find(2) };
-            Rent rent3 = new Rent() { Start = DateTime.Now, End = DateTime.Now, Branch = context.Branches.Find(3), Vehicle = context.Vechiles.Find(3) };
+            Rent rent1 = new Rent() { Deleted = false, Start = DateTime.Now, End = DateTime.Now, Branch = context.Branches.Find(1), Vehicle = context.Vechiles.Find(1) };
+            Rent rent2 = new Rent() { Deleted = false, Start = DateTime.Now, End = DateTime.Now, Branch = context.Branches.Find(2), Vehicle = context.Vechiles.Find(2) };
+            Rent rent3 = new Rent() { Deleted = false, Start = DateTime.Now, End = DateTime.Now, Branch = context.Branches.Find(3), Vehicle = context.Vechiles.Find(3) };
 
             context.Rents.AddOrUpdate(a => a.Id, rent1);
             context.Rents.AddOrUpdate(a => a.Id, rent2);
@@ -61,9 +61,9 @@ namespace RentApp.Migrations
             SaveChanges(context);
 
 
-            AppUser user1 = new AppUser() { FullName = "Marko Markovic", Email = "markomarkovic@gmail.com", Birthday = DateTime.Now, Activated = false, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(1) } };
-            AppUser user2 = new AppUser() { FullName = "Jovan Jovanovic", Email = "jovanjovanovic@gmail.com", Birthday = DateTime.Now, Activated = true, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(2) } };
-            AppUser user3 = new AppUser() { FullName = "Ilija Ilic", Email = "ilijailic@gmail.com", Birthday = DateTime.Now, Activated = false, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(3) } };
+            AppUser user1 = new AppUser() { Deleted = false, FullName = "Marko Markovic", Birthday = DateTime.Now, Activated = false, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(1) } };
+            AppUser user2 = new AppUser() { Deleted = false, FullName = "Jovan Jovanovic", Birthday = DateTime.Now, Activated = true, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(2) } };
+            AppUser user3 = new AppUser() { Deleted = false, FullName = "Ilija Ilic", Birthday = DateTime.Now, Activated = false, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(3) } };
 
             context.AppUsers.AddOrUpdate(a => a.Id, user1);
             context.AppUsers.AddOrUpdate(a => a.Id, user2);
@@ -71,9 +71,9 @@ namespace RentApp.Migrations
 
             SaveChanges(context);
 
-            Comment com1 = new Comment() { DateTime = DateTime.Now, Text = "neki tekst komentara", Author = context.AppUsers.Find(1) };
-            Comment com2 = new Comment() { DateTime = DateTime.Now, Text = "jos neki tekst komentara", Author = context.AppUsers.Find(2) };
-            Comment com3 = new Comment() { DateTime = DateTime.Now, Text = "jos malo teksta", Author = context.AppUsers.Find(3) };
+            Comment com1 = new Comment() { Deleted = false, DateTime = DateTime.Now, Text = "neki tekst komentara", Author = context.AppUsers.Find(1) };
+            Comment com2 = new Comment() { Deleted = false, DateTime = DateTime.Now, Text = "jos neki tekst komentara", Author = context.AppUsers.Find(2) };
+            Comment com3 = new Comment() { Deleted = false, DateTime = DateTime.Now, Text = "jos malo teksta", Author = context.AppUsers.Find(3) };
 
             context.Comments.AddOrUpdate(a => a.Id, com1);
             context.Comments.AddOrUpdate(a => a.Id, com2);
@@ -82,9 +82,9 @@ namespace RentApp.Migrations
             SaveChanges(context);
 
 
-            Service service1 = new Service() { Name = "Prvi servis", Logo = "putanja do slike", Email = "servis1@gmail.com", Description = "opis prvog servisa", AverageGrade = 8, NumberOfGrades = 2, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
-            Service service2 = new Service() { Name = "Drugi servis", Logo = "putanja do slike", Email = "servis2@gmail.com", Description = "opis drugog servisa", AverageGrade = 6, NumberOfGrades = 4, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
-            Service service3 = new Service() { Name = "Treci servis", Logo = "putanja do slike", Email = "servis3@gmail.com", Description = "opis treceg servisa", AverageGrade = 9, NumberOfGrades = 3, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
+            Service service1 = new Service() { Deleted = false, Name = "Prvi servis", Logo = "putanja do slike", Email = "servis1@gmail.com", Description = "opis prvog servisa", AverageGrade = 8, NumberOfGrades = 2, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
+            Service service2 = new Service() { Deleted = false, Name = "Drugi servis", Logo = "putanja do slike", Email = "servis2@gmail.com", Description = "opis drugog servisa", AverageGrade = 6, NumberOfGrades = 4, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
+            Service service3 = new Service() { Deleted = false, Name = "Treci servis", Logo = "putanja do slike", Email = "servis3@gmail.com", Description = "opis treceg servisa", AverageGrade = 9, NumberOfGrades = 3, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
 
             context.Services.AddOrUpdate(a => a.Id, service1);
             context.Services.AddOrUpdate(a => a.Id, service2);
@@ -119,12 +119,20 @@ namespace RentApp.Migrations
 
                 manager.Create(role);
             }
+            if (!context.Roles.Any(r => r.Name == "NotAuthenticated"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "AppUser" };
+
+                manager.Create(role);
+            }
 
             context.AppUsers.AddOrUpdate(
 
                   u => u.FullName,
 
-                  new AppUser() { FullName = "Admin Adminovic",Email= "admin@yahoo.com", Birthday=DateTime.Now,Activated=true,PersonalDocument="putanja do slike",Renting=new List<Rent>() { rent1} }
+                  new AppUser() { Deleted = false, FullName = "Admin Adminovic", Birthday=DateTime.Now,Activated=true,PersonalDocument="putanja do slike",Renting=new List<Rent>() { rent1} }
 
             );
 
@@ -132,7 +140,7 @@ namespace RentApp.Migrations
 
                 p => p.FullName,
 
-                new AppUser() { FullName = "AppUser AppUserovic", Email = "appu@yahoo.com", Birthday = DateTime.Now, Activated = true, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { rent2 } }
+                new AppUser() { Deleted = false, FullName = "AppUser AppUserovic", Birthday = DateTime.Now, Activated = true, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { rent2 } }
 
             );
 

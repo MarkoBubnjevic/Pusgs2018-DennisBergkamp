@@ -40,4 +40,29 @@ export class VehicleComponent implements OnInit {
         alert("Vehicle error!");
       })
   }
+
+  deleteVehicle(id: number){
+    this.vehicleService.deleteVehicle(id)
+    .subscribe(
+      data => {
+        alert("Vehicle successfully deleted!");
+        this.getVehicles();
+      },
+      error => {
+        alert("Vehicle delete error!");
+      })
+  }
+
+  saveService(i) {
+    debugger
+    this.vehicleService.updateVehicle(this.vehicles[i].Id,this.vehicles[i])
+    .subscribe(
+      data => {
+        alert("Vehicle successfully updated!");
+        this.getVehicles();
+      },
+      error => {
+        alert("Vehicle update error!");
+      })
+  }
 }

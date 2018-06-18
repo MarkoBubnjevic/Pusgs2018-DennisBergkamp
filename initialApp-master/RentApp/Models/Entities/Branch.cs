@@ -8,6 +8,7 @@ namespace RentApp.Models.Entities
     public class Branch
     {
         public int Id { get; set; }
+        public bool Deleted { get; set; }
         public string Logo { get; set; }
         public string Address { get; set; }
         public double Latitude { get; set; }

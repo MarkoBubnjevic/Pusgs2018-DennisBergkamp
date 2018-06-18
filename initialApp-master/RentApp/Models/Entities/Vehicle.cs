@@ -8,6 +8,7 @@ namespace RentApp.Models.Entities
     public class Vehicle
     {
         public int Id { get; set; }
+        public bool Deleted { get; set; }
         public string Model { get; set; }
         public string  Manufactor { get; set; }
         public int Year { get; set; }

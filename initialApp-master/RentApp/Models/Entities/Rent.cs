@@ -12,5 +12,6 @@ namespace RentApp.Models.Entities
         public DateTime? End { get; set; }
         public virtual Branch Branch { get; set; }
         public virtual Vehicle Vehicle { get; set; }
+        public bool Deleted { get; set; }
     }
 }

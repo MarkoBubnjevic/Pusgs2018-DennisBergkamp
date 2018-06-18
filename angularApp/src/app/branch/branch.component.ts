@@ -73,7 +73,7 @@ export class BranchComponent implements OnInit {
   }
 
   saveBranch(i) {
-    this.branchService.updateBranch(i,this.branches[i])
+    this.branchService.updateBranch(this.branches[i].Id,this.branches[i])
     .subscribe(
       data => {
         alert("Branch successfully updated!");

@@ -3,17 +3,20 @@ import { Vehicle } from "src/app/models/vehicle.model";
 
 export class Rent {
     Id: number;
+    Deleted: boolean;
     Start : string;
     End: string;
     Branch:Branch;
     Vehicle:Vehicle;  
 
     constructor( Id: number,
+        Deleted: boolean,
         Start : string,
         End: string,
         Branch:Branch,
         Vehicle:Vehicle  ) {
         this.Id=Id;
+        this.Deleted=Deleted;
         this.Start=Start;
         this.End=End;
         this.Branch=Branch;

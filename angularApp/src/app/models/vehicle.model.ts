@@ -2,6 +2,7 @@ import { TypeOfVehicle } from "src/app/models/typeofvehicle.model";
 
 export class Vehicle {
     Id: number;
+    Deleted: boolean;
     Model : String;
     Manufactor : String;
     Year:number;
@@ -12,6 +13,7 @@ export class Vehicle {
     Type:TypeOfVehicle;
 
     constructor(Id: number,
+        Deleted: boolean,
         Model : String,
         Manufactor : String,
         Year:number,
@@ -22,6 +24,7 @@ export class Vehicle {
         Type:TypeOfVehicle) {
         
             this.Id=Id;
+            this.Deleted=Deleted;
             this.Model=Model;
             this.Manufactor=Manufactor;
             this.Year=Year;

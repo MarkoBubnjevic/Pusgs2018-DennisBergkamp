@@ -2,6 +2,7 @@ import { Rent } from "src/app/models/rent.model";
 
 export class AppUser {
     Id: number;
+    Deleted: boolean;
     FullName : String;
     Email : String;
     Birthday: Date;
@@ -10,6 +11,7 @@ export class AppUser {
     Renting:Rent[];
 
     constructor(Id: number,
+        Deleted:boolean,
         FullName : String,
         Email : String,
         Birthday: Date,
@@ -18,6 +20,7 @@ export class AppUser {
         Renting:Rent[]) {
         
         this.Id=Id;
+        this.Deleted = Deleted;
         this.FullName=FullName;
         this.Email=Email;
         this.Birthday=Birthday;

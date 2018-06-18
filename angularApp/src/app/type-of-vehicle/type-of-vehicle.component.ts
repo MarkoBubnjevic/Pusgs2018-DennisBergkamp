@@ -43,4 +43,29 @@ export class TypeOfVehicleComponent implements OnInit {
       })
   }
 
+  deleteType(id: number){
+    this.typeService.deleteType(id)
+    .subscribe(
+      data => {
+        alert("Type successfully deleted!");
+        this.getTypes();
+      },
+      error => {
+        alert("Type delete error!");
+      })
+  }
+
+  saveType(i) {
+    debugger
+    this.typeService.updateType(this.types[i].Id,this.types[i])
+    .subscribe(
+      data => {
+        alert("Type successfully updated!");
+        this.getTypes();
+      },
+      error => {
+        alert("Type update error!");
+      })
+  }
+
 }

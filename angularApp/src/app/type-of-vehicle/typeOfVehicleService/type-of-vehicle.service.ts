@@ -31,4 +31,12 @@ export class TypeOfVehicleService {
   postType(newMember): Observable<any> {
     return this.httpClient.post("http://localhost:51680/api/TypeOfVehicles", newMember)
   }
+
+  deleteType(id: number){
+    return this.httpClient.delete("http://localhost:51680/api/TypeOfVehicles/"+id)
+  }
+
+  updateType(id:number,type:TypeOfVehicle): Observable<TypeOfVehicle> {
+    return this.httpClient.put<TypeOfVehicle>('http://localhost:51680/api/TypeOfVehicles/'+ id,type)
+  }
 }

@@ -67,7 +67,7 @@ export class RentComponent implements OnInit {
 
   finishRent(date: DateModel){
 
-    this.rent = new Rent(undefined,date.StartDate,date.EndDate, this.rentbranch, this.rentVehicle);
+    this.rent = new Rent(undefined,false,date.StartDate,date.EndDate, this.rentbranch, this.rentVehicle);
 
     this.rentService.postRent(this.rent)
     .subscribe(

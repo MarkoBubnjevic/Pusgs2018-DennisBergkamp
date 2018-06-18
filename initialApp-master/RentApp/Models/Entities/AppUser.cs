@@ -8,8 +8,8 @@ namespace RentApp.Models.Entities
     public class AppUser
     {
         public int Id { get; set; }
+        public bool Deleted { get; set; }
         public string FullName { get; set; }
-        public string Email { get; set; }
         public DateTime? Birthday { get; set; }
         public bool Activated { get; set; }
         public string PersonalDocument { get; set; }
