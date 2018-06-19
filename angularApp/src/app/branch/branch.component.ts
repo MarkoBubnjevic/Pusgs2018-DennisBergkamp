@@ -26,6 +26,8 @@ export class BranchComponent implements OnInit {
     .subscribe(
       data => {
         alert("Branch successfully added!");
+        this.getServices();
+        this.getBranches();
       },
       error => {
         alert("Branch error!");

@@ -59,6 +59,10 @@ const Routes = [
     component: RentComponent
   },
   {
+    path: "branch",
+    component: BranchComponent
+  },
+  {
     path: '',
     component: SerComponent
   },

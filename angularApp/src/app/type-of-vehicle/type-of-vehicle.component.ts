@@ -23,7 +23,6 @@ export class TypeOfVehicleComponent implements OnInit {
     this.typeService.getAllTypes()
       .subscribe(
         data => {
-          alert("TEST");
           this.types = data;
         },
         error => {
