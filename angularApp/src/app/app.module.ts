@@ -27,6 +27,8 @@ import { RentComponent } from './rent/rent.component';
 import { BranchComponent } from './branch/branch.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { TypeOfVehicleComponent } from './type-of-vehicle/type-of-vehicle.component';
+import { SerPreviewComponent } from './ser-preview/ser-preview.component';
+import { CommentComponent } from './comment/comment.component';
 
 const Routes = [
   {
@@ -59,12 +61,12 @@ const Routes = [
     component: RentComponent
   },
   {
-    path: "branch",
-    component: BranchComponent
-  },
-  {
     path: '',
     component: SerComponent
+  },
+  {
+    path: 'prev/:id',
+    component: SerPreviewComponent
   },
   {
     path: "other",
@@ -85,7 +87,9 @@ const Routes = [
     RentComponent,
     BranchComponent,
     VehicleComponent,
-    TypeOfVehicleComponent
+    TypeOfVehicleComponent,
+    SerPreviewComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

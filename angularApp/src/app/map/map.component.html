@@ -4,7 +4,7 @@
       <agm-map [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" [zoom]="18" (mapClick)="placeMarker($event)">
       
         <!-- Postavljamo markere -->
-        <agm-marker [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" [title]="mapInfo.title"
+        <agm-marker *ngFor="let mapInfo of mapInfos" [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" [title]="mapInfo.title"
         [label]="mapInfo.label">
     
           <!-- Svakom markeru dodajemo info-window (Nije obavezno!)-->
@@ -21,7 +21,9 @@
         </agm-marker>
       </agm-map>
     </p>
+    <button class="btn btn-primary " (click)="getBranches()">Refresh</button>
   </div>
+
 
   <div class="container">
     <app-branch></app-branch>

@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
+import {NgForm} from '@angular/forms';
 import {BranchService} from './branchService/branch.service';
+import {MapComponent} from '../map/map.component';
 import { Branch } from 'src/app/models/branch.model';
 import { Service } from 'src/app/models/service.model';
+import {FileUploader,FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
+
+const URL = 'http://localhost:51680/api/Upload/user/PostBranchImage';
 
 @Component({
   selector: 'app-branch',
@@ -14,20 +19,33 @@ export class BranchComponent implements OnInit {
   services: Service[];
   branches: Branch[];
 
-  constructor(private branchService: BranchService) { }
+  @ViewChild(MapComponent) child;
+
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
+
+  url: string;
+
+  constructor(private branchService: BranchService) { 
+    this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false;};
+    this.uploader.onCompleteItem = (item: any, response: any,status: any, headers: any) => {
+        this.url=JSON.parse(response);        
+    };
+  }
+
+  uploadFile: any;
 
   ngOnInit() {
     this.getServices();
     this.getBranches();
   }
 
-  addBranch(branch: Branch){
+  addBranch(branch: Branch, form: NgForm){
     this.branchService.addBranch(branch)
     .subscribe(
       data => {
         alert("Branch successfully added!");
-        this.getServices();
         this.getBranches();
+        this.child.getBranches();
       },
       error => {
         alert("Branch error!");
@@ -85,5 +103,12 @@ export class BranchComponent implements OnInit {
       error => {
         alert("Branch update error!");
       })
+  }
+
+  handleUpload(data): void{
+    if(data && data.response){
+      data = JSON.parse(data.response);
+      this.uploadFile = data;
+    }
   }
 }

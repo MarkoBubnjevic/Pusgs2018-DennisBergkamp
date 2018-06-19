@@ -49,8 +49,9 @@
         <input type="text" [(ngModel)]="service.Description">
       </div>
 
-      <button class="btn  btn-primary"  (click)="deleteService(service.Id)">Delete </button>
+      <button class="btn  btn-danger"  (click)="deleteService(service.Id)">Delete </button>
       <button class="btn  btn-primary"  (click)="saveService(i)">Save </button>
+      <button class="btn  btn-primary"  [routerLink]="['/prev/',service.Id]">Preview </button>
       <br>
       <br>
     </li>

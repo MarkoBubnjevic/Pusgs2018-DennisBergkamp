@@ -1,12 +1,15 @@
 
+
 <form class="container" #f="ngForm" (ngSubmit)="addBranch(f.value)">
    <div>
       <label>Add Branch:</label>
       <br>
-        <label>Service:</label>
-          <select id="ServiceName" ngModel #ServiceName="ngModel" name="ServiceName">
-              <option *ngFor="let item of services" [value]="item.Name" id="ServiceName" name="ServiceName">{{item.Name}}</option>
-          </select>
+
+     
+    <label>Service:</label>
+      <select id="ServiceName" ngModel #ServiceName="ngModel" name="ServiceName">
+          <option *ngFor="let item of services" [value]="item.Name" id="ServiceName" name="ServiceName">{{item.Name}}</option>
+      </select>
       
         <br>
       <div class="input-group ">
@@ -58,7 +61,7 @@
             <input type="text" [(ngModel)]="branchs.Address">
            </div>
       
-          <button class="btn btn-danger "  (click)="deleteBranch(branchs.Id)">Delete </button>
+          <button class="btn btn-primary "  (click)="deleteBranch(branchs.Id)">Delete </button>
           <button class="btn btn-primary "  (click)="saveBranch(i)">Save </button>
           <br>
           <br>

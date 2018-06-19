@@ -1,6 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit,ViewChild, Input } from '@angular/core';
 
 import { MapInfo } from '../models/map-info.model';
+
+import {MapService} from './mapService/map.service';
+import { Branch } from 'src/app/models/branch.model';
 
 @Component({
   selector: 'app-map',
@@ -11,12 +14,18 @@ import { MapInfo } from '../models/map-info.model';
 export class MapComponent implements OnInit {
 
   mapInfo: MapInfo;
+
+  mapInfos: MapInfo[];
  
+  branches: Branch[];
 
   ngOnInit() {
+    this.mapInfos = new Array<MapInfo>();
+    this.getBranches();
   }
 
-  constructor(){
+  constructor(private mapService: MapService){
+
     this.mapInfo = new MapInfo(45.242268, 19.842954, 
     "assets/ftn.png",
     "Jugodrvo" , "" , "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka");
@@ -27,5 +36,23 @@ export class MapComponent implements OnInit {
     console.log($event.coords.lng);
   }
 
+  addMarkers(){
+    for(let item of this.branches){
+      this.mapInfos.push(new MapInfo(item.Latitude, item.Longitude, 
+        "assets/ftn.png",
+        "Jugodrvo" , "" , "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka"));
+    }
+  }
 
+  getBranches(){
+    this.mapService.getAllBranches()
+      .subscribe(
+        data => {
+          this.branches = data;
+          this.addMarkers();
+        },
+        error => {
+          console.log(error);
+        })
+  }
 }
