@@ -39,8 +39,8 @@ export class MapComponent implements OnInit {
   addMarkers(){
     for(let item of this.branches){
       this.mapInfos.push(new MapInfo(item.Latitude, item.Longitude, 
-        "assets/ftn.png",
-        "Jugodrvo" , "" , "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka"));
+        "",
+        item.Address , "" , ""));
     }
   }
 

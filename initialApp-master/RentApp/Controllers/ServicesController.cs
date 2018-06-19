@@ -27,13 +27,17 @@ namespace RentApp.Controllers
         this.unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<Service> GetServices()
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IEnumerable<Service> GetServices()
     {
         return unitOfWork.Services.GetAll();
     }
 
     [ResponseType(typeof(Service))]
-    public IHttpActionResult GetService(int id)
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult GetService(int id)
     {
         Service service = unitOfWork.Services.Get(id);
         if (service == null)
@@ -45,7 +49,9 @@ namespace RentApp.Controllers
     }
 
     [ResponseType(typeof(void))]
-    public IHttpActionResult PutService(int id, Service service)
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult PutService(int id, Service service)
     {
         if (!ModelState.IsValid)
         {
@@ -78,7 +84,9 @@ namespace RentApp.Controllers
     }
 
     [ResponseType(typeof(Service))]
-    public IHttpActionResult PostService(Service service)
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult PostService(Service service)
     {
         if (!ModelState.IsValid)
         {
@@ -98,7 +106,9 @@ namespace RentApp.Controllers
     }
 
     [ResponseType(typeof(Service))]
-    public IHttpActionResult DeleteService(int id)
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult DeleteService(int id)
     {
         Service service = unitOfWork.Services.Get(id);
         if (service == null)
@@ -106,7 +116,24 @@ namespace RentApp.Controllers
             return NotFound();
         }
 
-        unitOfWork.Services.Remove(service);
+        foreach (var item in service.Branches)
+        {
+            item.Deleted = true;
+        }
+
+        foreach (var item in service.Vehicles)
+        {
+            item.Deleted = true;
+        }
+
+        foreach (var item in service.Comments)
+        {
+            item.Deleted = true;
+        }
+
+        service.Deleted = true;
+
+        unitOfWork.Services.Update(service);
         unitOfWork.Complete();
 
         return Ok(service);

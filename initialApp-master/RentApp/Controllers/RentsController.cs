@@ -26,12 +26,16 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IEnumerable<Rent> GetRents()
         {
             return unitOfWork.Rents.GetAll();
         }
 
         [ResponseType(typeof(Rent))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult GetRents(int id)
         {
             Rent rent = unitOfWork.Rents.Get(id);
@@ -44,6 +48,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PutRent(int id, Rent rent)
         {
             if (!ModelState.IsValid)
@@ -77,6 +83,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Rent))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PostRents(Rent rent)
         {
             if (!ModelState.IsValid)
@@ -91,6 +99,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Rent))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult DeleteRent(int id)
         {
             Rent rent = unitOfWork.Rents.Get(id);
@@ -99,7 +109,8 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
-            unitOfWork.Rents.Remove(rent);
+            rent.Deleted = true;
+            unitOfWork.Rents.Update(rent);
             unitOfWork.Complete();
 
             return Ok(rent);

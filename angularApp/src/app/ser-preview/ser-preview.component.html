@@ -1,3 +1,86 @@
-<p>
-  ser-preview works!
-</p>
+<div class="container">
+  <label>Service</label> 
+  <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+      <input type="text" [(ngModel)]="service.Name">
+    </div>
+
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+      <input type="text" [(ngModel)]="service.Email">
+    </div>
+    
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+      <input type="text" [(ngModel)]="service.Description">
+    </div>
+
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+      <input type="text" [(ngModel)]="service.AverageGrade">
+    </div>
+
+    <div class="input-group ">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+      <input type="text" [(ngModel)]="service.NumberOfGrades">
+    </div>
+
+    <label>Vehicles:</label>
+    <ul>
+      <li *ngFor="let vehicle of service.Vehicles">
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon1">Model</span>
+            <input type="text" [(ngModel)]="vehicle.Model">
+          </div>
+
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon1">Manufactor</span>
+            <input type="text" [(ngModel)]="vehicle.Manufactor">
+          </div>
+      </li>
+    </ul>
+
+    <label>Branches:</label>
+    <ul>
+      <li *ngFor="let branch of service.Branches">
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon1">Address</span>
+            <input type="text" [(ngModel)]="branch.Address">
+          </div>
+      </li>
+    </ul>
+
+    <label>Comments:</label>
+    <ul>
+      <li *ngFor="let comment of service.Comments">
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon1">Text</span>
+            <input type="text" [(ngModel)]="comment.Text">
+          </div>
+      </li>
+    </ul>
+
+    <form  #f="ngForm" (ngSubmit)="addComment(f.value)">
+        <div>
+          <label>Comment</label>
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input id="Text" type="text" style="width:fit-content" class="form-control" placeholder="Enter Text" name="Text" ngModel required #Text = "ngModel" aria-describedby="basic-addon1">
+          </div>
+          <button class="btn btn-primary" type="submit">Add Comment</button>
+        </div>
+      </form>
+
+      <form  #f="ngForm" (ngSubmit)="rateService(f.value)">
+          <div>
+              <label>Rate</label>
+            <div class="input-group ">
+              <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+              <input id="Rate" type="text" style="width:fit-content" class="form-control" placeholder="Enter Rate" name="Rate" ngModel required #Rate = "ngModel" aria-describedby="basic-addon1">
+            </div>
+            <button class="btn btn-primary" type="submit">Rate</button>
+          </div>
+        </form>
+
+</div>
+

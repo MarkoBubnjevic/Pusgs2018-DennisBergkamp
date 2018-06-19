@@ -26,12 +26,16 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IEnumerable<Vehicle> GetVehicles()
         {
             return unitOfWork.Vehicles.GetAll();
         }
 
         [ResponseType(typeof(Vehicle))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult GetVehicles(int id)
         {
             Vehicle rent = unitOfWork.Vehicles.Get(id);
@@ -44,6 +48,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PutVehicle(int id, Vehicle rent)
         {
             if (!ModelState.IsValid)
@@ -77,6 +83,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Vehicle))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PostVehicles(Vehicle rent)
         {
             if (!ModelState.IsValid)
@@ -91,6 +99,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Vehicle))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult DeleteVehicle(int id)
         {
             Vehicle rent = unitOfWork.Vehicles.Get(id);
@@ -99,7 +109,9 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
-            unitOfWork.Vehicles.Remove(rent);
+            rent.Deleted = true;
+
+            unitOfWork.Vehicles.Update(rent);
             unitOfWork.Complete();
 
             return Ok(rent);

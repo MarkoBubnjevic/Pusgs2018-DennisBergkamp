@@ -25,12 +25,16 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IEnumerable<Branch> GetBranches()
         {
             return unitOfWork.Branches.GetAll();
         }
 
         [ResponseType(typeof(Branch))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult GetBranches(int id)
         {
             Branch branch = unitOfWork.Branches.Get(id);
@@ -43,6 +47,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PutBranch(int id, Branch branch)
         {
             if (!ModelState.IsValid)
@@ -76,6 +82,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Branch))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PostBranches(BranchBindingModel branch)
         {
             if (!ModelState.IsValid)
@@ -115,6 +123,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Branch))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult DeleteBranch(int id)
         {
             Branch branch = unitOfWork.Branches.Get(id);
@@ -123,7 +133,8 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
-            unitOfWork.Branches.Remove(branch);
+            branch.Deleted = true;
+            unitOfWork.Branches.Update(branch);
             unitOfWork.Complete();
 
             return Ok(branch);

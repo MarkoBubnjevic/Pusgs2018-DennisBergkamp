@@ -8,9 +8,13 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork.Interface;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace RentApp.Controllers
 {
@@ -24,12 +28,16 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IEnumerable<Comment> GetComments()
         {
             return unitOfWork.Comments.GetAll();
         }
 
         [ResponseType(typeof(Comment))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult GetComments(int id)
         {
             Comment branch = unitOfWork.Comments.Get(id);
@@ -42,6 +50,8 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PutComment(int id, Comment branch)
         {
             if (!ModelState.IsValid)
@@ -75,20 +85,36 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(Branch))]
-        public IHttpActionResult PostComments(Comment branch)
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult PostComments(CommentBindingModel branch)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            unitOfWork.Comments.Add(branch);
+            string name = User.Identity.Name;
+
+
+            Comment com = new Comment()
+            {
+                Text = branch.Text,
+                DateTime = DateTime.Now,
+                Author = new AppUser()
+            };
+            
+
+
+            unitOfWork.Comments.Add(com);
             unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = branch.Id }, branch);
         }
 
         [ResponseType(typeof(Comment))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult DeleteComment(int id)
         {
             Comment branch = unitOfWork.Comments.Get(id);
@@ -97,7 +123,8 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
-            unitOfWork.Comments.Remove(branch);
+            branch.Deleted = true;
+            unitOfWork.Comments.Update(branch);
             unitOfWork.Complete();
 
             return Ok(branch);

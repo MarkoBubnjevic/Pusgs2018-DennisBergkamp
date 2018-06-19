@@ -25,6 +25,8 @@ namespace RentApp.Controllers
         }
 
         //GET: api/AppUsers
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IEnumerable<AppUser> GetAppUsers()
         {
             return unitOfWork.AppUsers.GetAll();
@@ -32,6 +34,8 @@ namespace RentApp.Controllers
 
         //GET: api/AppUsers/5
         [ResponseType(typeof(AppUser))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult GetAppUser(int id)
         {
             AppUser service = unitOfWork.AppUsers.Get(id);
@@ -45,6 +49,8 @@ namespace RentApp.Controllers
 
         //PUT: api/AppUsers/5
         [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PutAppUser(int id, AppUser appUser)
         {
             if (!ModelState.IsValid)
@@ -80,6 +86,8 @@ namespace RentApp.Controllers
 
         //POST: api/AppUsers
         [ResponseType(typeof(AppUser))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult PostAppUser(AppUser appUser)
         {
             if (!ModelState.IsValid)
@@ -96,6 +104,8 @@ namespace RentApp.Controllers
 
         //DELETE: api/AppUsers/5
         [ResponseType(typeof(AppUser))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
         public IHttpActionResult DeleteAppUser(int id)
         {
             AppUser appUser = unitOfWork.AppUsers.Get(id);
@@ -104,7 +114,8 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
-            unitOfWork.AppUsers.Remove(appUser);
+            appUser.Deleted = true;
+            unitOfWork.AppUsers.Update( appUser);
             unitOfWork.Complete();
 
             return Ok(appUser);

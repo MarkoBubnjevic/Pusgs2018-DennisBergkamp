@@ -4,20 +4,20 @@ export class Comment {
     Id: number;
     Deleted: boolean;
     DateTime : Date;
-    TextComment:string;
+    Text:string;
     Author:AppUser;
      
 
     constructor( Id: number,
         Deleted: boolean,
         DateTime : Date,
-        TextComment:string,
+        TextCom:string,
         Author:AppUser) {
 
         this.Id=Id;
         this.Deleted=Deleted;
         this.DateTime=DateTime;
-        this.TextComment=TextComment;
+        this.Text=TextCom;
         this.Author=Author;
 
     }

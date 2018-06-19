@@ -29,6 +29,7 @@ import { VehicleComponent } from './vehicle/vehicle.component';
 import { TypeOfVehicleComponent } from './type-of-vehicle/type-of-vehicle.component';
 import { SerPreviewComponent } from './ser-preview/ser-preview.component';
 import { CommentComponent } from './comment/comment.component';
+import { ApproveComponent } from './approve/approve.component';
 
 const Routes = [
   {
@@ -89,7 +90,8 @@ const Routes = [
     VehicleComponent,
     TypeOfVehicleComponent,
     SerPreviewComponent,
-    CommentComponent
+    CommentComponent,
+    ApproveComponent
   ],
   imports: [
     BrowserModule,

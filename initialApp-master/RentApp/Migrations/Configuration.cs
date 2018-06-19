@@ -20,9 +20,9 @@ namespace RentApp.Migrations
 
         protected override void Seed(RentApp.Persistance.RADBContext context)
         {
-            Branch branch1 = new Branch() { Deleted = false, Address = "Bulevar Oslobodjenja 123", Latitude = 22.22, Longitude = 44.44, Logo = "prva putanja do slike" };
-            Branch branch2 = new Branch() { Deleted = false, Address = "Bulevar Kralja Petra 45", Latitude = 11.32, Longitude = 53.44, Logo = "druga putanja do slike" };
-            Branch branch3 = new Branch() { Deleted = false, Address = "Bulevar Cara Lazara 42", Latitude = 31.33, Longitude = 25.77, Logo = "treca putanja do slike" };
+            Branch branch1 = new Branch() { Deleted = false, Address = "Valentina vodnika 18", Latitude = 45.256400, Longitude = 19.836926, Logo = "prva putanja do slike" };
+            Branch branch2 = new Branch() { Deleted = false, Address = "Bulevar Narodnog Fronta 23", Latitude = 45.239722, Longitude = 19.836132, Logo = "druga putanja do slike" };
+            Branch branch3 = new Branch() { Deleted = false, Address = "Prizrenska 20", Latitude = 45.284714, Longitude = 19.838642, Logo = "treca putanja do slike" };
 
             context.Branches.AddOrUpdate(a => a.Id, branch1);
             context.Branches.AddOrUpdate(a => a.Id, branch2);
@@ -123,7 +123,7 @@ namespace RentApp.Migrations
             {
                 var store = new RoleStore<IdentityRole>(context);
                 var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "AppUser" };
+                var role = new IdentityRole { Name = "NotAuthenticated" };
 
                 manager.Create(role);
             }

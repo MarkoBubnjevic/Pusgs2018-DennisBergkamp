@@ -87,6 +87,17 @@ namespace RentApp.Models
 
     }
 
+    public class CommentBindingModel
+    {
+        [Required]
+        [Display(Name = "Text")]
+        public string Text { get; set; }
+
+        [Required]
+        [Display(Name = "ServiceName")]
+        public double ServiceName { get; set; }
+    }
+
     public class RegisterExternalBindingModel
     {
         [Required]
