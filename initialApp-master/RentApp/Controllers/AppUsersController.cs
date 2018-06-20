@@ -11,6 +11,9 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork.Interface;
+using RentApp.Models;
+using System.Net.Mail;
+using System.Text;
 
 namespace RentApp.Controllers
 {
@@ -18,6 +21,8 @@ namespace RentApp.Controllers
     {
 
         private readonly IUnitOfWork unitOfWork;
+
+        private readonly string PASSWORD = "!anuar192DP168";
 
         public AppUsersController(IUnitOfWork unitOfWork)
         {
@@ -47,6 +52,35 @@ namespace RentApp.Controllers
             return Ok(service);
         }
 
+
+        [HttpGet]
+        [Route("api/AppUsers/RetInfo/{username}")]
+        [ResponseType(typeof(AppUser))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult GetAppUserFromEmail(string username)
+        {
+            var appusers = unitOfWork.AppUsers.GetAll();
+
+            var appUser = new AppUser();
+
+            foreach (var appu in appusers)
+            {
+                if (appu.Username == username)
+                {
+                    appUser = appu;
+                }
+            }
+
+
+            if (appUser == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(appUser);
+        }
+
         //PUT: api/AppUsers/5
         [ResponseType(typeof(void))]
         //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
@@ -67,6 +101,75 @@ namespace RentApp.Controllers
             {
                 unitOfWork.AppUsers.Update(appUser);
                 unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AppUserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
+
+        [HttpPut]
+        [Route("api/AppUsers/Approve/{id}")]
+        [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult ApproveAppUser(int id, RateBindingModel appUser)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var appusers = unitOfWork.AppUsers.GetAll();
+
+            var appuEdit = new AppUser();
+
+            foreach(var appu in appusers)
+            {
+                if(appu.Id == id)
+                {
+                    appuEdit = appu;
+                }
+            }
+
+            appuEdit.Activated = true;
+
+            try
+            {
+                unitOfWork.AppUsers.Update(appuEdit);
+                unitOfWork.Complete();
+
+                //string your_id = "kristijansalaji20@gmail.com";
+                //string your_password = PASSWORD;
+                
+                //SmtpClient client = new SmtpClient();
+                //client.Port = 587;
+                //client.Host = "smtp.gmail.com";
+                //client.EnableSsl = true;
+                //client.Timeout = 10000;
+                //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //client.UseDefaultCredentials = false;
+                //client.Credentials = new System.Net.NetworkCredential(your_id, your_password);
+
+                //MailMessage mm = new MailMessage(your_id, "kristijan.salaji@outlook.com");
+                //mm.BodyEncoding = UTF8Encoding.UTF8;
+                //mm.Subject = "CODE FOR FORUM";
+                //mm.Body = "NALOG JE ODOBREN!";
+                //mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+                //client.Send(mm);
+
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { AppUser } from '../../models/appuser.model';
 import { LogInModel } from '../../models/login.model';
 import { Body } from '@angular/http/src/body';
+import { UserInfo } from '../../models/userinfo.model';
 
 
 
@@ -64,6 +65,18 @@ export class LoginService {
     
               localStorage.setItem('jwt', jwt)
               localStorage.setItem('role', role);
+
+              let y= this.httpClient.get<UserInfo>('http://localhost:51680/api/Account/UserInfo');
+              y.subscribe(
+                res =>{
+                    let userInfo : UserInfo;
+                    userInfo = res;
+                    localStorage.setItem('username', userInfo.Email);
+                },
+                err =>{
+                    console.log(err);
+                }
+              )
             },
             err => {
               console.log("Error occured");

@@ -5,6 +5,7 @@ import { Comment } from "src/app/models/comment.model";
 export class Service {
     Id: number;
     Deleted: boolean;
+    Approved:boolean;
     Name:string;
     Logo : String;
     Email:String;
@@ -17,6 +18,7 @@ export class Service {
 
     constructor(Id: number,
         Deleted: boolean,
+        Approved: boolean,
         Name:string,
         Logo : String,
         Email:String,
@@ -29,6 +31,7 @@ export class Service {
        
         this.Id=Id;
         this.Deleted=Deleted;
+        this.Approved=Approved;
         this.Name=Name;
         this.Logo=Logo;
         this.Email=Email;

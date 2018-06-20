@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {ProfileService} from './profileService/profile.service';
 import { Service } from 'src/app/models/service.model';
 import { AppUser } from 'src/app/models/appuser.model';
+import { EmailBM } from '../models/emailBM.model';
 
 @Component({
   selector: 'app-profile',
@@ -35,7 +36,9 @@ export class ProfileComponent implements OnInit {
   }
 
   callGet(){
-    this.profileService.getUser(4)
+    let username: string;
+    username = localStorage.username;
+    this.profileService.getUserFromUsername(username)
       .subscribe(
         data => {
           this.appUser = data;
@@ -44,9 +47,6 @@ export class ProfileComponent implements OnInit {
           console.log(error);
         })
   }
-
-
-
 }
 
 

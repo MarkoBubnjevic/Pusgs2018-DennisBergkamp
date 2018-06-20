@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { AppUser } from '../../models/appuser.model';
+import { EmailBM } from '../../models/emailBM.model';
 
 
 @Injectable({
@@ -33,6 +34,10 @@ export class ProfileService {
     putUser(id:number,appUser:AppUser): Observable<AppUser> {
       return this.httpClient.put<AppUser>('http://localhost:51680/api/AppUsers/'+ id,appUser)
     
+    }
+
+    getUserFromUsername(username: string): Observable<AppUser> {
+      return this.httpClient.get<AppUser>('http://localhost:51680/api/AppUsers/RetInfo/'+username);
     }
 
   

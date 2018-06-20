@@ -12,6 +12,7 @@ using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork.Interface;
 using System.Web.Http.ModelBinding;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
@@ -83,7 +84,120 @@ namespace RentApp.Controllers
         return StatusCode(HttpStatusCode.NoContent);
     }
 
-    [ResponseType(typeof(Service))]
+
+        [HttpPut]
+        [Route("api/Services/Rate/{id}")]
+        [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult RateService(int id, RateBindingModel rate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var services = unitOfWork.Services.GetAll();
+            var serviceEdit = new Service();
+
+            foreach(var s in services)
+            {
+                if (s.Id == id)
+                {
+                    serviceEdit = s;
+                }
+            }
+
+            float gradeValue = ((serviceEdit.NumberOfGrades * serviceEdit.AverageGrade) + (float)rate.Rating) / (serviceEdit.NumberOfGrades + 1);
+            serviceEdit.AverageGrade = gradeValue;
+            serviceEdit.NumberOfGrades++;
+
+            try
+            {
+                unitOfWork.Services.Update(serviceEdit);
+                unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ServiceExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPut]
+        [Route("api/Services/Approve/{id}")]
+        [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult ApproveService(int id, RateBindingModel rate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var services = unitOfWork.Services.GetAll();
+            var serviceEdit = new Service();
+
+            foreach (var s in services)
+            {
+                if (s.Id == id)
+                {
+                    serviceEdit = s;
+                }
+            }
+
+            serviceEdit.Approved = true;
+
+            try
+            {
+                unitOfWork.Services.Update(serviceEdit);
+                unitOfWork.Complete();
+
+                //string your_id = "kristijansalaji20@gmail.com";
+                //string your_password = PASSWORD;
+
+                //SmtpClient client = new SmtpClient();
+                //client.Port = 587;
+                //client.Host = "smtp.gmail.com";
+                //client.EnableSsl = true;
+                //client.Timeout = 10000;
+                //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //client.UseDefaultCredentials = false;
+                //client.Credentials = new System.Net.NetworkCredential(your_id, your_password);
+
+                //MailMessage mm = new MailMessage(your_id, "kristijan.salaji@outlook.com");
+                //mm.BodyEncoding = UTF8Encoding.UTF8;
+                //mm.Subject = "CODE FOR FORUM";
+                //mm.Body = "NALOG JE ODOBREN!";
+                //mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+                //client.Send(mm);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ServiceExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [ResponseType(typeof(Service))]
         //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
         //[AllowAnonymous]
         public IHttpActionResult PostService(Service service)

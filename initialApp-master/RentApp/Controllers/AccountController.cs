@@ -48,12 +48,14 @@ namespace RentApp.Controllers
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-            return new UserInfoViewModel
+            var retval= new UserInfoViewModel
             {
-                Email = User.Identity.GetUserName(),
+                Email = externalLogin.UserName,
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
+
+            return retval;
         }
 
         // POST api/Account/Logout

@@ -87,6 +87,22 @@ namespace RentApp.Models
 
     }
 
+    public class RateBindingModel
+    {
+        
+        [Required]
+        [Display(Name = "Rating")]
+        public double Rating { get; set; }
+    }
+
+    public class EmailBindingModel
+    {
+
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
+
     public class CommentBindingModel
     {
         [Required]
@@ -95,7 +111,7 @@ namespace RentApp.Models
 
         [Required]
         [Display(Name = "ServiceName")]
-        public double ServiceName { get; set; }
+        public string ServiceName { get; set; }
     }
 
     public class RegisterExternalBindingModel

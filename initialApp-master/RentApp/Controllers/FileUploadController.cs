@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RentApp.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,7 +25,7 @@ namespace RentApp.Controllers
             {
 
                 var httpRequest = HttpContext.Current.Request;
-
+               // var branch = JsonConvert.DeserializeObject<Branch>(httpRequest.Form["branch"]);
                 foreach (string file in httpRequest.Files)
                 {
                     HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);

@@ -50,6 +50,10 @@ const Routes = [
     component: VehicleComponent
   },
   {
+    path: "approve",
+    component: ApproveComponent
+  },
+  {
     path: "tov",
     component: TypeOfVehicleComponent
   },

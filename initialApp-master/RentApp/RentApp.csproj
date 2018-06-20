@@ -321,6 +321,18 @@
     <Compile Include="Migrations\201806181349184_Logicko brisanje.Designer.cs">
       <DependentUpon>201806181349184_Logicko brisanje.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806201044067_Approved in Service.cs" />
+    <Compile Include="Migrations\201806201044067_Approved in Service.Designer.cs">
+      <DependentUpon>201806201044067_Approved in Service.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806201139381_email and Role in Appuser.cs" />
+    <Compile Include="Migrations\201806201139381_email and Role in Appuser.Designer.cs">
+      <DependentUpon>201806201139381_email and Role in Appuser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806201230194_username in appuser.cs" />
+    <Compile Include="Migrations\201806201230194_username in appuser.Designer.cs">
+      <DependentUpon>201806201230194_username in appuser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -462,6 +474,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806181349184_Logicko brisanje.resx">
       <DependentUpon>201806181349184_Logicko brisanje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806201044067_Approved in Service.resx">
+      <DependentUpon>201806201044067_Approved in Service.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806201139381_email and Role in Appuser.resx">
+      <DependentUpon>201806201139381_email and Role in Appuser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806201230194_username in appuser.resx">
+      <DependentUpon>201806201230194_username in appuser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -61,9 +61,9 @@ namespace RentApp.Migrations
             SaveChanges(context);
 
 
-            AppUser user1 = new AppUser() { Deleted = false, FullName = "Marko Markovic", Birthday = DateTime.Now, Activated = false, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(1) } };
-            AppUser user2 = new AppUser() { Deleted = false, FullName = "Jovan Jovanovic", Birthday = DateTime.Now, Activated = true, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(2) } };
-            AppUser user3 = new AppUser() { Deleted = false, FullName = "Ilija Ilic", Birthday = DateTime.Now, Activated = false, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(3) } };
+            AppUser user1 = new AppUser() { Deleted = false, Email = "marko@gmail.com", Role = "", FullName = "Marko Markovic", Birthday = DateTime.Now, Activated = false, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(1) } };
+            AppUser user2 = new AppUser() { Deleted = false, Email = "jovan@gmail.com", Role = "", FullName = "Jovan Jovanovic", Birthday = DateTime.Now, Activated = true, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(2) } };
+            AppUser user3 = new AppUser() { Deleted = false, Email = "ilija@gmail.com", Role = "", FullName = "Ilija Ilic", Birthday = DateTime.Now, Activated = false, PersonalDocument = "putanja do slike", Renting = new List<Rent>() { context.Rents.Find(3) } };
 
             context.AppUsers.AddOrUpdate(a => a.Id, user1);
             context.AppUsers.AddOrUpdate(a => a.Id, user2);
@@ -82,9 +82,9 @@ namespace RentApp.Migrations
             SaveChanges(context);
 
 
-            Service service1 = new Service() { Deleted = false, Name = "Prvi servis", Logo = "putanja do slike", Email = "servis1@gmail.com", Description = "opis prvog servisa", AverageGrade = 8, NumberOfGrades = 2, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
-            Service service2 = new Service() { Deleted = false, Name = "Drugi servis", Logo = "putanja do slike", Email = "servis2@gmail.com", Description = "opis drugog servisa", AverageGrade = 6, NumberOfGrades = 4, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
-            Service service3 = new Service() { Deleted = false, Name = "Treci servis", Logo = "putanja do slike", Email = "servis3@gmail.com", Description = "opis treceg servisa", AverageGrade = 9, NumberOfGrades = 3, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
+            Service service1 = new Service() { Deleted = false, Approved = true, Name = "Prvi servis", Logo = "putanja do slike", Email = "servis1@gmail.com", Description = "opis prvog servisa", AverageGrade = 8, NumberOfGrades = 2, Vehicles = new List<Vehicle>() { context.Vechiles.Find(1) }, Branches = new List<Branch>() { context.Branches.Find(1) }, Comments = new List<Comment>() { context.Comments.Find(1) } };
+            Service service2 = new Service() { Deleted = false, Approved = true, Name = "Drugi servis", Logo = "putanja do slike", Email = "servis2@gmail.com", Description = "opis drugog servisa", AverageGrade = 6, NumberOfGrades = 4, Vehicles = new List<Vehicle>() { context.Vechiles.Find(2) }, Branches = new List<Branch>() { context.Branches.Find(2) }, Comments = new List<Comment>() { context.Comments.Find(2) } };
+            Service service3 = new Service() { Deleted = false, Approved = false, Name = "Treci servis", Logo = "putanja do slike", Email = "servis3@gmail.com", Description = "opis treceg servisa", AverageGrade = 9, NumberOfGrades = 3, Vehicles = new List<Vehicle>() { context.Vechiles.Find(3) }, Branches = new List<Branch>() { context.Branches.Find(3) }, Comments = new List<Comment>() { context.Comments.Find(3) } };
 
             context.Services.AddOrUpdate(a => a.Id, service1);
             context.Services.AddOrUpdate(a => a.Id, service2);
@@ -152,6 +152,8 @@ namespace RentApp.Migrations
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
                 var _appUser = context.AppUsers.FirstOrDefault(a => a.FullName == "Admin Adminovic");
+                _appUser.Role = "Admin";
+                _appUser.Username = "admin";
                 var user = new RAIdentityUser() { Id = "admin", UserName = "admin", Email = "admin@yahoo.com", PasswordHash = RAIdentityUser.HashPassword("admin"), AppUserId = _appUser.Id, AppUser = _appUser };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "Admin");
@@ -162,7 +164,49 @@ namespace RentApp.Migrations
             {
 
                 var _appUser = context.AppUsers.FirstOrDefault(a => a.FullName == "AppUser AppUserovic");
+                _appUser.Role = "AppUser";
+                _appUser.Username = "appu";
                 var user = new RAIdentityUser() { Id = "appu", UserName = "appu", Email = "appu@yahoo.com", PasswordHash = RAIdentityUser.HashPassword("appu"), AppUserId = _appUser.Id, AppUser = _appUser };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "AppUser");
+
+            }
+
+
+            if (!context.Users.Any(u => u.UserName == "marko"))
+
+            {
+
+                var _appUser = context.AppUsers.FirstOrDefault(a => a.FullName == "Marko Markovic");
+                _appUser.Role = "Manager";
+                _appUser.Username = "marko";
+                var user = new RAIdentityUser() { Id = "marko", UserName = "marko", Email = _appUser.Email, PasswordHash = RAIdentityUser.HashPassword("marko"), AppUserId = _appUser.Id, AppUser = _appUser };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "Manager");
+
+            }
+
+            if (!context.Users.Any(u => u.UserName == "jovan"))
+
+            {
+
+                var _appUser = context.AppUsers.FirstOrDefault(a => a.FullName == "Jovan Jovanovic");
+                _appUser.Role = "NotAuthenticated";
+                _appUser.Username = "jovan";
+                var user = new RAIdentityUser() { Id = "jovan", UserName = "jovan", Email = _appUser.Email, PasswordHash = RAIdentityUser.HashPassword("jovan"), AppUserId = _appUser.Id, AppUser = _appUser };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "NotAuthenticated");
+
+            }
+
+            if (!context.Users.Any(u => u.UserName == "ilija"))
+
+            {
+
+                var _appUser = context.AppUsers.FirstOrDefault(a => a.FullName == "Ilija Ilic");
+                _appUser.Role = "AppUser";
+                _appUser.Username = "ilija";
+                var user = new RAIdentityUser() { Id = "ilija", UserName = "ilija", Email = _appUser.Email, PasswordHash = RAIdentityUser.HashPassword("ilija"), AppUserId = _appUser.Id, AppUser = _appUser };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
 

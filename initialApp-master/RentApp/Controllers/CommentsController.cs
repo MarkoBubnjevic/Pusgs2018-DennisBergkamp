@@ -97,19 +97,33 @@ namespace RentApp.Controllers
             string name = User.Identity.Name;
 
 
+            var services = unitOfWork.Services.GetAll();
+
+            var serAdd = new Service();
+
+            foreach(var service in services)
+            {
+                if(service.Name == branch.ServiceName)
+                {
+                    serAdd = service;
+                }
+            }
+
             Comment com = new Comment()
             {
                 Text = branch.Text,
                 DateTime = DateTime.Now,
                 Author = new AppUser()
             };
-            
 
+
+            serAdd.Comments.Add(com);
 
             unitOfWork.Comments.Add(com);
+            unitOfWork.Services.Update(serAdd);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = branch.Id }, branch);
+            return CreatedAtRoute("DefaultApi", new { id = com.Id }, com);
         }
 
         [ResponseType(typeof(Comment))]

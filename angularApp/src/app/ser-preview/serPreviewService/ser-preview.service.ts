@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Service } from '../../models/service.model';
 import { Comment } from '../../models/comment.model';
 import { CommentBindingModel } from '../../models/commentBM.model';
+import { Rate } from '../../models/rate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,19 @@ export class SerPreviewService {
   }
 
   putComment(comment:CommentBindingModel): Observable<CommentBindingModel> {
-    return this.httpClient.put<CommentBindingModel>('http://localhost:51680/api/Comments/',comment);
+    return this.httpClient.post<CommentBindingModel>('http://localhost:51680/api/Comments',comment);
   }
+
+  deleteComment(id: number){
+    return this.httpClient.delete("http://localhost:51680/api/Comments/"+id)
+  }
+
+  updateComment(id:number,comment:Comment): Observable<Comment> {
+    return this.httpClient.put<Comment>('http://localhost:51680/api/Comments/'+ id,comment)
+  }
+
+  rateService(id:number,rate:Rate): Observable<Rate> {
+    return this.httpClient.put<Rate>('http://localhost:51680/api/Services/Rate/'+ id,rate);
+  }
+
 }

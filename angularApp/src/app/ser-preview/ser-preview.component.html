@@ -51,16 +51,21 @@
     </ul>
 
     <label>Comments:</label>
-    <ul>
-      <li *ngFor="let comment of service.Comments">
-          <div class="input-group ">
-            <span class="input-group-addon" id="basic-addon1">Text</span>
-            <input type="text" [(ngModel)]="comment.Text">
-          </div>
-      </li>
-    </ul>
+      <ul>
+        <li *ngFor="let comment of comments; let i = index" >
+          <div *ngIf="checkComDeleted(i)" >
+            <div class="input-group ">
+              <span class="input-group-addon" id="basic-addon1">Text</span>
+              <input type="text" [(ngModel)]="comment.Text">
+            </div>
+            <button class="btn  btn-danger"  (click)="deleteComment(comment.Id)">Delete </button>
+            <button class="btn  btn-primary"  (click)="saveComment(i)">Save </button>
+        </div>
+        </li>
+      </ul>
 
-    <form  #f="ngForm" (ngSubmit)="addComment(f.value)">
+    <form  #f1="ngForm" (ngSubmit)="addComment(f1.value)">
+
         <div>
           <label>Comment</label>
           <div class="input-group ">
@@ -69,18 +74,18 @@
           </div>
           <button class="btn btn-primary" type="submit">Add Comment</button>
         </div>
-      </form>
+    </form>
 
-      <form  #f="ngForm" (ngSubmit)="rateService(f.value)">
+    <form  #f2="ngForm" (ngSubmit)="rateService(f2.value)">
           <div>
               <label>Rate</label>
             <div class="input-group ">
               <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
-              <input id="Rate" type="text" style="width:fit-content" class="form-control" placeholder="Enter Rate" name="Rate" ngModel required #Rate = "ngModel" aria-describedby="basic-addon1">
+              <input id="Rating" type="text" style="width:fit-content" class="form-control" placeholder="Enter Rating" name="Rating" ngModel required #Rating = "ngModel" aria-describedby="basic-addon1">
             </div>
-            <button class="btn btn-primary" type="submit">Rate</button>
-          </div>
-        </form>
+        <button class="btn btn-primary" type="submit">Rate</button>
+      </div>
+    </form>
 
 </div>
 

@@ -26,6 +26,10 @@ export class BranchService {
   }
 
   addBranch(newMember): Observable<any> {
+
+    //let body = new FormData();
+    //body.append('image', )
+    //body.append('branch', JSON.stringify(newMember))
     return this.httpClient.post("http://localhost:51680/api/Branches", newMember)
   }
 

@@ -16,6 +16,6 @@ export class LoginComponent implements OnInit {
   }
 
   callTokens(logInModel: LogInModel){
-        this.loginService.getTheToken(logInModel);
-      }
+      this.loginService.getTheToken(logInModel);
+  }
 }
