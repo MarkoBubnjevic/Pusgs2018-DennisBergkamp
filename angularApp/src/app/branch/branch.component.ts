@@ -40,6 +40,7 @@ export class BranchComponent implements OnInit {
   }
 
   addBranch(branch: Branch, form: NgForm){
+    branch.Logo = this.url;
     this.branchService.addBranch(branch)
     .subscribe(
       data => {

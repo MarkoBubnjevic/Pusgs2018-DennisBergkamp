@@ -31,6 +31,8 @@ import { SerPreviewComponent } from './ser-preview/ser-preview.component';
 import { CommentComponent } from './comment/comment.component';
 import { ApproveComponent } from './approve/approve.component';
 
+import { FileSelectDirective } from 'ng2-file-upload';
+
 const Routes = [
   {
     path: "login",
@@ -95,7 +97,8 @@ const Routes = [
     TypeOfVehicleComponent,
     SerPreviewComponent,
     CommentComponent,
-    ApproveComponent
+    ApproveComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,

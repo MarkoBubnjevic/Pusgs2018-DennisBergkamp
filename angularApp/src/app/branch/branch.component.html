@@ -5,6 +5,16 @@
       <label>Add Branch:</label>
       <br>
 
+      <form  #form = "ngForm" class="groove">
+        <!-- File Button --> 
+          <label class="col-md-4 control-label" for="Logo">Logo</label>
+            <input multiple type="file" name="photo" ng2FileSelect [uploader]="uploader" enctype = "multipart/form-data"/>
+            <button type="button" class ="btn btn-success btn-s"
+            (click)="uploader.uploadAll()"
+            [disabled] ="!uploader.getNotUploadedItems().length">Upload Image</button>
+      
+      </form>
+
      
     <label>Service:</label>
       <select id="ServiceName" ngModel #ServiceName="ngModel" name="ServiceName">
@@ -12,10 +22,6 @@
       </select>
       
         <br>
-      <div class="input-group ">
-        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-        <input id="Logo" type="text" style="width:fit-content" class="form-control" placeholder="Enter Logo" name="Logo" ngModel required #Logo = "ngModel" aria-describedby="basic-addon1">
-      </div>
 
       <div class="input-group ">
         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-map-marker"></i></span>
@@ -41,10 +47,7 @@
     <label><b>All Branches:</b></label>
     <ul class="container">
         <li *ngFor="let branchs of branches; let i = index">
-          <div class="input-group ">
-            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-            <input type="text" [(ngModel)]="branchs.Logo">
-          </div>
+          <td style="width: 250px;"><label class="col-md-4 control-label">Logo</label><img width="200" src='{{branchs.Logo}}' /></td>
          
           <div class="input-group ">
             <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-map-marker"></i></span>
