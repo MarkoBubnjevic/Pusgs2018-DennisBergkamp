@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import {SerService} from './serService/ser.service';
 import { Service } from 'src/app/models/service.model';
 
+import {FileUploader,FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
+
+const URL = 'http://localhost:51680/api/Upload/user/PostBranchImage';
+
 @Component({
   selector: 'app-ser',
   templateUrl: './ser.component.html',
@@ -12,10 +16,28 @@ export class SerComponent implements OnInit {
 
   services: Service[];
 
-  constructor(private serService: SerService) { }
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
+
+  url: string;
+
+  constructor(private serService: SerService) {
+    this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false;};
+    this.uploader.onCompleteItem = (item: any, response: any,status: any, headers: any) => {
+        this.url=JSON.parse(response);        
+    };
+   }
 
   ngOnInit() {
     this.callGet();
+  }
+
+  uploadFile: any;
+
+  handleUpload(data): void{
+    if(data && data.response){
+      data = JSON.parse(data.response);
+      this.uploadFile = data;
+    }
   }
 
   callGet(){
@@ -30,6 +52,7 @@ export class SerComponent implements OnInit {
   }
 
   addService(service: Service){
+    service.Logo=this.url;
     this.serService.postService(service)
     .subscribe(
       data => {

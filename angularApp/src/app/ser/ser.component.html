@@ -4,15 +4,22 @@
   <br>
   <form  #f="ngForm" (ngSubmit)="addService(f.value)">
     <div>
+
+        <form  #form = "ngForm" class="groove">
+            <!-- File Button --> 
+              <label class="col-md-4 control-label" for="Logo">Logo</label>
+                <input multiple type="file" name="photo" ng2FileSelect [uploader]="uploader" enctype = "multipart/form-data"/>
+                <button type="button" class ="btn btn-success btn-s"
+                (click)="uploader.uploadAll()"
+                [disabled] ="!uploader.getNotUploadedItems().length">Upload Image</button>
+          
+          </form>
+
       <div class="input-group ">
         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
         <input id="Name" type="text" style="width:fit-content" class="form-control" placeholder="Enter Name" name="Name" ngModel required #Name = "ngModel" aria-describedby="basic-addon1">
       </div>
      
-      <div class="input-group ">
-        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
-        <input id="Logo" type="text" style="width:fit-content" class="form-control" placeholder="Enter Logo" name="Logo" ngModel required #Logo = "ngModel" aria-describedby="basic-addon1">
-      </div>
 
       <div class="input-group ">
         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>

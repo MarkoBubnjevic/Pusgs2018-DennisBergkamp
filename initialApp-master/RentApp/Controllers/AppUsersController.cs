@@ -152,7 +152,7 @@ namespace RentApp.Controllers
 
                 //string your_id = "kristijansalaji20@gmail.com";
                 //string your_password = PASSWORD;
-                
+
                 //SmtpClient client = new SmtpClient();
                 //client.Port = 587;
                 //client.Host = "smtp.gmail.com";

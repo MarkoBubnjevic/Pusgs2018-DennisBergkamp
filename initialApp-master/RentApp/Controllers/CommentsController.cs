@@ -97,7 +97,22 @@ namespace RentApp.Controllers
             string name = User.Identity.Name;
 
 
+            var appu = new AppUser();
+
+
+            var appusers = unitOfWork.AppUsers.GetAll();
+
+            foreach (var au in appusers)
+            {
+                if (au.Username == name)
+                {
+                    appu = au;
+                }
+            }
+
             var services = unitOfWork.Services.GetAll();
+
+
 
             var serAdd = new Service();
 
@@ -113,7 +128,7 @@ namespace RentApp.Controllers
             {
                 Text = branch.Text,
                 DateTime = DateTime.Now,
-                Author = new AppUser()
+                Author = appu
             };
 
 
