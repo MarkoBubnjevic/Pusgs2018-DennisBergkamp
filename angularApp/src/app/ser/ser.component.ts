@@ -40,6 +40,11 @@ export class SerComponent implements OnInit {
     }
   }
 
+  checkUsername(i:number)
+  {
+    return this.services[i].CreatorUserName == localStorage.username;
+  }
+
   checkUserType()
   {
     return localStorage.role == 'Admin' || localStorage.role == 'Manager';
