@@ -20,6 +20,12 @@ namespace RentApp.Persistance.Repository.Implementation
 
         }
 
+        public IEnumerable<Rent> GetAllRents()
+        {
+            return RADBContext.Rents.Include(i => i.Vehicle).Include(a => a.RetBranch).Include(sa => sa.GetBranch).ToList();
+
+        }
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
     }
 }

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppUser } from '../../models/appuser.model';
 import { EmailBM } from '../../models/emailBM.model';
+import { FinishProfile } from '../../models/finishProfile.model';
 
 
 @Injectable({
@@ -40,5 +41,7 @@ export class ProfileService {
       return this.httpClient.get<AppUser>('http://localhost:51680/api/AppUsers/RetInfo/'+username);
     }
 
-  
+    finishProfile(id:number ,profileBM: FinishProfile): Observable<AppUser> {
+      return this.httpClient.put<AppUser>('http://localhost:51680/api/AppUsers/Finish/'+ id,profileBM)
+    }
 }

@@ -36,6 +36,11 @@ export class MapComponent implements OnInit {
     console.log($event.coords.lng);
   }
 
+  checkUserType()
+  {
+    return localStorage.role == 'Admin' || localStorage.role == 'Manager';
+  }
+
   addMarkers(){
     for(let item of this.branches){
       this.mapInfos.push(new MapInfo(item.Latitude, item.Longitude, 

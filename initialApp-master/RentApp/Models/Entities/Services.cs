@@ -11,6 +11,7 @@ namespace RentApp.Models.Entities
         public int Id { get; set; }
         public bool Deleted { get; set; }
         public bool Approved { get; set; }
+        public string CreatorUserName { get; set; }
         public string Name { get; set; }
         public string Logo { get; set; }
         public string Email { get; set; }

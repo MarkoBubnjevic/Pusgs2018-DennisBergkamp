@@ -1,39 +1,8 @@
 
-  <!--<div>
-    <ul>
-      <li><a [routerLink]="['/']">Services</a></li>
-      <li><a [routerLink]="['/login']">Log In</a></li>
-      <li><a [routerLink]="['/reg']">Register</a></li>
-      <li><a [routerLink]="['/rent']">Rent</a></li>
-      <li><a [routerLink]="['/map']">Map</a></li>
-      <li style="float:right"><a [routerLink]="['/profile']">Profile</a></li>
-    </ul>
-  </div>
-
-
-<router-outlet></router-outlet> -->
-
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-   
-
-    
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-          <li><a [routerLink]="['/']">Services</a></li>
-          <li><a [routerLink]="['/login']">Log In</a></li>
-          <li><a [routerLink]="['/reg']">Register</a></li>
-          <li><a [routerLink]="['/rent']">Rent</a></li>
-          <li><a [routerLink]="['/map']">Map</a></li>
-          <li><a [routerLink]="['/vehicle']">Vehicles</a></li>
-          <li><a [routerLink]="['/tov']">Types</a></li>
-          <li><a [routerLink]="['/approve']">Approve</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-          <li><a [routerLink]="['/profile']">Profile</a></li>
-      </ul>
+  <div class="row">
+    <div class="col col-lg-12">
+        <app-navbar></app-navbar>
+        <router-outlet></router-outlet>
+        <!-- <clock-component></clock-component> -->
     </div>
-  </div>
-</nav>
-
-<router-outlet></router-outlet>
+</div>

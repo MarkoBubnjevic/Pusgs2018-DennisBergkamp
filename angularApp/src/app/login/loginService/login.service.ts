@@ -9,6 +9,8 @@ import { AppUser } from '../../models/appuser.model';
 import { LogInModel } from '../../models/login.model';
 import { Body } from '@angular/http/src/body';
 import { UserInfo } from '../../models/userinfo.model';
+import { Router } from '@angular/router';
+
 
 
 
@@ -17,7 +19,7 @@ import { UserInfo } from '../../models/userinfo.model';
 })
 export class LoginService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router: Router) { }
 
   private parseData(res: Response) {
     return res.json() || [];
@@ -72,6 +74,8 @@ export class LoginService {
                     let userInfo : UserInfo;
                     userInfo = res;
                     localStorage.setItem('username', userInfo.Email);
+                    alert("you are successfully loged!");
+                    this.router.navigate(['profile']);
                 },
                 err =>{
                     console.log(err);

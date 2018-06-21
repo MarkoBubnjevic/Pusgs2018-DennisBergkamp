@@ -94,6 +94,7 @@ namespace RentApp.Controllers
             //    return BadRequest(ModelState);
             //}
 
+
             string name = User.Identity.Name;
 
 
@@ -109,6 +110,23 @@ namespace RentApp.Controllers
                     appu = au;
                 }
             }
+
+
+            bool canComment = false;
+
+            foreach(var r in appu.Renting)
+            {
+                int result = DateTime.Compare((DateTime)r.Start, (DateTime)r.End);
+
+                if (result <= 0)
+                {
+                    canComment = true;
+                }
+                    
+            }
+
+            if (!canComment)
+                return null;
 
             var services = unitOfWork.Services.GetAll();
 

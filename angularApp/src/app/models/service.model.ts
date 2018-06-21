@@ -15,6 +15,7 @@ export class Service {
     Vehicles:Vehicle[];
     Branches:Branch[];
     Comments:Comment[];
+    CreatorUserName:String;
 
     constructor(Id: number,
         Deleted: boolean,
@@ -27,7 +28,8 @@ export class Service {
         NumberOfGrades:number,
         Vehicles:Vehicle[],
         Branches:Branch[],
-        Comments:Comment[]) {
+        Comments:Comment[],
+        CreatorUserName:String) {
        
         this.Id=Id;
         this.Deleted=Deleted;
@@ -41,6 +43,7 @@ export class Service {
         this.Vehicles=Vehicles;
         this.Branches=Branches;
         this.Comments=Comments;
+        this.CreatorUserName=CreatorUserName;
 
     }
 }

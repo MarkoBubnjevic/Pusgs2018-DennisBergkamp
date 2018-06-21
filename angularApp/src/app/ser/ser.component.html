@@ -1,5 +1,5 @@
 
-<div class="container">
+<div *ngIf="checkUserType()" class="container">
   <label>Add Service</label>
   <br>
   <form  #f="ngForm" (ngSubmit)="addService(f.value)">
@@ -40,27 +40,29 @@
 <div class="container">
 <label>All Services:</label>
   <ul>
-    <li *ngFor="let service of services; let i = index">
-      <div class="input-group ">
-        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
-        <input type="text" [(ngModel)]="service.Name">
-      </div>
+    <li *ngFor="let service of services; let i = index" >
+      <div *ngIf="chechServiceApprove(i)">
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input type="text" [(ngModel)]="service.Name">
+        </div>
 
-      <div class="input-group ">
-        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
-        <input type="text" [(ngModel)]="service.Email">
-      </div>
-      
-      <div class="input-group ">
-        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
-        <input type="text" [(ngModel)]="service.Description">
-      </div>
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input type="text" [(ngModel)]="service.Email">
+        </div>
+        
+        <div class="input-group ">
+          <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input type="text" [(ngModel)]="service.Description">
+        </div>
 
-      <button class="btn  btn-danger"  (click)="deleteService(service.Id)">Delete </button>
-      <button class="btn  btn-primary"  (click)="saveService(i)">Save </button>
-      <button class="btn  btn-primary"  [routerLink]="['/prev/',service.Id]">Preview </button>
-      <br>
-      <br>
+        <button *ngIf="checkUserType()" class="btn  btn-danger"  (click)="deleteService(service.Id)">Delete </button>
+        <button *ngIf="checkUserType()" class="btn  btn-primary"  (click)="saveService(i)">Save </button>
+        <button class="btn  btn-primary"  [routerLink]="['/prev/',service.Id]">Preview </button>
+        <br>
+        <br>
+     </div>
     </li>
   </ul>
 </div>

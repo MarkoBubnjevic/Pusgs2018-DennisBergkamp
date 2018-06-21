@@ -10,5 +10,7 @@ namespace RentApp.Persistance.Repository.Interface
     public interface IAppUserRepository : IRepository<AppUser,int>
     {
         IEnumerable<AppUser> GetAll(int pageIndex, int pageSize);
+
+        AppUser GetFromUsername(string username);
     }
 }

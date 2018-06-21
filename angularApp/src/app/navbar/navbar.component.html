@@ -1,0 +1,19 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['/']">Services</a></li>
+            <li *ngIf="!checkIfLogged()" ><a [routerLink]="['/login']">Log In</a></li>
+            <li *ngIf="!checkIfLogged()" ><a [routerLink]="['/reg']">Register</a></li>
+            <li *ngIf="checkRent() && checkIfLogged()" ><a [routerLink]="['/rent']">Rent</a></li>
+            <li><a [routerLink]="['/map']">Branches Map</a></li>
+            <li><a [routerLink]="['/vehicle']">Vehicles</a></li>
+            <li *ngIf="checkIfLogged() && checkUserType()" ><a [routerLink]="['/tov']">Types</a></li>
+            <li *ngIf="checkIfLogged() && checkUserType()" ><a [routerLink]="['/approve']">Approve</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li *ngIf="checkIfLogged()" ><a [routerLink]="['/profile']">Profile</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>

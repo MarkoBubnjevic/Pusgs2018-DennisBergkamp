@@ -6,20 +6,32 @@ export class Rent {
     Deleted: boolean;
     Start : string;
     End: string;
-    Branch:Branch;
+    GetBranchId:number;
+    RetBranchId:number;
+    VehicleId:number;  
+    GetBranch:Branch;
+    RetBranch:Branch;
     Vehicle:Vehicle;  
 
     constructor( Id: number,
         Deleted: boolean,
         Start : string,
         End: string,
-        Branch:Branch,
+        GetBranchId:number,
+        RetBranchId:number,
+        VehicleId:number,
+        GetBranch:Branch,
+        RetBranch:Branch,
         Vehicle:Vehicle  ) {
         this.Id=Id;
         this.Deleted=Deleted;
         this.Start=Start;
         this.End=End;
-        this.Branch=Branch;
+        this.GetBranchId=GetBranchId;
+        this.RetBranchId=RetBranchId;
+        this.VehicleId=VehicleId;
+        this.GetBranch=GetBranch;
+        this.RetBranch=RetBranch;
         this.Vehicle=Vehicle;
     }
 }

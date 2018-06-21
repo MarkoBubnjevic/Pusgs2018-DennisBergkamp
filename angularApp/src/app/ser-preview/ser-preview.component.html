@@ -40,6 +40,7 @@
             <span class="input-group-addon" id="basic-addon1">Manufactor</span>
             <input type="text" [(ngModel)]="vehicle.Manufactor">
           </div>
+          <br>
       </li>
     </ul>
 
@@ -50,6 +51,7 @@
             <span class="input-group-addon" id="basic-addon1">Address</span>
             <input type="text" [(ngModel)]="branch.Address">
           </div>
+          <br>
       </li>
     </ul>
 
@@ -61,9 +63,10 @@
               <span class="input-group-addon" id="basic-addon1">Text</span>
               <input type="text" [(ngModel)]="comment.Text">
             </div>
-            <button class="btn  btn-danger"  (click)="deleteComment(comment.Id)">Delete </button>
-            <button class="btn  btn-primary"  (click)="saveComment(i)">Save </button>
+            <button *ngIf="checkUserType()" class="btn  btn-danger"  (click)="deleteComment(comment.Id)">Delete </button>
+            <button *ngIf="checkUserType()" class="btn  btn-primary"  (click)="saveComment(i)">Save </button>
         </div>
+        <br>
         </li>
       </ul>
 

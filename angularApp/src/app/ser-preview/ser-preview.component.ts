@@ -94,6 +94,11 @@ export class SerPreviewComponent implements OnInit {
     return this.comments[i].Deleted == false;
   }
 
+  checkUserType()
+  {
+    return localStorage.role == 'Admin' || localStorage.role == 'Manager';
+  }
+
   rateService(rate:Rate){
     this.serPreviewService.rateService(this.service.Id,rate)
     .subscribe(

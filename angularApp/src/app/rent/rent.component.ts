@@ -19,7 +19,8 @@ export class RentComponent implements OnInit {
   branches: Branch[];
   appUser: AppUser;
   rentVehicle: Vehicle;
-  rentbranch: Branch;
+  rentGetbranch: Branch;
+  rentRetbranch: Branch;
   rent: Rent;
 
   constructor(private rentService: RentService) { }
@@ -38,6 +39,11 @@ export class RentComponent implements OnInit {
       error => {
         console.log(error);
       })
+  }
+  
+  checkUserType()
+  {
+    return localStorage.role == 'Admin' || localStorage.role == 'Manager';
   }
 
   getAllBranches(){
@@ -60,19 +66,26 @@ export class RentComponent implements OnInit {
      alert("Vehicle added "+this.rentVehicle.Model)
   }
 
-  addBranch(i){
-   this.rentbranch = this.branches[i];
-   alert("Branch added "+this.rentbranch.Address)
+  addGetBranch(i){
+   this.rentGetbranch = this.branches[i];
+   alert("Get Branch added "+this.rentGetbranch.Address)
   }
+
+  addRetBranch(i){
+    this.rentRetbranch = this.branches[i];
+    alert("Ret Branch added "+this.rentRetbranch.Address)
+   }
 
   finishRent(date: DateModel){
 
-    this.rent = new Rent(undefined,false,date.StartDate,date.EndDate, this.rentbranch, this.rentVehicle);
+    alert(date.StartDate +" "+date.EndDate);
+    this.rent = new Rent(undefined,false, date.StartDate, date.EndDate, this.rentGetbranch.Id,this.rentRetbranch.Id ,this.rentVehicle.Id,null,null,null);
 
     this.rentService.postRent(this.rent)
     .subscribe(
       data => {
         alert("Rent successfully added!");
+        this.getAllVehicles();
       },
       error => {
         alert("Rent error!");

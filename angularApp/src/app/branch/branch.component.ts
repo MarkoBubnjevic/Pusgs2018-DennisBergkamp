@@ -63,6 +63,11 @@ export class BranchComponent implements OnInit {
           console.log(error);
         })
   }
+  checkUserType()
+  {
+    return localStorage.role == 'Admin' || localStorage.role == 'Manager';
+  }
+
 
   getBranches(){
     this.branchService.getAllBranches()

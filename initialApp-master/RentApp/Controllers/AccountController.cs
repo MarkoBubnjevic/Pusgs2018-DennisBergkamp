@@ -17,6 +17,7 @@ using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Providers;
 using RentApp.Results;
+using RentApp.Persistance.UnitOfWork.Interface;
 
 namespace RentApp.Controllers
 {
@@ -26,15 +27,19 @@ namespace RentApp.Controllers
     {
         private const string LocalLoginProvider = "Local";
 
+        private readonly IUnitOfWork unitOfWork;
+
         public AccountController()
         {
+            
         }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IUnitOfWork unitOfWork)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            this.unitOfWork = unitOfWork; ;
         }
 
         public ApplicationUserManager UserManager { get; private set; }
@@ -315,10 +320,10 @@ namespace RentApp.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            //if (!(ModelState.IsValid))
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!(ModelState.IsValid))
+            {
+                return BadRequest(ModelState);
+            }
 
             var appUser = new AppUser();
             appUser.Activated = false;
@@ -330,13 +335,52 @@ namespace RentApp.Controllers
             appUser.FullName = model.FullName;
             appUser.PersonalDocument = "";
             appUser.Renting = new List<Rent>();
-            var user = new RAIdentityUser() { UserName = model.Username, Email = model.Email, AppUser= appUser, PasswordHash = RAIdentityUser.HashPassword(model.Password) };
+            appUser.Deleted = false;
+            appUser.Email = model.Email;
+            appUser.Role = "Client";
+            appUser.Username = model.Username;
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-            if (!result.Succeeded)
+            //var user = new RAIdentityUser() { UserName = model.Username, Email = model.Email, AppUser= appUser, PasswordHash = RAIdentityUser.HashPassword(model.Password) };
+
+            var users = unitOfWork.AppUsers.GetAll();
+
+            bool exist = false;
+
+            foreach( var u in users)
             {
-                return GetErrorResult(result);    // password 6 slova minimum mora da ima slovo i broj neko i moras specijalan znak
+                if(u.Username == model.Username)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+
+
+         
+            if (!exist)
+            {
+                unitOfWork.AppUsers.Add(appUser);
+                unitOfWork.Complete();
+
+                AppUser au = unitOfWork.AppUsers.GetFromUsername(appUser.Username );
+
+                var user = new RAIdentityUser() { Id = au.Username, UserName = au.Username, Email = au.Email, PasswordHash = RAIdentityUser.HashPassword(model.Password), AppUserId = au.Id, AppUser = au };
+
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);    // password 6 slova minimum mora da ima slovo i broj neko i moras specijalan znak
+                }
+
+                IdentityResult result2 = await  UserManager.AddToRoleAsync(user.Id, au.Role);
+
+                if (!result2.Succeeded)
+                {
+                    return GetErrorResult(result);    // password 6 slova minimum mora da ima slovo i broj neko i moras specijalan znak
+                }
+
             }
 
             return Ok();

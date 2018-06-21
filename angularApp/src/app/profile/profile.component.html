@@ -1,5 +1,8 @@
 
    <div class="container">
+
+      <td *ngIf="appUser.Activated" style="width: 250px;"><label class="col-md-4 control-label">Logo</label><img width="200" src='{{appUser.PersonalDocument}}' /></td>
+
       <div class="input-group ">
         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
         <input type="text" [(ngModel)]="appUser.Email">
@@ -15,16 +18,6 @@
         <input type="text" [(ngModel)]="appUser.Birthday">
       </div>
 
-      <div class="input-group ">
-        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-        <input type="text" [(ngModel)]="appUser.Activated">
-      </div>
-      
-      <div class="input-group ">
-        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-        <input type="text" [(ngModel)]="appUser.PersonalDocument">
-      </div>
-     
      <label><b>Rents</b></label>
       <ul>
         <li *ngFor="let rent of appUser.Renting">
@@ -34,6 +27,28 @@
       <br>
      <button class="btn btn-primary" (click)="logOut()">Log Out</button>
      <button class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
+   </div>
+   <br>
+   <br>
+   <div *ngIf="!appUser.Activated" class="container">
+      <label>Finish account</label>
+      <br>
+      <br>
+          <div>
+            <form  #form = "ngForm" class="groove">
+                <!-- File Button --> 
+                  <label class="col-md-4 control-label" for="Logo">Upload photo</label>
+                  
+                    <input multiple type="file" name="photo" ng2FileSelect [uploader]="uploader" enctype = "multipart/form-data"/>
+                    <button type="button" class ="btn btn-success btn-s"
+                    (click)="uploader.uploadAll()"
+                    [disabled] ="!uploader.getNotUploadedItems().length">Upload Image</button>
+              
+              </form>
+            </div>
+            <br>
+            <br>
+            <button class="btn btn-primary" (click)="finishProfile()">Finish</button>
    </div>
 
   

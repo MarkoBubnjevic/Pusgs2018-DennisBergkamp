@@ -32,6 +32,7 @@ import { CommentComponent } from './comment/comment.component';
 import { ApproveComponent } from './approve/approve.component';
 
 import { FileSelectDirective } from 'ng2-file-upload';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const Routes = [
   {
@@ -98,7 +99,8 @@ const Routes = [
     SerPreviewComponent,
     CommentComponent,
     ApproveComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -126,4 +128,6 @@ const Routes = [
     }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+ }

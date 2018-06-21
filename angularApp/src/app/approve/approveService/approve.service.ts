@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Service } from '../../models/service.model';
 import { AppUser } from '../../models/appuser.model';
 import { Rate } from '../../models/rate.model';
+import { Rent } from '../../models/rent.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +41,21 @@ export class ApproveService {
     return this.httpClient.get<Service[]>('http://localhost:51680/api/Services')
   }
 
+  getAllRents(): Observable<Rent[]> {
+    return this.httpClient.get<Rent[]>('http://localhost:51680/api/Rents');
+  }
+
   approveSer(id:number): Observable<Rate> {
     let rate: Rate;
     rate = new Rate(10);
     return this.httpClient.put<Rate>('http://localhost:51680/api/Services/Approve/'+ id,rate);
+  }
+
+  availableVehicle(id:number): Observable<void> {
+    return this.httpClient.get<void>('http://localhost:51680/api/Vehicles/available/'+ id);
+  }
+
+  blockSer(id:number): Observable<void> {
+    return this.httpClient.get<void>('http://localhost:51680/api/AppUsers/blockservice/'+ id);
   }
 }

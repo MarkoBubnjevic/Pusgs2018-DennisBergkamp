@@ -108,7 +108,40 @@ namespace RentApp.Controllers
                 }
             }
 
-            float gradeValue = ((serviceEdit.NumberOfGrades * serviceEdit.AverageGrade) + (float)rate.Rating) / (serviceEdit.NumberOfGrades + 1);
+            string name = User.Identity.Name;
+
+
+            var appu = new AppUser();
+
+
+            var appusers = unitOfWork.AppUsers.GetAll();
+
+            foreach (var au in appusers)
+            {
+                if (au.Username == name)
+                {
+                    appu = au;
+                }
+            }
+
+
+            bool canComment = false;
+
+            foreach (var r in appu.Renting)
+            {
+                int result = DateTime.Compare((DateTime)r.Start, (DateTime)r.End);
+
+                if (result <= 0)
+                {
+                    canComment = true;
+                }
+
+            }
+
+            if (!canComment)
+                return null;
+
+            float gradeValue = ((serviceEdit.AverageGrade + (float)rate.Rating)) / (serviceEdit.NumberOfGrades + 1);
             serviceEdit.AverageGrade = gradeValue;
             serviceEdit.NumberOfGrades++;
 

@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork.Interface;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
@@ -45,6 +46,88 @@ namespace RentApp.Controllers
             }
 
             return Ok(rent);
+        }
+
+        [HttpGet]
+        [Route("api/Vehicles/un/{id}")]
+        [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult MakeUnavailable(int id)
+        {
+            var vehicles = unitOfWork.Vehicles.GetAll();
+
+            var vehicle = new Vehicle();
+
+            foreach (var ve in vehicles)
+            {
+                if (ve.Id == id)
+                {
+                    vehicle = ve;
+                }
+            }
+
+            vehicle.Unvailable = true;
+
+            try
+            {
+                unitOfWork.Vehicles.Update(vehicle);
+                unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!VehicleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpGet]
+        [Route("api/Vehicles/available/{id}")]
+        [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult MakeAvailable(int id)
+        {
+            var vehicles = unitOfWork.Vehicles.GetAll();
+
+            var vehicle = new Vehicle();
+
+            foreach (var ve in vehicles)
+            {
+                if (ve.Id == id)
+                {
+                    vehicle = ve;
+                }
+            }
+
+            vehicle.Unvailable = false;
+
+            try
+            {
+                unitOfWork.Vehicles.Update(vehicle);
+                unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!VehicleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [ResponseType(typeof(void))]
@@ -85,17 +168,57 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Vehicle))]
         //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
         //[AllowAnonymous]
-        public IHttpActionResult PostVehicles(Vehicle rent)
+        public IHttpActionResult PostVehicles(VehicleBindingModel vehicleBM)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Vehicles.Add(rent);
+            var type = new TypeOfVehicle();
+
+            var types = unitOfWork.Types.GetAll();
+
+            foreach (var t in types)
+            {
+                if (t.Name == vehicleBM.Type)
+                {
+                    type = t;
+                }
+            }
+
+            var ser = new Service();
+
+            var services = unitOfWork.Services.GetAll();
+
+            foreach (var s in services)
+            {
+                if (s.Name == vehicleBM.ServiceName)
+                {
+                    ser = s;
+                }
+            }
+
+            var vehicle = new Vehicle()
+            {
+                Deleted = vehicleBM.Deleted,
+                Description = vehicleBM.Description,
+                Images = vehicleBM.Images,
+                Manufactor = vehicleBM.Manufactor,
+                Model = vehicleBM.Model,
+                PricePerHour =(decimal)vehicleBM.PricePerHour,
+                Type = type,
+                Unvailable = vehicleBM.Unvailable,
+                Year =(int)vehicleBM.Year
+            };
+
+
+            ser.Vehicles.Add(vehicle);
+
+            unitOfWork.Vehicles.Add(vehicle);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
+            return CreatedAtRoute("DefaultApi", new { id = vehicle.Id }, vehicle);
         }
 
         [ResponseType(typeof(Vehicle))]

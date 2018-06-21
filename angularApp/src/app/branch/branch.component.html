@@ -1,6 +1,6 @@
 
 
-<form class="container" #f="ngForm" (ngSubmit)="addBranch(f.value)">
+<form *ngIf="checkUserType()" class="container" #f="ngForm" (ngSubmit)="addBranch(f.value)">
    <div>
       <label>Add Branch:</label>
       <br>
@@ -64,8 +64,8 @@
             <input type="text" [(ngModel)]="branchs.Address">
            </div>
       
-          <button class="btn btn-primary "  (click)="deleteBranch(branchs.Id)">Delete </button>
-          <button class="btn btn-primary "  (click)="saveBranch(i)">Save </button>
+          <button *ngIf="checkUserType()" class="btn btn-primary "  (click)="deleteBranch(branchs.Id)">Delete </button>
+          <button *ngIf="checkUserType()" class="btn btn-primary "  (click)="saveBranch(i)">Save </button>
           <br>
           <br>
         </li>

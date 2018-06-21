@@ -11,6 +11,7 @@ namespace RentApp.Models.Entities
         public bool Deleted { get; set; }
         public string FullName { get; set; }
         public string Username { get; set; }
+        public bool ServiceBlock { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }
         public DateTime? Birthday { get; set; }

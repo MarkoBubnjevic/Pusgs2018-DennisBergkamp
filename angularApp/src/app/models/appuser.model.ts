@@ -10,6 +10,7 @@ export class AppUser {
     Activated:boolean;
     PersonalDocument:String;
     Renting:Rent[];
+    ServiceBlock: boolean;
 
     constructor(Id: number,
         Deleted:boolean,
@@ -19,7 +20,8 @@ export class AppUser {
         Birthday: Date,
         Activated:boolean,
         PersonalDocument:String,
-        Renting:Rent[]) {
+        Renting:Rent[],
+        Serviceblock :boolean) {
         
         this.Id=Id;
         this.Deleted = Deleted;
@@ -30,6 +32,7 @@ export class AppUser {
         this.Activated=Activated;
         this.PersonalDocument=PersonalDocument;
         this.Renting=Renting;
+        this.ServiceBlock = Serviceblock;
 
     }
 }

@@ -10,5 +10,7 @@ namespace RentApp.Persistance.Repository.Interface
     public interface IRentRepository : IRepository<Rent, int>
     {
         IEnumerable<Rent> GetAll(int pageIndex, int pageSize);
+
+        IEnumerable<Rent> GetAllRents();
     }
 }

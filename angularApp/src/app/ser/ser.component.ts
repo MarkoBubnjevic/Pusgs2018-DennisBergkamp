@@ -40,6 +40,11 @@ export class SerComponent implements OnInit {
     }
   }
 
+  checkUserType()
+  {
+    return localStorage.role == 'Admin' || localStorage.role == 'Manager';
+  }
+
   callGet(){
     this.serService.getAllServices()
       .subscribe(
@@ -53,6 +58,7 @@ export class SerComponent implements OnInit {
 
   addService(service: Service){
     service.Logo=this.url;
+    service.CreatorUserName = localStorage.username;
     this.serService.postService(service)
     .subscribe(
       data => {
@@ -66,6 +72,10 @@ export class SerComponent implements OnInit {
 
   checkRole(){
     return localStorage.role == "Admin";
+  }
+
+  chechServiceApprove(i:number){
+    return this.services[i].Approved;
   }
 
 

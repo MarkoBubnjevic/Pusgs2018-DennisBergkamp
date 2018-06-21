@@ -19,7 +19,7 @@
         </agm-marker>
       </agm-map>
     </p>
-    <button class="btn btn-primary " (click)="getBranches()">Refresh</button>
+    <button *ngIf="checkUserType()" class="btn btn-primary " (click)="getBranches()">Refresh</button>
   </div>
 
 

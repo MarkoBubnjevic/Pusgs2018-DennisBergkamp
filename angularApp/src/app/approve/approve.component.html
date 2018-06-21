@@ -12,7 +12,8 @@
             <input type="text" [(ngModel)]="user.Birthday">
           </div>
     
-          <button *ngIf="checkApprove(i)" class="btn  btn-danger"  (click)="approve(user.Id)">Approve </button>
+          <button *ngIf="checkApprove(i)" class="btn  btn-primary"  (click)="approve(user.Id)">Approve </button>
+          <button *ngIf="chackRole(i)" class="btn  btn-danger"  (click)="blockService(user.Id)">Service Block </button>
           <br>
           <br>
         </li>
@@ -39,6 +40,35 @@
           <button *ngIf="checkApproveSer(i)" class="btn  btn-danger"  (click)="approveSer(service.Id)">Approve </button>
           <br>
           <br>
+        </li>
+      </ul>
+
+      <label>All Vehicles:</label>
+      <ul>
+        <li *ngFor="let rent of rents; let i = index">
+          <div *ngIf="chechAvailableVehicle(i)">
+       
+            <td style="width: 250px;"><label class="col-md-4 control-label">Logo</label><img width="200" src='{{rent.Vehicle.Images}}' /></td>
+            
+            <div class="input-group ">
+              <span class="input-group-addon" id="basic-addon1">model</span>
+              <input type="text" [(ngModel)]="rent.Vehicle.Model">
+            </div>
+
+            <div class="input-group ">
+              <span class="input-group-addon" id="basic-addon1">Start Date</span>
+              <input type="text" [(ngModel)]="rent.Start">
+            </div>
+
+            <div class="input-group ">
+              <span class="input-group-addon" id="basic-addon1">End Date</span>
+              <input type="text" [(ngModel)]="rent.End">
+            </div>
+      
+            <button class="btn  btn-danger"  (click)="availableVehicle(rent.Vehicle.Id)">Available Vehicle </button>
+            <br>
+            <br>
+          </div>
         </li>
       </ul>
 </div>

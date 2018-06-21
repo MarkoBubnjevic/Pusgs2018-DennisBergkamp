@@ -32,6 +32,13 @@ namespace RentApp.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class FinishBindingModel
+    {
+        [Required]
+        [Display(Name = "Image")]
+        public string Image { get; set; }
+    }
+
     public class RegisterBindingModel
     {
         [Required]
@@ -60,6 +67,49 @@ namespace RentApp.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class VehicleBindingModel
+    {
+        [Required]
+        [Display(Name = "Deleted")]
+        public bool Deleted { get; set; }
+
+        [Required]
+        [Display(Name = "Model")]
+        public string Model{ get; set; }
+
+        [Required]
+        [Display(Name = "Manufactor")]
+        public string Manufactor { get; set; }
+
+        [Required]
+        [Display(Name = "Year")]
+        public double Year { get; set; }
+
+        [Required]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Required]
+        [Display(Name = "PricePerHour")]
+        public double PricePerHour { get; set; }
+
+        [Required]
+        [Display(Name = "Unvailable")]
+        public bool Unvailable { get; set; }
+
+        [Required]
+        [Display(Name = "Images")]
+        public string Images { get; set; }
+
+        [Required]
+        [Display(Name = "Type")]
+        public string Type { get; set; }
+
+        [Required]
+        [Display(Name = "ServiceName")]
+        public string ServiceName { get; set; }
     }
 
     public class BranchBindingModel
@@ -93,6 +143,30 @@ namespace RentApp.Models
         [Required]
         [Display(Name = "Rating")]
         public double Rating { get; set; }
+    }
+
+    public class RentBindingModel
+    {
+
+        [Required]
+        [Display(Name = "GetBranchId")]
+        public int  GetBranchId { get; set; }
+
+        [Required]
+        [Display(Name = "RetBranchId")]
+        public int RetBranchId { get; set; }
+
+        [Required]
+        [Display(Name = "VehicleId")]
+        public int VehicleId { get; set; }
+
+        [Required]
+        [Display(Name = "Start")]
+        public string Start { get; set; }
+
+        [Required]
+        [Display(Name = "End")]
+        public string End { get; set; }
     }
 
     public class EmailBindingModel

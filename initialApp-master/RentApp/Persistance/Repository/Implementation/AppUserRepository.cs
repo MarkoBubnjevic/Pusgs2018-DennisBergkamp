@@ -20,6 +20,13 @@ namespace RentApp.Persistance.Repository.Implementation
 
         }
 
+        public AppUser GetFromUsername(string username)
+        {
+            return RADBContext.AppUsers.FirstOrDefault( a => a.Username.Equals(username));
+
+        }
+
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
     }
 }

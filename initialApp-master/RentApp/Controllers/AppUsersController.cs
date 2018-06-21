@@ -22,10 +22,13 @@ namespace RentApp.Controllers
 
         private readonly IUnitOfWork unitOfWork;
 
+        public ApplicationUserManager UserManager { get; private set; }
+
         private readonly string PASSWORD = "!anuar192DP168";
 
-        public AppUsersController(IUnitOfWork unitOfWork)
+        public AppUsersController(IUnitOfWork unitOfWork, ApplicationUserManager userManager)
         {
+            this.UserManager = userManager;
             this.unitOfWork = unitOfWork;
         }
 
@@ -79,6 +82,88 @@ namespace RentApp.Controllers
             }
 
             return Ok(appUser);
+        }
+
+        [HttpGet]
+        [Route("api/AppUsers/blockservice/{id}")]
+        [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult BlockManagerService(int id)
+        {
+            var users = unitOfWork.AppUsers.GetAll();
+
+            var user = new AppUser();
+
+            foreach (var u in users)
+            {
+                if (u.Id == id)
+                {
+                    user = u;
+                }
+            }
+
+            user.ServiceBlock = true;
+
+            try
+            {
+                unitOfWork.AppUsers.Update(user);
+                unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AppUserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPut]
+        [Route("api/AppUsers/Finish/{id}")]
+        [ResponseType(typeof(void))]
+        //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
+        //[AllowAnonymous]
+        public IHttpActionResult FinishProfile(int id, FinishBindingModel finishBM)
+        {
+            var appusers = unitOfWork.AppUsers.GetAll();
+
+            var appUser = new AppUser();
+
+            foreach (var appu in appusers)
+            {
+                if (appu.Id == id)
+                {
+                    appUser = appu;
+                }
+            }
+
+            appUser.PersonalDocument = finishBM.Image;
+
+            try
+            {
+                unitOfWork.AppUsers.Update(appUser);
+                unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AppUserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         //PUT: api/AppUsers/5

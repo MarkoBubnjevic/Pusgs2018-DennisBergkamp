@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { Vehicle } from '../../models/vehicle.model';
+import { TypeOfVehicle } from '../../models/typeofvehicle.model';
+import { Service } from '../../models/service.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,16 @@ export class VehicleService {
   
   }
 
+  getAllTypes(): Observable<TypeOfVehicle[]> {
+    return this.httpClient.get<TypeOfVehicle[]>('http://localhost:51680/api/TypeOfVehicles')
+  
+  }
+
+  getAllServices(): Observable<Service[]> {
+    return this.httpClient.get<Service[]>('http://localhost:51680/api/Services')
+  
+  }
+
   postVehicle(newMember): Observable<any> {
     return this.httpClient.post("http://localhost:51680/api/Vehicles", newMember)
   }
@@ -39,5 +51,9 @@ export class VehicleService {
 
   updateVehicle(id:number,vehicle:Vehicle): Observable<Vehicle> {
     return this.httpClient.put<Vehicle>('http://localhost:51680/api/Vehicles/'+ id,vehicle)
+  }
+
+  makeUnavailable(id:number): Observable<void> {
+    return this.httpClient.get<void>('http://localhost:51680/api/Vehicles/un/'+ id);
   }
 }

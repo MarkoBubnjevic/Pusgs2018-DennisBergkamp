@@ -333,6 +333,22 @@
     <Compile Include="Migrations\201806201230194_username in appuser.Designer.cs">
       <DependentUpon>201806201230194_username in appuser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806210726162_lista u string slika kod vozila.cs" />
+    <Compile Include="Migrations\201806210726162_lista u string slika kod vozila.Designer.cs">
+      <DependentUpon>201806210726162_lista u string slika kod vozila.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806211145177_serviceblock i servicecreator.cs" />
+    <Compile Include="Migrations\201806211145177_serviceblock i servicecreator.Designer.cs">
+      <DependentUpon>201806211145177_serviceblock i servicecreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806211301545_branch.cs" />
+    <Compile Include="Migrations\201806211301545_branch.Designer.cs">
+      <DependentUpon>201806211301545_branch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806211338058_rent.cs" />
+    <Compile Include="Migrations\201806211338058_rent.Designer.cs">
+      <DependentUpon>201806211338058_rent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -483,6 +499,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806201230194_username in appuser.resx">
       <DependentUpon>201806201230194_username in appuser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806210726162_lista u string slika kod vozila.resx">
+      <DependentUpon>201806210726162_lista u string slika kod vozila.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806211145177_serviceblock i servicecreator.resx">
+      <DependentUpon>201806211145177_serviceblock i servicecreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806211301545_branch.resx">
+      <DependentUpon>201806211301545_branch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806211338058_rent.resx">
+      <DependentUpon>201806211338058_rent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

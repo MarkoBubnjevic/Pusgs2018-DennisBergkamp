@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork.Interface;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
@@ -30,7 +31,7 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IEnumerable<Rent> GetRents()
         {
-            return unitOfWork.Rents.GetAll();
+            return unitOfWork.Rents.GetAllRents();
         }
 
         [ResponseType(typeof(Rent))]
@@ -85,14 +86,54 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Rent))]
         //[Authorize(Roles="Admin,Manager,AppUser,Client,NotAuthenticated")]
         //[AllowAnonymous]
-        public IHttpActionResult PostRents(Rent rent)
+        public IHttpActionResult PostRents(RentBindingModel rentBM)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            AppUser appu = new AppUser();
+            var appusers = unitOfWork.AppUsers.GetAll();
+
+            foreach(var i in appusers)
+            {
+                if(i.Username == User.Identity.Name)
+                {
+                    appu = i;
+                    break;
+                }
+            }
+
+            Vehicle veh = new Vehicle();
+            var vehicles = unitOfWork.Vehicles.GetAll();
+
+            foreach (var v in vehicles)
+            {
+                if (v.Id == rentBM.VehicleId)
+                {
+                    veh = v;
+                    break;
+                }
+            }
+
+
+            Rent rent = new Rent()
+            {
+                Start = DateTime.Parse(rentBM.Start),
+                End = DateTime.Parse(rentBM.End),
+                Deleted = false,
+                VehicleId = rentBM.VehicleId,
+                GetBranchId = rentBM.GetBranchId,
+                RetBranchId = rentBM.RetBranchId
+            };
+
+            appu.Renting.Add(rent);
+            veh.Unvailable = true;
+
             unitOfWork.Rents.Add(rent);
+            unitOfWork.AppUsers.Update(appu);
+            unitOfWork.Vehicles.Update(veh);
             unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
