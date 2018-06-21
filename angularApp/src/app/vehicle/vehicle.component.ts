@@ -49,6 +49,18 @@ export class VehicleComponent implements OnInit {
     }
   }
 
+  checkVehicleDeleted(i:number){
+    return this.vehicles[i].Deleted == false;
+  }
+
+  checkServiceDeleted(i:number){
+    return this.services[i].Deleted == false;
+  }
+
+  checkTypeDeleted(i:number){
+    return this.types[i].Deleted == false;
+  }
+
   getVehicles(){
     this.vehicleService.getAllVehicles().subscribe(
       data => {

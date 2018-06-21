@@ -6,6 +6,7 @@ import {Service} from '../models/service.model';
 import {Vehicle} from '../models/vehicle.model';
 import {Comment} from '../models/comment.model';
 import {Rate} from '../models/rate.model';
+import {Branch} from '../models/branch.model';
 
 import {SerPreviewService} from './serPreviewService/ser-preview.service';
 import { CommentBindingModel } from '../models/commentBM.model';
@@ -21,7 +22,8 @@ export class SerPreviewComponent implements OnInit {
   service:Service;
 
   comments: Comment[];
-
+  branches: Branch[];
+  vehicles: Vehicle[];
 
   constructor(private activatedRoute: ActivatedRoute, private serPreviewService: SerPreviewService) { }
 
@@ -33,6 +35,8 @@ export class SerPreviewComponent implements OnInit {
         data => {
           this.service = data;
           this.comments = this.service.Comments;
+          this.branches= this.service.Branches;
+          this.vehicles=this.service.Vehicles;
         },
         error => {
           console.log(error);
@@ -46,6 +50,8 @@ export class SerPreviewComponent implements OnInit {
         data => {
           this.service = data;
           this.comments = this.service.Comments;
+          this.branches= this.service.Branches;
+          this.vehicles=this.service.Vehicles;
         },
         error => {
           console.log(error);
@@ -92,6 +98,14 @@ export class SerPreviewComponent implements OnInit {
 
   checkComDeleted(i:number){
     return this.comments[i].Deleted == false;
+  }
+
+  checkBranchDeleted(i:number){
+    return this.branches[i].Deleted == false;
+  }
+
+  checkVehicleDeleted(i:number){
+    return this.vehicles[i].Deleted == false;
   }
 
   checkUserType()

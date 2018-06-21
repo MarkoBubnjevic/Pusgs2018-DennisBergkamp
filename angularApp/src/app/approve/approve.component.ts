@@ -50,6 +50,24 @@ export class ApproveComponent implements OnInit {
     return this.rents[i].Vehicle.Unvailable;
   }
 
+  checkUserDeleted(i:number)
+  {
+    return this.users[i].Deleted == false;
+
+  }
+
+  checkServiceDeleted(i:number)
+  {
+    return this.services[i].Deleted == false;
+
+  }
+
+  checkRentDeleted(i:number)
+  {
+    return this.rents[i].Deleted == false;
+
+  }
+
   availableVehicle(id:number){
     this.approveService.availableVehicle(id)
       .subscribe(

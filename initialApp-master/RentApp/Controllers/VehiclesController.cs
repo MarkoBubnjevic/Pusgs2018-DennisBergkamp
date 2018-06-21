@@ -39,13 +39,16 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult GetVehicles(int id)
         {
-            Vehicle rent = unitOfWork.Vehicles.Get(id);
-            if (rent == null)
+            lock (unitOfWork.Vehicles)
             {
-                return NotFound();
-            }
+                Vehicle rent = unitOfWork.Vehicles.Get(id);
+                if (rent == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(rent);
+                return Ok(rent);
+            }
         }
 
         [HttpGet]
@@ -55,38 +58,41 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult MakeUnavailable(int id)
         {
-            var vehicles = unitOfWork.Vehicles.GetAll();
-
-            var vehicle = new Vehicle();
-
-            foreach (var ve in vehicles)
+            lock (unitOfWork.Vehicles)
             {
-                if (ve.Id == id)
-                {
-                    vehicle = ve;
-                }
-            }
+                var vehicles = unitOfWork.Vehicles.GetAll();
 
-            vehicle.Unvailable = true;
+                var vehicle = new Vehicle();
 
-            try
-            {
-                unitOfWork.Vehicles.Update(vehicle);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VehicleExists(id))
+                foreach (var ve in vehicles)
                 {
-                    return NotFound();
+                    if (ve.Id == id)
+                    {
+                        vehicle = ve;
+                    }
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                vehicle.Unvailable = true;
+
+                try
+                {
+                    unitOfWork.Vehicles.Update(vehicle);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VehicleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [HttpGet]
@@ -96,38 +102,41 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult MakeAvailable(int id)
         {
-            var vehicles = unitOfWork.Vehicles.GetAll();
-
-            var vehicle = new Vehicle();
-
-            foreach (var ve in vehicles)
+            lock (unitOfWork.Vehicles)
             {
-                if (ve.Id == id)
-                {
-                    vehicle = ve;
-                }
-            }
+                var vehicles = unitOfWork.Vehicles.GetAll();
 
-            vehicle.Unvailable = false;
+                var vehicle = new Vehicle();
 
-            try
-            {
-                unitOfWork.Vehicles.Update(vehicle);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VehicleExists(id))
+                foreach (var ve in vehicles)
                 {
-                    return NotFound();
+                    if (ve.Id == id)
+                    {
+                        vehicle = ve;
+                    }
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                vehicle.Unvailable = false;
+
+                try
+                {
+                    unitOfWork.Vehicles.Update(vehicle);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VehicleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [ResponseType(typeof(void))]
@@ -135,34 +144,37 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PutVehicle(int id, Vehicle rent)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Vehicles)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != rent.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Vehicles.Update(rent);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VehicleExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != rent.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.Vehicles.Update(rent);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VehicleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [ResponseType(typeof(Vehicle))]
@@ -170,55 +182,58 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PostVehicles(VehicleBindingModel vehicleBM)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Vehicles)
             {
-                return BadRequest(ModelState);
-            }
-
-            var type = new TypeOfVehicle();
-
-            var types = unitOfWork.Types.GetAll();
-
-            foreach (var t in types)
-            {
-                if (t.Name == vehicleBM.Type)
+                if (!ModelState.IsValid)
                 {
-                    type = t;
+                    return BadRequest(ModelState);
                 }
-            }
 
-            var ser = new Service();
+                var type = new TypeOfVehicle();
 
-            var services = unitOfWork.Services.GetAll();
+                var types = unitOfWork.Types.GetAll();
 
-            foreach (var s in services)
-            {
-                if (s.Name == vehicleBM.ServiceName)
+                foreach (var t in types)
                 {
-                    ser = s;
+                    if (t.Name == vehicleBM.Type)
+                    {
+                        type = t;
+                    }
                 }
+
+                var ser = new Service();
+
+                var services = unitOfWork.Services.GetAll();
+
+                foreach (var s in services)
+                {
+                    if (s.Name == vehicleBM.ServiceName)
+                    {
+                        ser = s;
+                    }
+                }
+
+                var vehicle = new Vehicle()
+                {
+                    Deleted = vehicleBM.Deleted,
+                    Description = vehicleBM.Description,
+                    Images = vehicleBM.Images,
+                    Manufactor = vehicleBM.Manufactor,
+                    Model = vehicleBM.Model,
+                    PricePerHour = (decimal)vehicleBM.PricePerHour,
+                    Type = type,
+                    Unvailable = vehicleBM.Unvailable,
+                    Year = (int)vehicleBM.Year
+                };
+
+
+                ser.Vehicles.Add(vehicle);
+
+                unitOfWork.Vehicles.Add(vehicle);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = vehicle.Id }, vehicle);
             }
-
-            var vehicle = new Vehicle()
-            {
-                Deleted = vehicleBM.Deleted,
-                Description = vehicleBM.Description,
-                Images = vehicleBM.Images,
-                Manufactor = vehicleBM.Manufactor,
-                Model = vehicleBM.Model,
-                PricePerHour =(decimal)vehicleBM.PricePerHour,
-                Type = type,
-                Unvailable = vehicleBM.Unvailable,
-                Year =(int)vehicleBM.Year
-            };
-
-
-            ser.Vehicles.Add(vehicle);
-
-            unitOfWork.Vehicles.Add(vehicle);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = vehicle.Id }, vehicle);
         }
 
         [ResponseType(typeof(Vehicle))]
@@ -226,23 +241,29 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult DeleteVehicle(int id)
         {
-            Vehicle rent = unitOfWork.Vehicles.Get(id);
-            if (rent == null)
+            lock (unitOfWork.Vehicles)
             {
-                return NotFound();
+                Vehicle rent = unitOfWork.Vehicles.Get(id);
+                if (rent == null)
+                {
+                    return NotFound();
+                }
+
+                rent.Deleted = true;
+
+                unitOfWork.Vehicles.Update(rent);
+                unitOfWork.Complete();
+
+                return Ok(rent);
             }
-
-            rent.Deleted = true;
-
-            unitOfWork.Vehicles.Update(rent);
-            unitOfWork.Complete();
-
-            return Ok(rent);
         }
 
         private bool VehicleExists(int id)
         {
-            return unitOfWork.Vehicles.Get(id) != null;
+            lock (unitOfWork.Vehicles)
+            {
+                return unitOfWork.Vehicles.Get(id) != null;
+            }
         }
     }
 }

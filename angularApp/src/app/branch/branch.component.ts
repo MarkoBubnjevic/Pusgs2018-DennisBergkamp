@@ -39,6 +39,16 @@ export class BranchComponent implements OnInit {
     this.getBranches();
   }
 
+  checkServiceDeleted(i:number)
+  {
+    return this.services[i].Deleted == false;
+  }
+
+  checkBranchDeleted(i:number)
+  {
+    return this.branches[i].Deleted == false;
+  }
+
   addBranch(branch: Branch, form: NgForm){
     branch.Logo = this.url;
     this.branchService.addBranch(branch)

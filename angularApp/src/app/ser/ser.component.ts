@@ -82,7 +82,9 @@ export class SerComponent implements OnInit {
   chechServiceApprove(i:number){
     return this.services[i].Approved;
   }
-
+  checkServiceDeleted(i:number){
+    return this.services[i].Deleted == false;
+  }
 
   deleteService(id: number){
     this.serService.deleteService(id)

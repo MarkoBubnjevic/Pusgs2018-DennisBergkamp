@@ -18,7 +18,7 @@
       <label>All Types:</label>
         <ul>
           <li *ngFor="let item of types; let i = index">
-
+          <div *ngIf="CheckTypeDeleted(i)">
             <div class="input-group ">
               <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
               <input type="text" [(ngModel)]="item.Name">
@@ -28,6 +28,7 @@
             <button class="btn  btn-primary"  (click)="saveType(i)">Save </button>
             <br>
             <br>
+          </div>
           </li>
         </ul>
       </div>

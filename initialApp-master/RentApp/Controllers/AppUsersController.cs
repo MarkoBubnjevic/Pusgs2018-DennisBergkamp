@@ -37,7 +37,8 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IEnumerable<AppUser> GetAppUsers()
         {
-            return unitOfWork.AppUsers.GetAll();
+           
+                return unitOfWork.AppUsers.GetAll();
         }
 
         //GET: api/AppUsers/5
@@ -46,13 +47,20 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult GetAppUser(int id)
         {
-            AppUser service = unitOfWork.AppUsers.Get(id);
-            if (service == null)
-            {
-                return NotFound();
-            }
+            lock (unitOfWork.AppUsers) { 
 
-            return Ok(service);
+                    AppUser service = unitOfWork.AppUsers.Get(id);
+                    if (service == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(service);
+
+
+
+                } 
+               
         }
 
 
@@ -63,25 +71,29 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult GetAppUserFromEmail(string username)
         {
-            var appusers = unitOfWork.AppUsers.GetAll();
-
-            var appUser = new AppUser();
-
-            foreach (var appu in appusers)
+            lock (unitOfWork.AppUsers)
             {
-                if (appu.Username == username)
+
+                var appusers = unitOfWork.AppUsers.GetAll();
+
+                var appUser = new AppUser();
+
+                foreach (var appu in appusers)
                 {
-                    appUser = appu;
+                    if (appu.Username == username)
+                    {
+                        appUser = appu;
+                    }
                 }
+
+
+                if (appUser == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(appUser);
             }
-
-
-            if (appUser == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(appUser);
         }
 
         [HttpGet]
@@ -91,38 +103,41 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult BlockManagerService(int id)
         {
-            var users = unitOfWork.AppUsers.GetAll();
-
-            var user = new AppUser();
-
-            foreach (var u in users)
+            lock (unitOfWork.AppUsers)
             {
-                if (u.Id == id)
-                {
-                    user = u;
-                }
-            }
+                var users = unitOfWork.AppUsers.GetAll();
 
-            user.ServiceBlock = true;
+                var user = new AppUser();
 
-            try
-            {
-                unitOfWork.AppUsers.Update(user);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AppUserExists(id))
+                foreach (var u in users)
                 {
-                    return NotFound();
+                    if (u.Id == id)
+                    {
+                        user = u;
+                    }
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                user.ServiceBlock = true;
+
+                try
+                {
+                    unitOfWork.AppUsers.Update(user);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AppUserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [HttpPut]
@@ -132,38 +147,41 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult FinishProfile(int id, FinishBindingModel finishBM)
         {
-            var appusers = unitOfWork.AppUsers.GetAll();
-
-            var appUser = new AppUser();
-
-            foreach (var appu in appusers)
+            lock (unitOfWork.AppUsers)
             {
-                if (appu.Id == id)
-                {
-                    appUser = appu;
-                }
-            }
+                var appusers = unitOfWork.AppUsers.GetAll();
 
-            appUser.PersonalDocument = finishBM.Image;
+                var appUser = new AppUser();
 
-            try
-            {
-                unitOfWork.AppUsers.Update(appUser);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AppUserExists(id))
+                foreach (var appu in appusers)
                 {
-                    return NotFound();
+                    if (appu.Id == id)
+                    {
+                        appUser = appu;
+                    }
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                appUser.PersonalDocument = finishBM.Image;
+
+                try
+                {
+                    unitOfWork.AppUsers.Update(appUser);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AppUserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         //PUT: api/AppUsers/5
@@ -172,34 +190,37 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PutAppUser(int id, AppUser appUser)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.AppUsers)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != appUser.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.AppUsers.Update(appUser);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AppUserExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != appUser.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.AppUsers.Update(appUser);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AppUserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
 
@@ -211,64 +232,68 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult ApproveAppUser(int id, RateBindingModel appUser)
         {
-            if (!ModelState.IsValid)
+
+            lock (unitOfWork.AppUsers)
             {
-                return BadRequest(ModelState);
-            }
-
-            var appusers = unitOfWork.AppUsers.GetAll();
-
-            var appuEdit = new AppUser();
-
-            foreach(var appu in appusers)
-            {
-                if(appu.Id == id)
+                if (!ModelState.IsValid)
                 {
-                    appuEdit = appu;
+                    return BadRequest(ModelState);
                 }
-            }
 
-            appuEdit.Activated = true;
+                var appusers = unitOfWork.AppUsers.GetAll();
 
-            try
-            {
-                unitOfWork.AppUsers.Update(appuEdit);
-                unitOfWork.Complete();
+                var appuEdit = new AppUser();
 
-                //string your_id = "kristijansalaji20@gmail.com";
-                //string your_password = PASSWORD;
-
-                //SmtpClient client = new SmtpClient();
-                //client.Port = 587;
-                //client.Host = "smtp.gmail.com";
-                //client.EnableSsl = true;
-                //client.Timeout = 10000;
-                //client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //client.UseDefaultCredentials = false;
-                //client.Credentials = new System.Net.NetworkCredential(your_id, your_password);
-
-                //MailMessage mm = new MailMessage(your_id, "kristijan.salaji@outlook.com");
-                //mm.BodyEncoding = UTF8Encoding.UTF8;
-                //mm.Subject = "CODE FOR FORUM";
-                //mm.Body = "NALOG JE ODOBREN!";
-                //mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-
-                //client.Send(mm);
-
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AppUserExists(id))
+                foreach (var appu in appusers)
                 {
-                    return NotFound();
+                    if (appu.Id == id)
+                    {
+                        appuEdit = appu;
+                    }
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                appuEdit.Activated = true;
+
+                try
+                {
+                    unitOfWork.AppUsers.Update(appuEdit);
+                    unitOfWork.Complete();
+
+                    //string your_id = "kristijansalaji20@gmail.com";
+                    //string your_password = PASSWORD;
+
+                    //SmtpClient client = new SmtpClient();
+                    //client.Port = 587;
+                    //client.Host = "smtp.gmail.com";
+                    //client.EnableSsl = true;
+                    //client.Timeout = 10000;
+                    //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    //client.UseDefaultCredentials = false;
+                    //client.Credentials = new System.Net.NetworkCredential(your_id, your_password);
+
+                    //MailMessage mm = new MailMessage(your_id, "kristijan.salaji@outlook.com");
+                    //mm.BodyEncoding = UTF8Encoding.UTF8;
+                    //mm.Subject = "CODE FOR FORUM";
+                    //mm.Body = "NALOG JE ODOBREN!";
+                    //mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+                    //client.Send(mm);
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AppUserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
 
@@ -278,15 +303,18 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PostAppUser(AppUser appUser)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.AppUsers)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                unitOfWork.AppUsers.Add(appUser);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = appUser.Id }, appUser);
             }
-
-            unitOfWork.AppUsers.Add(appUser);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = appUser.Id }, appUser);
         }
 
 
@@ -296,22 +324,28 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult DeleteAppUser(int id)
         {
-            AppUser appUser = unitOfWork.AppUsers.Get(id);
-            if (appUser == null)
+            lock (unitOfWork.AppUsers)
             {
-                return NotFound();
+                AppUser appUser = unitOfWork.AppUsers.Get(id);
+                if (appUser == null)
+                {
+                    return NotFound();
+                }
+
+                appUser.Deleted = true;
+                unitOfWork.AppUsers.Update(appUser);
+                unitOfWork.Complete();
+
+                return Ok(appUser);
             }
-
-            appUser.Deleted = true;
-            unitOfWork.AppUsers.Update( appUser);
-            unitOfWork.Complete();
-
-            return Ok(appUser);
         }
 
         private bool AppUserExists(int id)
         {
-            return unitOfWork.AppUsers.Get(id) != null;
+            lock (unitOfWork.AppUsers)
+            {
+                return unitOfWork.AppUsers.Get(id) != null;
+            }
         }
     }
 }

@@ -40,13 +40,16 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult GetComments(int id)
         {
-            Comment branch = unitOfWork.Comments.Get(id);
-            if (branch == null)
+            lock (unitOfWork.Comments)
             {
-                return NotFound();
-            }
+                Comment branch = unitOfWork.Comments.Get(id);
+                if (branch == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(branch);
+                return Ok(branch);
+            }
         }
 
         [ResponseType(typeof(void))]
@@ -54,34 +57,37 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PutComment(int id, Comment branch)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Comments)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != branch.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Comments.Update(branch);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CommentExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != branch.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.Comments.Update(branch);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CommentExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [ResponseType(typeof(Branch))]
@@ -94,69 +100,71 @@ namespace RentApp.Controllers
             //    return BadRequest(ModelState);
             //}
 
-
-            string name = User.Identity.Name;
-
-
-            var appu = new AppUser();
-
-
-            var appusers = unitOfWork.AppUsers.GetAll();
-
-            foreach (var au in appusers)
+            lock (unitOfWork.Comments)
             {
-                if (au.Username == name)
+                string name = User.Identity.Name;
+
+
+                var appu = new AppUser();
+
+
+                var appusers = unitOfWork.AppUsers.GetAll();
+
+                foreach (var au in appusers)
                 {
-                    appu = au;
+                    if (au.Username == name)
+                    {
+                        appu = au;
+                    }
                 }
-            }
 
 
-            bool canComment = false;
+                bool canComment = false;
 
-            foreach(var r in appu.Renting)
-            {
-                int result = DateTime.Compare((DateTime)r.Start, (DateTime)r.End);
-
-                if (result <= 0)
+                foreach (var r in appu.Renting)
                 {
-                    canComment = true;
+                    int result = DateTime.Compare((DateTime)r.Start, (DateTime)r.End);
+
+                    if (result <= 0)
+                    {
+                        canComment = true;
+                    }
+
                 }
-                    
-            }
 
-            if (!canComment)
-                return null;
+                if (!canComment)
+                    return null;
 
-            var services = unitOfWork.Services.GetAll();
+                var services = unitOfWork.Services.GetAll();
 
 
 
-            var serAdd = new Service();
+                var serAdd = new Service();
 
-            foreach(var service in services)
-            {
-                if(service.Name == branch.ServiceName)
+                foreach (var service in services)
                 {
-                    serAdd = service;
+                    if (service.Name == branch.ServiceName)
+                    {
+                        serAdd = service;
+                    }
                 }
+
+                Comment com = new Comment()
+                {
+                    Text = branch.Text,
+                    DateTime = DateTime.Now,
+                    Author = appu
+                };
+
+
+                serAdd.Comments.Add(com);
+
+                unitOfWork.Comments.Add(com);
+                unitOfWork.Services.Update(serAdd);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = com.Id }, com);
             }
-
-            Comment com = new Comment()
-            {
-                Text = branch.Text,
-                DateTime = DateTime.Now,
-                Author = appu
-            };
-
-
-            serAdd.Comments.Add(com);
-
-            unitOfWork.Comments.Add(com);
-            unitOfWork.Services.Update(serAdd);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = com.Id }, com);
         }
 
         [ResponseType(typeof(Comment))]
@@ -164,22 +172,28 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult DeleteComment(int id)
         {
-            Comment branch = unitOfWork.Comments.Get(id);
-            if (branch == null)
+            lock (unitOfWork.Comments)
             {
-                return NotFound();
+                Comment branch = unitOfWork.Comments.Get(id);
+                if (branch == null)
+                {
+                    return NotFound();
+                }
+
+                branch.Deleted = true;
+                unitOfWork.Comments.Update(branch);
+                unitOfWork.Complete();
+
+                return Ok(branch);
             }
-
-            branch.Deleted = true;
-            unitOfWork.Comments.Update(branch);
-            unitOfWork.Complete();
-
-            return Ok(branch);
         }
 
         private bool CommentExists(int id)
         {
-            return unitOfWork.Branches.Get(id) != null;
+            lock (unitOfWork.Comments)
+            {
+                return unitOfWork.Branches.Get(id) != null;
+            }
         }
     }
 }

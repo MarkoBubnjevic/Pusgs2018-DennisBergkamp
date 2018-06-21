@@ -20,8 +20,11 @@
 
      <label><b>Rents</b></label>
       <ul>
-        <li *ngFor="let rent of appUser.Renting">
+        <li *ngFor="let rent of appUser.Renting;let i=index">
+          <div *ngIf="checkRentDeleted(i)">
           <label>rent: {{rent.Id}}</label>
+
+          </div>
         </li> 
       </ul>   
       <br>

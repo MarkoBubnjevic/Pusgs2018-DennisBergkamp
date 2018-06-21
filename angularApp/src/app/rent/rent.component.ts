@@ -46,6 +46,16 @@ export class RentComponent implements OnInit {
     return localStorage.role == 'Admin' || localStorage.role == 'Manager';
   }
 
+  checkVehiclesDeleted(i:number)
+  {
+    return this.vehicles[i].Deleted == false;
+  }
+
+  checkBranchesDeleted(i:number)
+  {
+    return this.branches[i].Deleted == false;
+  }
+
   getAllBranches(){
     this.rentService.getAllBranches()
     .subscribe(

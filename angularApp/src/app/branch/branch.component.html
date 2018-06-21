@@ -18,7 +18,13 @@
      
     <label>Service:</label>
       <select id="ServiceName" ngModel #ServiceName="ngModel" name="ServiceName">
-          <option *ngFor="let item of services" [value]="item.Name" id="ServiceName" name="ServiceName">{{item.Name}}</option>
+          <option *ngFor="let item of services;let i=index" [value]="item.Name" id="ServiceName" name="ServiceName">
+            
+              <div *ngIf="CheckServiceDeleted(i)">
+                  {{item.Name}}
+              </div>
+            
+            </option>
       </select>
       
         <br>
@@ -47,6 +53,7 @@
     <label><b>All Branches:</b></label>
     <ul class="container">
         <li *ngFor="let branchs of branches; let i = index">
+          <div *ngIf="checkBranchDeleted(i)">
           <td style="width: 250px;"><label class="col-md-4 control-label">Logo</label><img width="200" src='{{branchs.Logo}}' /></td>
          
           <div class="input-group ">
@@ -68,6 +75,7 @@
           <button *ngIf="checkUserType()" class="btn btn-primary "  (click)="saveBranch(i)">Save </button>
           <br>
           <br>
+          </div>
         </li>
       </ul>
 </div>

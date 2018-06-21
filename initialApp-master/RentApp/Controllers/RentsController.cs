@@ -39,13 +39,16 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult GetRents(int id)
         {
-            Rent rent = unitOfWork.Rents.Get(id);
-            if (rent == null)
+            lock (unitOfWork.Rents)
             {
-                return NotFound();
-            }
+                Rent rent = unitOfWork.Rents.Get(id);
+                if (rent == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(rent);
+                return Ok(rent);
+            }
         }
 
         [ResponseType(typeof(void))]
@@ -53,34 +56,37 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PutRent(int id, Rent rent)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Rents)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != rent.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Rents.Update(rent);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RentExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != rent.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.Rents.Update(rent);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RentExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [ResponseType(typeof(Rent))]
@@ -88,55 +94,58 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PostRents(RentBindingModel rentBM)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Rents)
             {
-                return BadRequest(ModelState);
-            }
-
-            AppUser appu = new AppUser();
-            var appusers = unitOfWork.AppUsers.GetAll();
-
-            foreach(var i in appusers)
-            {
-                if(i.Username == User.Identity.Name)
+                if (!ModelState.IsValid)
                 {
-                    appu = i;
-                    break;
+                    return BadRequest(ModelState);
                 }
-            }
 
-            Vehicle veh = new Vehicle();
-            var vehicles = unitOfWork.Vehicles.GetAll();
+                AppUser appu = new AppUser();
+                var appusers = unitOfWork.AppUsers.GetAll();
 
-            foreach (var v in vehicles)
-            {
-                if (v.Id == rentBM.VehicleId)
+                foreach (var i in appusers)
                 {
-                    veh = v;
-                    break;
+                    if (i.Username == User.Identity.Name)
+                    {
+                        appu = i;
+                        break;
+                    }
                 }
+
+                Vehicle veh = new Vehicle();
+                var vehicles = unitOfWork.Vehicles.GetAll();
+
+                foreach (var v in vehicles)
+                {
+                    if (v.Id == rentBM.VehicleId)
+                    {
+                        veh = v;
+                        break;
+                    }
+                }
+
+
+                Rent rent = new Rent()
+                {
+                    Start = DateTime.Parse(rentBM.Start),
+                    End = DateTime.Parse(rentBM.End),
+                    Deleted = false,
+                    VehicleId = rentBM.VehicleId,
+                    GetBranchId = rentBM.GetBranchId,
+                    RetBranchId = rentBM.RetBranchId
+                };
+
+                appu.Renting.Add(rent);
+                veh.Unvailable = true;
+
+                unitOfWork.Rents.Add(rent);
+                unitOfWork.AppUsers.Update(appu);
+                unitOfWork.Vehicles.Update(veh);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
             }
-
-
-            Rent rent = new Rent()
-            {
-                Start = DateTime.Parse(rentBM.Start),
-                End = DateTime.Parse(rentBM.End),
-                Deleted = false,
-                VehicleId = rentBM.VehicleId,
-                GetBranchId = rentBM.GetBranchId,
-                RetBranchId = rentBM.RetBranchId
-            };
-
-            appu.Renting.Add(rent);
-            veh.Unvailable = true;
-
-            unitOfWork.Rents.Add(rent);
-            unitOfWork.AppUsers.Update(appu);
-            unitOfWork.Vehicles.Update(veh);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
         }
 
         [ResponseType(typeof(Rent))]
@@ -144,22 +153,28 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult DeleteRent(int id)
         {
-            Rent rent = unitOfWork.Rents.Get(id);
-            if (rent == null)
+            lock (unitOfWork.Rents)
             {
-                return NotFound();
+                Rent rent = unitOfWork.Rents.Get(id);
+                if (rent == null)
+                {
+                    return NotFound();
+                }
+
+                rent.Deleted = true;
+                unitOfWork.Rents.Update(rent);
+                unitOfWork.Complete();
+
+                return Ok(rent);
             }
-
-            rent.Deleted = true;
-            unitOfWork.Rents.Update(rent);
-            unitOfWork.Complete();
-
-            return Ok(rent);
         }
 
         private bool RentExists(int id)
         {
-            return unitOfWork.Rents.Get(id) != null;
+            lock (unitOfWork.Rents)
+            {
+                return unitOfWork.Rents.Get(id) != null;
+            }
         }
     }
 }

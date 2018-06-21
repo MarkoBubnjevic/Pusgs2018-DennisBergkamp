@@ -30,7 +30,8 @@
 
     <label>Vehicles:</label>
     <ul>
-      <li *ngFor="let vehicle of service.Vehicles">
+      <li *ngFor="let vehicle of service.Vehicles; let i=index">
+        <div *ngIf="CheckVehicleDeleted(i)">
           <div class="input-group ">
             <span class="input-group-addon" id="basic-addon1">Model</span>
             <input type="text" [(ngModel)]="vehicle.Model">
@@ -41,24 +42,27 @@
             <input type="text" [(ngModel)]="vehicle.Manufactor">
           </div>
           <br>
+        </div>
       </li>
     </ul>
 
     <label>Branches:</label>
     <ul>
-      <li *ngFor="let branch of service.Branches">
+      <li *ngFor="let branch of service.Branches; let i=index">
+        <div *ngIf="checkBranchDeleted(i)">
           <div class="input-group ">
             <span class="input-group-addon" id="basic-addon1">Address</span>
             <input type="text" [(ngModel)]="branch.Address">
           </div>
           <br>
+        </div>
       </li>
     </ul>
 
     <label>Comments:</label>
       <ul>
         <li *ngFor="let comment of comments; let i = index" >
-          <div *ngIf="checkComDeleted(i)" >
+        <div *ngIf="checkComDeleted(i)" >
             <div class="input-group ">
               <span class="input-group-addon" id="basic-addon1">Text</span>
               <input type="text" [(ngModel)]="comment.Text">

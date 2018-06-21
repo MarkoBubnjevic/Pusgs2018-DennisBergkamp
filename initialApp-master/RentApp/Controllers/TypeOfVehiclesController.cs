@@ -37,13 +37,16 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult GetTypes(int id)
         {
-            TypeOfVehicle rent = unitOfWork.Types.Get(id);
-            if (rent == null)
+            lock (unitOfWork.Types)
             {
-                return NotFound();
-            }
+                TypeOfVehicle rent = unitOfWork.Types.Get(id);
+                if (rent == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(rent);
+                return Ok(rent);
+            }
         }
 
         [ResponseType(typeof(void))]
@@ -51,34 +54,37 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PutType(int id, TypeOfVehicle rent)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Types)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != rent.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Types.Update(rent);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TypeOfVehicleExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != rent.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.Types.Update(rent);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TypeOfVehicleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [ResponseType(typeof(TypeOfVehicle))]
@@ -86,15 +92,18 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PostTypes(TypeOfVehicle rent)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Types)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                unitOfWork.Types.Add(rent);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
             }
-
-            unitOfWork.Types.Add(rent);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
         }
 
         [ResponseType(typeof(TypeOfVehicle))]
@@ -102,28 +111,34 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult DeleteTypeOfVehicle(int id)
         {
-            TypeOfVehicle rent = unitOfWork.Types.Get(id);
-            if (rent == null)
+            lock (unitOfWork.Types)
             {
-                return NotFound();
+                TypeOfVehicle rent = unitOfWork.Types.Get(id);
+                if (rent == null)
+                {
+                    return NotFound();
+                }
+
+                foreach (var item in rent.Vehicles)
+                {
+                    item.Deleted = true;
+                }
+
+                rent.Deleted = true;
+
+                unitOfWork.Types.Update(rent);
+                unitOfWork.Complete();
+
+                return Ok(rent);
             }
-
-            foreach (var item in rent.Vehicles)
-            {
-                item.Deleted = true;
-            }
-
-            rent.Deleted = true;
-
-            unitOfWork.Types.Update(rent);
-            unitOfWork.Complete();
-
-            return Ok(rent);
         }
 
         private bool TypeOfVehicleExists(int id)
         {
-            return unitOfWork.Types.Get(id) != null;
+            lock (unitOfWork.Types)
+            {
+                return unitOfWork.Types.Get(id) != null;
+            }
         }
     }
 }

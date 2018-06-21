@@ -51,6 +51,12 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
+  checkRentDeleted(i:number)
+  {
+    return this.appUser[i].Renting.Deleted == false;
+
+  }
+
   saveChanges(){
     this.profileService.putUser(this.appUser.Id,this.appUser)
     .subscribe(

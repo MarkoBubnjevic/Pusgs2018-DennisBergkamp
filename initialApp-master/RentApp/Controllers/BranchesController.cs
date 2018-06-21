@@ -37,13 +37,16 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult GetBranches(int id)
         {
-            Branch branch = unitOfWork.Branches.Get(id);
-            if (branch == null)
+            lock (unitOfWork.Branches)
             {
-                return NotFound();
-            }
+                Branch branch = unitOfWork.Branches.Get(id);
+                if (branch == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(branch);
+                return Ok(branch);
+            }
         }
 
         [ResponseType(typeof(void))]
@@ -51,34 +54,37 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PutBranch(int id, Branch branch)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Branches)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != branch.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Branches.Update(branch);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BranchExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != branch.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.Branches.Update(branch);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BranchExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [ResponseType(typeof(Branch))]
@@ -86,40 +92,43 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult PostBranches(BranchBindingModel branch)
         {
-            if (!ModelState.IsValid)
+            lock (unitOfWork.Branches)
             {
-                return BadRequest(ModelState);
-            }
-
-            Branch bra = new Branch()
-            {
-                Logo = branch.Logo,
-                Longitude = branch.Longitude,
-                Latitude = branch.Latitude,
-                Address = branch.Address
-            };
-
-            var services = unitOfWork.Services.GetAll();
-
-            Service item = new Service();
-
-            foreach(var s in services)
-            {
-                if(branch.ServiceName == s.Name)
+                if (!ModelState.IsValid)
                 {
-                    item = s;
+                    return BadRequest(ModelState);
                 }
+
+                Branch bra = new Branch()
+                {
+                    Logo = branch.Logo,
+                    Longitude = branch.Longitude,
+                    Latitude = branch.Latitude,
+                    Address = branch.Address
+                };
+
+                var services = unitOfWork.Services.GetAll();
+
+                Service item = new Service();
+
+                foreach (var s in services)
+                {
+                    if (branch.ServiceName == s.Name)
+                    {
+                        item = s;
+                    }
+                }
+
+                item.Branches.Add(bra);
+
+
+                unitOfWork.Branches.Add(bra);
+                unitOfWork.Services.Update(item);
+
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = bra.Id }, bra);
             }
-
-            item.Branches.Add(bra);
-
-
-            unitOfWork.Branches.Add(bra);
-            unitOfWork.Services.Update(item);
-
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = bra.Id }, bra);
         }
 
         [ResponseType(typeof(Branch))]
@@ -127,22 +136,28 @@ namespace RentApp.Controllers
         //[AllowAnonymous]
         public IHttpActionResult DeleteBranch(int id)
         {
-            Branch branch = unitOfWork.Branches.Get(id);
-            if (branch == null)
+            lock (unitOfWork.Branches)
             {
-                return NotFound();
+                Branch branch = unitOfWork.Branches.Get(id);
+                if (branch == null)
+                {
+                    return NotFound();
+                }
+
+                branch.Deleted = true;
+                unitOfWork.Branches.Update(branch);
+                unitOfWork.Complete();
+
+                return Ok(branch);
             }
-
-            branch.Deleted = true;
-            unitOfWork.Branches.Update(branch);
-            unitOfWork.Complete();
-
-            return Ok(branch);
         }
 
         private bool BranchExists(int id)
         {
-            return unitOfWork.Branches.Get(id) != null;
+            lock (unitOfWork.Branches)
+            {
+                return unitOfWork.Branches.Get(id) != null;
+            }
         }
     }
 }

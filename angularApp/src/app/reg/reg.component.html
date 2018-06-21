@@ -3,31 +3,71 @@
     <div class="input-group ">
       <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-pencil"></i></span>
       <input id="FullName" type="text" style="width:fit-content" class="form-control" placeholder="Enter FullName" name="FullName" ngModel required #FullName = "ngModel" aria-describedby="basic-addon1">
+      <div *ngIf="FullName.errors &&(FullName.dirty || FullName.touched)" class="alert alert-danger">
+        <div [hidden]="!FullName.errors.required">
+          FullName is required!
+        </div>
+      </div>
     </div>
 
     <div class="input-group ">
       <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
       <input id="Username" type="text" style="width:fit-content" class="form-control" placeholder="Enter Username" name="Username" ngModel required #Username = "ngModel" aria-describedby="basic-addon1">
+      <div *ngIf="Username.errors &&(Username.dirty || Username.touched)" class="alert alert-danger">
+        <div [hidden]="!Username.errors.required">
+          Username is required!
+        </div>
+      </div>
     </div>
 
     <div class="input-group ">
       <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-lock"></i></span>
-      <input id="Password" type="password" style="width:fit-content" class="form-control" placeholder="Enter Password" name="Password" ngModel required #Password = "ngModel" aria-describedby="basic-addon1">
+      <input id="Password" type="password" minlength="3" style="width:fit-content" class="form-control" placeholder="Enter Password" name="Password" ngModel required #Password = "ngModel" aria-describedby="basic-addon1">
+      <div *ngIf="Password.errors &&(Password.dirty || Password.touched)" class="alert alert-danger">
+        <div [hidden]="!Password.errors.required">
+          Password is required!
+        </div>
+        <div [hidden]="!Password.errors.minlength">
+          Password min length is 3 chars!
+        </div>
+      </div>
     </div>
     
     <div class="input-group ">
       <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-lock"></i></span>
       <input id="ConfirmPassword" type="password" style="width:fit-content" class="form-control" placeholder="Enter ConfirmPassword" name="ConfirmPassword" ngModel required #ConfirmPassword = "ngModel" aria-describedby="basic-addon1">
+      <div *ngIf="ConfirmPassword.errors &&(ConfirmPassword.dirty || ConfirmPassword.touched)" class="alert alert-danger">
+        <div [hidden]="!ConfirmPassword.errors.required">
+          ConfirmPassword is required!
+        </div> 
+      </div>
+        <div [hidden]="Password.value == ConfirmPassword.value" class="alert alert-danger">
+            Confirm doesent match with Password!
+        </div>
     </div>
   
     <div class="input-group ">
       <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
-      <input id="Email" type="text" style="width:fit-content" class="form-control" placeholder="Enter Email" name="Email" ngModel required #Email = "ngModel" aria-describedby="basic-addon1">
+      <input id="Email" type="text" style="width:fit-content" class="form-control" placeholder="Enter Email" name="Email" ngModel required #Email = "ngModel" aria-describedby="basic-addon1"
+      required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+      <div *ngIf="Email.errors &&(Email.dirty || Email.touched)" class="alert alert-danger">
+        <div [hidden]="!Email.errors.required">
+          Email is required!
+        </div>
+        <div [hidden]="!Email.errors.pattern">
+          Email form invalid (user@mail.com)
+        </div>
+      </div>
     </div>
 
     <div class="input-group ">
       <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
       <input id="Date" type="text" style="width:fit-content" class="form-control" placeholder="Enter Date" name="Date" ngModel required #Date = "ngModel" aria-describedby="basic-addon1">
+      <div *ngIf="Date.errors &&(ConfirmPassword.dirty || Date.touched)" class="alert alert-danger">
+        <div [hidden]="!Date.errors.required">
+          Date is required!
+        </div> 
+      </div>
     </div>
 
     <button class="btn btn-primary " type="submit">Register</button>

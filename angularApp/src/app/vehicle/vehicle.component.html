@@ -5,12 +5,20 @@
       <div>
         <label>Service:</label>
         <select id="ServiceName" ngModel #ServiceName="ngModel" name="ServiceName">
-          <option *ngFor="let item of services" [value]="item.Name" id="ServiceName" name="ServiceName">{{item.Name}}</option>
+          <option *ngFor="let item of services;let i=index" [value]="item.Name" id="ServiceName" name="ServiceName">
+            <div *ngIf="CheckServiceDeleted(i)">
+                {{item.Name}}
+            </div>
+            </option>
         </select>
        
         <label>Types:</label>
         <select id="Type" ngModel #Type="ngModel" name="Type">
-            <option *ngFor="let t of types" [value]="t.Name" id="Type" name="Type">{{t.Name}}</option>
+            <option *ngFor="let t of types;let i=index" [value]="t.Name" id="Type" name="Type">
+                <div *ngIf="CheckTypeDeleted(i)">
+                    {{t.Name}}
+                </div>
+               </option>
         </select>
   
         <div class="input-group ">
@@ -67,7 +75,7 @@
   <br>
   <ul>
     <li *ngFor="let vehicle of showVehicles; let i = index">
-
+      <div *ngIf="checkVehicleDeleted(i)">
         <td style="width: 250px;"><label class="col-md-4 control-label">Logo</label><img width="200" src='{{vehicle.Images}}' /></td>
 
       <div class="input-group ">
@@ -95,6 +103,7 @@
       <button *ngIf="checkUserType()" class="btn  btn-primary"  (click)="makeUnavailabe(vehicle.Id)">Make Unavailable </button>
       <br>
       <br>
+      </div>
     </li>
   </ul>
 </div>

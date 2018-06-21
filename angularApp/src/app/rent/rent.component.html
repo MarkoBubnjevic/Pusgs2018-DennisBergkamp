@@ -2,6 +2,7 @@
   <label>All Vehicles:</label>
   <ul>
     <li *ngFor="let vehicle of vehicles; let i = index">
+    <div *ngIf="checkVehiclesDeleted(i)">
       <div class="input-group ">
         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
         <input type="text" [(ngModel)]="vehicle.Model">
@@ -20,6 +21,7 @@
       <button class="btn btn-primary" *ngIf="checkAvailable(i)" (click)="addVehicle(i)">Add Vehicle</button>
       <br>
       <br>
+    </div>
     </li>
   </ul>
 </div>
@@ -28,6 +30,7 @@
   <label>All Branches:</label>
   <ul>
     <li *ngFor="let branch of branches; let i = index">
+    <div *ngIf="checkBranchesDeleted(i)">
       <div class="input-group ">
         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
         <input type="text" [(ngModel)]="branch.Logo">
@@ -42,6 +45,7 @@
       <button  class="btn btn-primary" (click)="addRetBranch(i)">Add Ret Branch</button>
       <br>
       <br>
+    </div>
     </li>
   </ul>
 </div>

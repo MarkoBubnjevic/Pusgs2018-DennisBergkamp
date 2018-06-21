@@ -30,6 +30,11 @@ export class TypeOfVehicleComponent implements OnInit {
         })
   }
 
+  checkTypeDeleted(i:number)
+  {
+    return this.types[i].Deleted == false;
+  }
+
   addType(type: TypeOfVehicle){
     this.typeService.postType(type)
     .subscribe(
